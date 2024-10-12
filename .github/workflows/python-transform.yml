@@ -23,7 +23,7 @@ jobs:
     # ------------------------------------------------
     - name: Verify FPC installation
       run: |
-          fpc -v
+          fpc -iW
     # ------------------------------------------------
     - name: Install Python 3.2
       run: |
