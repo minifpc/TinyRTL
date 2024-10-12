@@ -22,9 +22,11 @@ jobs:
           sudo apt-get install -y fp-compiler
     # ------------------------------------------------
     - name: Verify FPC installation
-      run: fpc -v
+      run: |
+          fpc -v
     # ------------------------------------------------
     - name: Install Python 3.2
+      run: |
           sudo apt-get update
           sudo apt-get install -y python3.2
     # ------------------------------------------------
