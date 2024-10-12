@@ -1,2 +1,5 @@
-# TinyRTL
-a toying tiny implementation of the RTL for using with FPC (Free Pascal Compiler 3.2+)
+# Qt_FPC
+A little toying with FPC RTL Framework
+
+Preview Front-Window 1 (Intro):<br>
+![Preview](img/screen000.png)
