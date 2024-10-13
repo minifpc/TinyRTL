@@ -730,7 +730,7 @@ if errorlevel 1 (goto buildError)
 python %prjdir%\transform.py %temp%.s
 ::
 echo assemble: test1.o
-%asmx64% %temp%.s -o %prjdir%\test\test1.o
+%asmx64% %temp%.s -o %temp%.o
 if errorlevel 1 (goto buildError)
 for %%A in (fpcinit sysinit) do (
     %fpcx64% -dwinexe %srcsys%\%%A.pas
