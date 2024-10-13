@@ -40,7 +40,6 @@ jobs:
             make:p
             ninja:p
             gcc:p
-      - name: '🚧 Build TOOL'
+      - name: '🚧 Build TinyRTL for FPC'
         run: |
-          cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build
+          pacman -S mingw-w64-x86_64-fpc
