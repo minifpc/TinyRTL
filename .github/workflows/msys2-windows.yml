@@ -57,7 +57,8 @@ jobs:
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
-          cmd.exe /C "$WINDOWS_PATH\build.bat"
+          dir $(pwd)
+          $WINDOWS_PATH\build.bat
       # ----------------------------------------------------------
       - name: 'Build TinyRTL for FPC'
         run: |
