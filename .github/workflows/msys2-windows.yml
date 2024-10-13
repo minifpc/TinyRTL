@@ -41,7 +41,6 @@ jobs:
             ninja:p
             gcc:p
             g++:p
-            bison:p
       - name: '🚧 Build TOOL'
         run: |
           cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release
