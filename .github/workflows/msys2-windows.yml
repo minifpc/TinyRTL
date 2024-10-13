@@ -56,10 +56,10 @@ jobs:
       - name: Verify FPC Installation
         shell: cmd
         run: |
-          echo test1:
-          D\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32\ppcrossx64.exe -iW
-          echo test2:
+          echo test1
+          setx PATH %PATH%;d:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32
           ppcrossx64.exe -iW
+          echo tsst2
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
         run: |
