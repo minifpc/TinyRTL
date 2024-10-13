@@ -38,6 +38,7 @@ jobs:
             toolchain:p
             cmake:p
             make:p
+            nasm:p
             ninja:p
             gcc:p
             minizip:p
