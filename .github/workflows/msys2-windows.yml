@@ -47,7 +47,8 @@ jobs:
           mkdir -p $(pwd)/fpc
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
-          tar -xvf   $(pwd)/fpc/fpc.tar.gz -C $(pwd)/fpc
+          ls -a      $(pwd)/fpc/
+          tar -xvf   $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
           ls -a      $(pwd)/fpc/3.2.2/
       # ----------------------------------------------------------
       - name: Add FPC to PATH
