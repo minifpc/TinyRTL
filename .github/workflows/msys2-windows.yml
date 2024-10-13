@@ -49,7 +49,7 @@ jobs:
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
           dir $(pwd)
-          D:\\a\\TinyRTL\\TinyRTL\\src\\build.bat
+          D:\\a\\TinyRTL\\TinyRTL\\build.bat
       # ----------------------------------------------------------
       - name: 'Build TinyRTL for FPC'
         run: |
