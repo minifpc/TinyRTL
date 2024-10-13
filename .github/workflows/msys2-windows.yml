@@ -14,13 +14,13 @@ jobs:
         fail-fast: false
         matrix:
           include:
-          - { icon: '🟦', sys: mingw64 }
-      name: 🚧${{ matrix.icon }} ${{ matrix.sys }}
+          - { sys: mingw64 }
+      name: ${{ matrix.icon }} ${{ matrix.sys }}
       defaults:
         run:
           shell: msys2 {0}
       steps:
-      - name: '🧰 Checkout'
+      - name: 'Checkout'
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
@@ -50,14 +50,16 @@ jobs:
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           ls -a      $(pwd)/fpc/
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
-          export PATH=$PATH:$(pwd)/fpc/3.2.2/bin/i386-win32
-          echo "$PATH"
+          export PATH=$(pwd)/fpc/3.2.2/bin/i386-win32:$PATH
+          ls -a $(pwd)/fpc/3.2.2
       # ----------------------------------------------------------
       - name: Verify FPC Installation
         shell: cmd
         run: |
           echo test1
-          setx PATH "%PATH%;d:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32"
+          setx SCRIPT_LOCATION "%~dp0"
+          echo script location: %SCRIPT_LOCATION%
+          setx PATH "%SCRIPT_LOCATION%\fpc\3.2.2\bin\i386-win32;%PATH%"
           echo test2
           echo %PATH%
           echo test3
