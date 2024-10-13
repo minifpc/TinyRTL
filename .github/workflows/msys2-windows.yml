@@ -49,10 +49,8 @@ jobs:
           mkdir -p   $(pwd)/fpc
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
-          ls -a      $(pwd)/fpc/
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
-          export PATH=$(pwd)/fpc/3.2.2/bin/i386-win32:$PATH
-          ls -a $(pwd)/fpc/3.2.2
+          ls -a $(pwd)/fpc/3.2.2/bin/i386-win32/
       # ----------------------------------------------------------
       - name: Verify FPC Installation
         shell: cmd
@@ -60,11 +58,9 @@ jobs:
           @echo off
           echo test1
           set /p MY_PWD=<var.env.txt
-          echo Der Inhalt von MY_PWD ist: %MY_PWD%
           echo test2
-          setx PATH "%MY_PWD%\fpc\3.2.2\bin\i386-win32;%PATH%"
-          echo test3
-          "%MY_PWD%\fpc\3.2.2\bin\i386-win32\ppcrossx64.exe" -iW
+          dir %MY_PWD%/fpc/3.2.2/bin
+          %MY_PWD%/fpc/3.2.2/bin/i386-win32/ppcrossx64.exe -iW
           echo tsst4
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
