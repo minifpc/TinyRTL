@@ -45,6 +45,8 @@ jobs:
       - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
           mkdir -p   $(pwd)/fpc
+          mkdir -p   $(pwd)/nasm
+          curl -L -o $(pwd)/nasm/nasm.exe  https://kallup.net/gitpack/nasm.bin
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
