@@ -57,10 +57,10 @@ jobs:
         run: |
           @echo off
           echo test1
-          set /p MY_PWD=<var.env.txt
-          echo test2
-          dir %MY_PWD%/fpc/3.2.2/bin
-          %MY_PWD%/fpc/3.2.2/bin/i386-win32/ppcrossx64.exe -iW
+          setx 
+          setx MY_PWD "d:\a\TinyRTL\TinyRTL"
+          dir %MY_PWD%\fpc\3.2.2\bin
+          %MY_PWD%\fpc\3.2.2\bin\i386-win32\ppcrossx64.exe -iW
           echo tsst4
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
