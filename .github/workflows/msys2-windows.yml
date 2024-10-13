@@ -44,8 +44,8 @@ jobs:
       # ----------------------------------------------------------
       - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
-          curl -L -o fpc.zip https://kallup.net/gitpack/fpc.zip
-          miniunz fpc.zip -d C:\fpc
+          curl -L -o fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
+          tar -xvzf fpc.tar.gz -C /C/fpc/
           dir C:\fpc\3.2.2
       # ----------------------------------------------------------
       - name: Add FPC to PATH
