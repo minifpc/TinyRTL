@@ -59,7 +59,7 @@ jobs:
           cp $(pwd)/src/test/test1.exe   $(pwd)/output/test1.exe
       # ----------------------------------------------------------
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifact
           path: output/
