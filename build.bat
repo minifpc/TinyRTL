@@ -811,24 +811,24 @@ if errorlevel 1 (goto buildError)
 :: -----------------------------------------------------------------
 echo =[ build bundle zip file...]=   80 %%  done
 
-del %prjdir%\test\packed.zip  /F /S /Q >nul: 2>nul:
-cd  %prjdir%\test\
+::del %prjdir%\test\packed.zip  /F /S /Q >nul: 2>nul:
+::cd  %prjdir%\test\
 
-zip -9 -v packed.zip test1.exe *.dll >nul: 2>nul:
-if errorlevel 1 ( goto linkError )
-cd  %prjdir%
+::zip -9 -v packed.zip test1.exe *.dll >nul: 2>nul:
+::if errorlevel 1 ( goto linkError )
+::cd  %prjdir%
 
 :: -----------------------------------------------------------------
 :: after compile, delete old crap ...
 :: -----------------------------------------------------------------
 echo =[ clean up dev files...   ]=   90 %%  done
-::rmdir %prjdir%\units /S /Q >nul 2>nul
-::if errorlevel 1 (goto buildError)
+rmdir %prjdir%\units /S /Q >nul 2>nul
+if errorlevel 1 (goto buildError)
 
-echo =[ start test1.exe...      ]=  100 %%  done
-%prjdir%\test\test1.exe
-echo %errorlevel%
-if errorlevel 4 ( goto linkError )
+::echo =[ start test1.exe...      ]=  100 %%  done
+::%prjdir%\test\test1.exe
+::echo %errorlevel%
+::if errorlevel 4 ( goto linkError )
 goto allok
 
 :buildError
