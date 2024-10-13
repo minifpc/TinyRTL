@@ -34,7 +34,10 @@ on:
         update: true
         install: >-
           git
+          python
           make
+          base-devel
+          mingw-w64-x86_64-fpc
         pacboy: >-
           toolchain:p
           cmake:p
