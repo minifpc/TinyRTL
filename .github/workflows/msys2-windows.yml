@@ -40,32 +40,24 @@ jobs:
             make:p
             ninja:p
             gcc:p
+            unzip:p
       # ----------------------------------------------------------
-      - name: Download FPC Installer 32-Bit Windows
+      - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
-          curl -L -o fpc-installer.exe https://sourceforge.net/projects/freepascal/files/Windows/3.2.2/fpc-3.2.2.i386-win32.exe/download
-      - name: Download FPC 64-Bit Installer
-        run: |
-          curl -L -o fpc-installer.exe https://sourceforge.net/projects/freepascal/files/Windows/3.2.2/fpc-3.2.2.x86_64-win64.exe/download
-      # ----------------------------------------------------------
-      - name: Install FPC 32-Bit
-        run: |
-          fpc-installer.exe /VERYSILENT /DIR="C:\fpc32"
-      - name: Install FPC 64-Bit
-        run: |
-          fpc-installer.exe /VERYSILENT /DIR="C:\fpc64"
+          curl -L -o fpc.zip https://kallup.net/gitpack/fpc.zip
+          unzip fpc.zip -d C:\fpc
+          dir C:\fpc\3.2.2
       # ----------------------------------------------------------
       - name: Add FPC to PATH
         shell: cmd
         run: |
-          setx PATH "%PATH%;C:\fpc64\bin\x86_64-win64"
-          setx PATH "%PATH%;C:\fpc32\bin\i386-win32"
+          setx PATH "%PATH%;C:\fpc\3.2.2\bin\i386-win32"
       # ----------------------------------------------------------
       - name: Verify FPC Installation
         shell: cmd
         run: |
-          fpc -iW
+          ppcrossx64 -iW
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
         run: |
-          pacman -S fpc
+          echo "hallo"
