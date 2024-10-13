@@ -40,7 +40,7 @@ jobs:
             make:p
             ninja:p
             gcc:p
-            unzip:p
+            minizip:p
       # ----------------------------------------------------------
       - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
