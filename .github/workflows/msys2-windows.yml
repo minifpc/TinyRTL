@@ -44,14 +44,21 @@ jobs:
       # ----------------------------------------------------------
       - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
-          export MY_PWD=$(pwd)
+          convert_to_windows_path() {
+            local msys_path=$1
+            local drive_letter=${msys_path:1:1}
+            local rest_of_path=${msys_path:2}
+            echo "${drive_letter^^}:\\${rest_of_path//\//\\}"
+          }
+          MY_MSYS2_PATH=$(pwd)
+          WINDOWS_PATH=$(convert_to_windows_path "$MY_MSYS2_PATH")
+          echo "Windows-Pfad: $WINDOWS_PATH"
           mkdir -p   $(pwd)/fpc
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
-          WINDOWS_PATH=$(cypath-w "$(pwd)/build.bat")
-          cmd.exe /C "$WINDOWS_PATH"
+          cmd.exe /C "$WINDOWS_PATH\build.bat"
       # ----------------------------------------------------------
-      - name: '🚧 Build TinyRTL for FPC'
+      - name: 'Build TinyRTL for FPC'
         run: |
           echo "hallo"
