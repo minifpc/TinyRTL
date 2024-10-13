@@ -1,4 +1,4 @@
-name: CMake msys2 Windows 10
+name: msys2 Windows 10
 
 on:
   push:
@@ -49,8 +49,8 @@ jobs:
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
-          ls -a $(pwd)/fpc/3.2.2/bin/i386-win32/
-          cmd.exe /C "$(pwd)/fpc/3.2.2/bin/i386-win32/fpc.exe -iW"
+          WINDOWS_PATH=$(cypath-w "$(pwd)/build.bat")
+          cmd.exe /C "$WINDOWS_PATH"
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
         run: |
