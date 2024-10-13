@@ -729,8 +729,8 @@ if errorlevel 1 (goto buildError)
 ::
 python %prjdir%\transform.py %temp%.s
 ::
-echo assemble: test1.o
-%asmx64% %temp%.s -o %temp%.o
+echo assemble: test1.s
+D:\a\TinyRTL\TinyRTL\nasm\nasm.exe -f win64 -w-orphan-labels -o %temp%.o %temp%.s
 if errorlevel 1 (goto buildError)
 for %%A in (fpcinit sysinit) do (
     %fpcx64% -dwinexe %srcsys%\%%A.pas
