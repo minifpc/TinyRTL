@@ -42,4 +42,4 @@ jobs:
             gcc:p
       - name: '🚧 Build TinyRTL for FPC'
         run: |
-          pacman -S mingw-w64-x86_64-fpc
+          pacman -S fpc
