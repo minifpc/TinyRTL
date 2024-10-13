@@ -49,17 +49,19 @@ jobs:
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           ls -a      $(pwd)/fpc/
           tar -xvf   $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
-          ls -a      $(pwd)/fpc/3.2.2/
       # ----------------------------------------------------------
       - name: Add FPC to PATH
         shell: cmd
         run: |
-          setx PATH "%PATH%;C:\fpc\3.2.2\bin\i386-win32"
+          setx PATH "%PATH%;D\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32"
       # ----------------------------------------------------------
       - name: Verify FPC Installation
         shell: cmd
         run: |
-          ppcrossx64 -iW
+          echo test1:
+          D\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32\ppcrossx64.exe -iW
+          echo test2:
+          ppcrossx64.exe -iW
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
         run: |
