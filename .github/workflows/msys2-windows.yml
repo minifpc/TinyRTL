@@ -44,16 +44,14 @@ jobs:
       # ----------------------------------------------------------
       - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
-          mkdir -p $(pwd)/fpc
+          echo       $(pwd)
+          mkdir -p   $(pwd)/fpc
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           ls -a      $(pwd)/fpc/
-          tar -xvf   $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
-      # ----------------------------------------------------------
-      - name: Add FPC to PATH
-        shell: cmd
-        run: |
-          setx PATH "%PATH%;D\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32"
+          tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
+          export PATH=$PATH:$(pwd)/fpc/3.2.2/bin/i386-win32
+          echo "$PATH"
       # ----------------------------------------------------------
       - name: Verify FPC Installation
         shell: cmd
