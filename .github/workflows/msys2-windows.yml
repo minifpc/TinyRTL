@@ -44,23 +44,13 @@ jobs:
       # ----------------------------------------------------------
       - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
-          MY_PWD=$(pwd)
-          echo $MY_PWD > var.env.txt
+          export MY_PWD=$(pwd)
           mkdir -p   $(pwd)/fpc
           curl -L -o $(pwd)/fpc/fpc.tar.gz https://kallup.net/gitpack/fpc.tar.gz
           gzip    -d $(pwd)/fpc/fpc.tar.gz
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
           ls -a $(pwd)/fpc/3.2.2/bin/i386-win32/
-      # ----------------------------------------------------------
-      - name: Verify FPC Installation
-        shell: cmd
-        run: |
-          @echo off
-          echo test1
-          setx MY_PWD "d:\a\TinyRTL\TinyRTL"
-          dir %MY_PWD%\fpc\3.2.2\bin
-          %MY_PWD%\fpc\3.2.2\bin\i386-win32\ppcrossx64.exe -iW
-          echo tsst4
+          cmd.exe /C "$(pwd)/fpc/3.2.2/bin/i386-win32/fpc.exe -iW"
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
         run: |
