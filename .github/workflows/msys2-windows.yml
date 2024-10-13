@@ -57,9 +57,12 @@ jobs:
         shell: cmd
         run: |
           echo test1
-          setx PATH %PATH%;d:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32
+          setx PATH "%PATH%;d:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32"
+          echo test2
+          echo %PATH%
+          echo test3
           ppcrossx64.exe -iW
-          echo tsst2
+          echo tsst4
       # ----------------------------------------------------------
       - name: '🚧 Build TinyRTL for FPC'
         run: |
