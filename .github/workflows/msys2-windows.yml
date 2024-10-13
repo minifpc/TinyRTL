@@ -30,11 +30,14 @@ jobs:
           msystem: ${{matrix.sys}}
           update: true
           install: >-
-            git python cmake make base-devel ninja libxslt-devel
-            toolchain
+            git
+            python
+            base-devel
+            libxslt-devel
           pacboy: >-
             toolchain:p
             cmake:p
+            make:p
             ninja:p
             gcc:p
             g++:p
