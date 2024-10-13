@@ -30,15 +30,8 @@ jobs:
           msystem: ${{matrix.sys}}
           update: true
           install: >-
-            git
-            python
-            make
-            base-devel
-            mingw-w64-x86_64-fpc
-          pacboy: >-
-            toolchain:p
-            cmake:p
-            ninja:p
+            git python cmake make base-devel gcc g++ fpc ninja libxslt-devel
+            toolchain
       - name: '🚧 Build TOOL'
         run: |
           cmake -G Ninja -B build -DCMAKE_BUILD_TYPE=Release
