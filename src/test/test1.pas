@@ -8,17 +8,21 @@
 {$mode delphi}
 program test1;
 
+uses Qt_String;
+
+procedure ExitProcess(AValue: Integer); external 'kernel32.dll';
+
 procedure Entry;
-stdcall; public name '_mainCRTStartup';
 var
     hm: HMODULE;
     qs: QString;
 begin
     qs := QString.Create('one string');
         
-    MessageBox(qs,'Information');
+    MessageBox(0,'qs','Information',0);
     ExitProcess(0);
 end;
 
 begin
+    Entry;
 end.

@@ -28,25 +28,25 @@ setlocal enabledelayedexpansion
 :: -----------------------------------------------------------------
 :: developer project directory => location of the fpc-qt project ...
 :: -----------------------------------------------------------------
-set prjdrv=E:
-set prjdir=%prjdrv%\Projekte\fpc-qt\src
+set prjdrv=D:
+set prjdir=%prjdrv%\a\TinyRTL\TinyRTL\src
 
-set prjpar=E:/Projekte/fpc-qt/src
+set prjpar=/d/a/TinyRTL/TinyRTL/src
 set BASHCO=%prjdrv%\msys64\usr\bin\bash.exe
 set SCRIPT_PATH=%prjpar%
 
 :: -----------------------------------------------------------------
 :: fpcdir1/2 => location of fpc.exe compiler tools ...
 :: -----------------------------------------------------------------
-set fpcdir1=%prjdrv%\FPC\3.2.0\bin\i386-win32
-set fpcdir2=%prjdrv%\fpc\3.2.2\bin\i386-win32
+set fpcdir1=%prjdrv%\a\TinyRTL\TinyRTL\fpc\3.2.0\bin\i386-win32
+set fpcdir2=%prjdrv%\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32
 
 set gccdir1=%prjdrv%\msys64\mingw32\bin
 set gccdir2=%prjdrv%\msys64\mingw64\bin
 
-set asmdir=%prjdrv%\nasm
+set asmdir=%prjdrv%\a\TinyRTL\TinyRTL\nasm
 
-set fpcdir=%fpcdir1%
+set fpcdir=%fpcdir2%
 set gccdir=%gccdir2%
 set gdbdir=%gccdir2%
 
@@ -89,9 +89,9 @@ set asmx64=%asmdir%\nasm.exe -f win64 -w-orphan-labels
 ::
 :: the files was manualy copied from a 32-Bit, and 64-Bit Relase
 :: -----------------------------------------------------------------
-set fpcx32=%fpcdir%\fpc32.exe %fpcdst% %fpcsys2% %fpcsys1%
-set fpcx64=%fpcdir%\fpc64.exe %fpcdst% %fpcsys2% %fpcsys1%
-set fplx64=%fpcdir%\fpc64.exe %fpcdst% %fpcsys1%
+set fpcx32=%fpcdir%\fpc.exe        %fpcdst% %fpcsys2% %fpcsys1%
+set fpcx64=%fpcdir%\ppcrossx64.exe %fpcdst% %fpcsys2% %fpcsys1%
+set fplx64=%fpcdir%\ppcrossx64.exe %fpcdst% %fpcsys1%
 
 :: -----------------------------------------------------------------
 :: ld32.exe is a copy of fpc 3.2 tool ld.exe (32-Bit)
@@ -100,7 +100,7 @@ set fplx64=%fpcdir%\fpc64.exe %fpcdst% %fpcsys1%
 :: the files was manualy copied from a 32-Bit, and 64-Bit Relase
 :: -----------------------------------------------------------------
 set ld32=%fpcdir%\ld32.exe
-set ld64=%fpcdir%\ld64.exe -b pei-x86-64 --subsystem windows
+set ld64=ld.exe -b pei-x86-64 --subsystem windows
 
 :: -----------------------------------------------------------------
 :: as32.exe is a copy of fpc 3.2 tool as.exe (32-Bit)
@@ -117,11 +117,11 @@ set as64=%fpcdir%\as64.exe
 ::
 :: the files was manualy copied from a 32-Bit, and 64-Bit Relase
 :: -----------------------------------------------------------------
-set gcc32=%gccdir1%\gcc.exe
-set gcc64=%gccdir2%\gcc.exe
+set gcc32=gcc.exe
+set gcc64=gcc.exe
 
-set gdb32=%gccdir1%\gdb.exe
-set gdb64=%gccdir2%\gdb.exe
+set gdb32=gdb.exe
+set gdb64=gdb.exe
 
 :: -----------------------------------------------------------------
 :: strip32.exe is a copy of fpc 3.2 tool strip.exe (32-Bit)
@@ -129,13 +129,13 @@ set gdb64=%gccdir2%\gdb.exe
 ::
 :: the files was manualy copied from a 32-Bit, and 64-Bit Relase
 :: -----------------------------------------------------------------
-set strip32=%fpcdir%\strip32.exe
-set strip64=%fpcdir%\strip64.exe
+set strip32=strip.exe
+set strip64=strip.exe
 
-set dlltool=%fpcdir%\dlltool.exe
+set dlltool=D:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32\dlltool.exe
 
-set punits=%prjdir%\units
-set sunits=%prjdir%\sources
+set punits=D:\a\TinyRTL\TinyRTL\src\units
+set sunits=D:\a\TinyRTL\TinyRTL\src\sources
 
 set srcsys=-FE%punits%\fpc-sys %sunits%\fpc-sys
 set srcrtl=-FE%punits%\fpc-rtl %sunits%\fpc-rtl
@@ -147,7 +147,7 @@ set sysrtl=%punits%\fpc-rtl
 :: -----------------------------------------------------------------
 set /a counter=0
 
-cd %prjdir%
+cd D:\a\TinyRTL\TinyRTL\src
 ::goto cplusplus
 
 echo =[ clean up directories    ]=    1 %%  done
@@ -225,17 +225,34 @@ for %%A in (Qt_String Qt_Dialogs) do (
 :: -----------------------------------------------------------------
 for %%A in (Qt_String Qt_Dialogs) do (
     echo sedding: %prjdir%\units\fpc-qt\%%A.s
-    sed -i '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-qt\%%A.s
+    sed '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-qt\%%A.s > %prjdir%\units\fpc-qt\%%A.tmp
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_dwarf_frame.*/,/\; End asmlist al_dwarf_frame.*/d' %prjdir%\units\fpc-qt\%%A.s
+    move /Y "%prjdir%\units\fpc-qt\%%A.tmp" %prjdir%\units\fpc-qt\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
-    sed -i '/\.\.\@.*strlab\:/,+3d' %prjdir%\units\fpc-qt\%%A.s
+
+    sed '/\; Begin asmlist al_dwarf_frame.*/,/\; End asmlist al_dwarf_frame.*/d' %prjdir%\units\fpc-qt\%%A.s > %prjdir%\units\fpc-qt\%%A.tmp
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_indirectglobals.*/,/\; End asmlist al_indirectglobals.*/d' %prjdir%\units\fpc-qt\%%A.s
+    move /Y "%prjdir%\units\fpc-qt\%%A.tmp" %prjdir%\units\fpc-qt\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_globals.*/,/\; End asmlist al_globals.*/d' %prjdir%\units\fpc-qt\%%A.s
+
+    sed '/\.\.\@.*strlab\:/,+3d' %prjdir%\units\fpc-qt\%%A.s > %prjdir%\units\fpc-qt\%%A.tmp
     if errorlevel 1 (goto buildError)
-    sed -i '/call\tfpc\_reraise/,/\t\tcall\tFPC\_DONEEXCEPTION/d' %prjdir%\units\fpc-qt\%%A.s
+    move /Y "%prjdir%\units\fpc-qt\%%A.tmp" %prjdir%\units\fpc-qt\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/\; Begin asmlist al_indirectglobals.*/,/\; End asmlist al_indirectglobals.*/d' %prjdir%\units\fpc-qt\%%A.s > %prjdir%\units\fpc-qt\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-qt\%%A.tmp" %prjdir%\units\fpc-qt\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/\; Begin asmlist al_globals.*/,/\; End asmlist al_globals.*/d' %prjdir%\units\fpc-qt\%%A.s > %prjdir%\units\fpc-qt\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-qt\%%A.tmp" %prjdir%\units\fpc-qt\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/call\tfpc\_reraise/,/\t\tcall\tFPC\_DONEEXCEPTION/d' %prjdir%\units\fpc-qt\%%A.s > %prjdir%\units\fpc-qt\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-qt\%%A.tmp" %prjdir%\units\fpc-qt\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
 )
 echo.
@@ -251,7 +268,7 @@ echo.
 copy %prjdir%\sources\fpc-qt\symbols.asm %prjdir%\units\fpc-qt\symbols.s
 for %%A in (Qt_String Qt_Dialogs symbols) do (
     echo assemble: %prjdir%\units\fpc-qt\%%A.s
-    nasm.exe -f win64 -o %prjdir%\units\fpc-qt\%%A.o -w-orphan-labels %prjdir%\units\fpc-qt\%%A.s
+    %asmx64% -f win64 -o %prjdir%\units\fpc-qt\%%A.o -w-orphan-labels %prjdir%\units\fpc-qt\%%A.s
 )
 echo compile: %prjdir%\test\fpc_rtl.pas
 %fpcx64% -dwindll -CX -fPIC -st -Xe -XD -FE%prjdir%\units\fpc-rtl %prjdir%\test\fpc_rtl.pas
@@ -277,29 +294,57 @@ echo.
 :: -----------------------------------------------------------------
 for %%A in (system rtl_utils fpc_rtl) do (
     echo sedding: %prjdir%\units\fpc-sys\%%A.s
-    sed -i '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-sys\%%A.s
+    sed '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-sys\%%A.s > %prjdir%\units\fpc-sys\%%A.tmp
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_dwarf_frame.*/,/\; End asmlist al_dwarf_frame.*/d' %prjdir%\units\fpc-sys\%%A.s
+    move /Y "%prjdir%\units\fpc-sys\%%A.tmp" %prjdir%\units\fpc-sys\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
-    sed -i '/\.\.\@.*strlab\:/,+3d' %prjdir%\units\fpc-sys\%%A.s
+
+    sed '/\; Begin asmlist al_dwarf_frame.*/,/\; End asmlist al_dwarf_frame.*/d' %prjdir%\units\fpc-sys\%%A.s > %prjdir%\units\fpc-sys\%%A.tmp
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_indirectglobals.*/,/\; End asmlist al_indirectglobals.*/d' %prjdir%\units\fpc-sys\%%A.s
+    move /Y "%prjdir%\units\fpc-sys\%%A.tmp" %prjdir%\units\fpc-sys\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_globals.*/,/\; End asmlist al_globals.*/d' %prjdir%\units\fpc-sys\%%A.s
+    
+    sed '/\.\.\@.*strlab\:/,+3d' %prjdir%\units\fpc-sys\%%A.s > %prjdir%\units\fpc-sys\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-sys\%%A.tmp" %prjdir%\units\fpc-sys\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+    
+    sed '/\; Begin asmlist al_indirectglobals.*/,/\; End asmlist al_indirectglobals.*/d' %prjdir%\units\fpc-sys\%%A.s > %prjdir%\units\fpc-sys\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-sys\%%A.tmp" %prjdir%\units\fpc-sys\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+    
+    sed '/\; Begin asmlist al_globals.*/,/\; End asmlist al_globals.*/d' %prjdir%\units\fpc-sys\%%A.s > %prjdir%\units\fpc-sys\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-sys\%%A.tmp" %prjdir%\units\fpc-sys\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
 )
 echo.
 for %%A in (system rtl_utils fpc_rtl) do (
     echo sedding: %prjdir%\units\fpc-rtl\%%A.s
-    sed -i '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-rtl\%%A.s
+    sed '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_dwarf_frame.*/,/\; End asmlist al_dwarf_frame.*/d' %prjdir%\units\fpc-rtl\%%A.s
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
-    sed -i '/\.\.\@.*strlab\:/,+3d' %prjdir%\units\fpc-rtl\%%A.s
+    
+    sed '/\; Begin asmlist al_dwarf_frame.*/,/\; End asmlist al_dwarf_frame.*/d' %prjdir%\units\fpc-rtl\%%A.s  > %prjdir%\units\fpc-rtl\%%A.tmp
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_indirectglobals.*/,/\; End asmlist al_indirectglobals.*/d' %prjdir%\units\fpc-rtl\%%A.s
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
-    sed -i '/\; Begin asmlist al_globals.*/,/\; End asmlist al_globals.*/d' %prjdir%\units\fpc-rtl\%%A.s
+    
+    sed '/\.\.\@.*strlab\:/,+3d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+    
+    sed '/\; Begin asmlist al_indirectglobals.*/,/\; End asmlist al_indirectglobals.*/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+    
+    sed '/\; Begin asmlist al_globals.*/,/\; End asmlist al_globals.*/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
     if errorlevel 1 (goto buildError)
 )
 echo.
@@ -314,7 +359,103 @@ echo.
 :: -----------------------------------------------------------------
 :: there, we go furture with MinGW64 (sys2) console ...
 :: -----------------------------------------------------------------
-%BASHCO% --login -i -c "%SCRIPT_PATH%/script_sed.sh"
+::%BASHCO% --login -i -c "%SCRIPT_PATH%/script_sed.sh"
+
+echo seeding: units\fpc-rtl\system.s
+sed '/\tGLOBAL SYSTEM\$\_\$QSTRING\_\$\_\_\$\$\_CREATE\$PCHAR\$\$QSTRING/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$QSTRING\_\$\_\_\$\$\_DESTROY/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$QSTRING\_\$\_\_\$\$\_APPEND\$PCHAR\$\$QSTRING/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$QSTRING\_\$\_\_\$\$\_APPEND\$QSTRING\$\$QSTRING/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$QOBJECT\_\$\_\_\$\$\_CREATE$$QOBJECT/,/\t\tret/d'   %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$QOBJECT\_\$\_\_\$\$\_DESTROY/,/\t\tret/d'           %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_AFTERCONSTRUCTION/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_BEFOREDESTRUCTION/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_CREATE\$\$TOBJECT/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_DESTROY/,/\t\tret/d'           %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_FREE/,/\t\tret/d'              %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_FREEINSTANCE/,/\t\tret/d'      %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_SAFECALLEXCEPTION$TOBJECT\$POINTER\$\$SHORTDWORD/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/\tGLOBAL SYSTEM\$\_\$TOBJECT\_\$\_\_\$\$\_DEFAULTHANDLER\$formal/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+::sed '/SYSTEM\$\_.*\_fin/{:a;N;/\t\tret/!ba;d}' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+::if errorlevel 1 (goto buildError)
+::move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+::if errorlevel 1 (goto buildError)
+
+sed '/SYSTEM\$\_\$QSTRING\_\$\_\_\$\$\_CREATE\$\$QSTRING/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/GLOBAL SYSTEM\$\_\$QSTRING\_\$\_\_\$\$\_CREATE\$QSTRING\$\$QSTRING/,/\t\tret/d' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '0,/GLOBAL fpc_do_exit/s///' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '0,/fpc_do_exit\:/s///' %prjdir%\units\fpc-rtl\system.s > %prjdir%\units\fpc-rtl\system.tmp
+if errorlevel 1 (goto buildError)
+move /Y %prjdir%\units\fpc-rtl\system.tmp %prjdir%\units\fpc-rtl\system.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
 
 echo section .data                      >> %prjdir%\units\fpc-rtl\fpc_rtl.s
 echo global U_$P$FPC_RTL_$$_LIBRARYHDL  >> %prjdir%\units\fpc-rtl\fpc_rtl.s
@@ -554,18 +695,41 @@ for %%A in (fpcinit sysinit) do (
 if errorlevel 1 (goto buildError)
 
 %fpcx64% -al -Anasm -Cn -dwinexe -FE%prjdir%\test %prjdir%\test\test1.pas
-set temp=%prjdir%\test\test1.s
-sed -i -E '/\tGLOBAL PASCALMAIN/a GLOBAL _mainCRTStartup\n\t_mainCRTStartup\:' %temp%
+set temp=%prjdir%\test\test1
 ::
-sed -i 's/call\tFPC\_DO\_EXIT/\n; [1]\nxor ecx, ecx\ncall _$dll$kernel32$ExitProcess\n; [1]/g' %temp%
-sed -i 's/call\tfpc_initializeunits//g' %temp%
-sed -i '/; Begin asmlist al_dwarf_frame/,/; End asmlist al_dwarf_frame/d' %temp%
-sed -i '/; Begin asmlist al_globals/,/; End asmlist al_globals/d' %temp%
-sed -i 's/\tGLOBAL main/\tGLOBAL main\n\tglobal \_mainCRTStartup\n\_mainCRTStartup\:/g' %temp%
+sed -E '/\tGLOBAL PASCALMAIN/a GLOBAL _mainCRTStartup\n\t_mainCRTStartup\:' %temp%.s > %temp%.tmp
+if errorlevel 1 (goto buildError)
+move /Y %temp%.tmp %temp%.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed 's/call\tFPC\_DO\_EXIT/\n; [1]\nxor ecx, ecx\ncall _$dll$kernel32$ExitProcess\n; [1]/g' %temp%.s > %temp%.tmp
+if errorlevel 1 (goto buildError)
+move /Y %temp%.tmp %temp%.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed 's/call\tfpc_initializeunits//g' %temp%.s > %temp%.tmp
+if errorlevel 1 (goto buildError)
+move /Y %temp%.tmp %temp%.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/; Begin asmlist al_dwarf_frame/,/; End asmlist al_dwarf_frame/d' %temp%.s > %temp%.tmp
+if errorlevel 1 (goto buildError)
+move /Y %temp%.tmp %temp%.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed '/; Begin asmlist al_globals/,/; End asmlist al_globals/d' %temp%.s > %temp%.tmp
+if errorlevel 1 (goto buildError)
+move /Y %temp%.tmp %temp%.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
+
+sed 's/\tGLOBAL main/\tGLOBAL main\n\tglobal \_mainCRTStartup\n\_mainCRTStartup\:/g' %temp%.s > %temp%.tmp
+if errorlevel 1 (goto buildError)
+move /Y %temp%.tmp %temp%.s >nul: 2>nul:
+if errorlevel 1 (goto buildError)
 ::
-python %prjdir%\transform.py %temp%
+python %prjdir%\transform.py %temp%.s
 ::
-%asmx64% %temp% -o %prjdir%\test\test1.o
+%asmx64% %temp%.s -o %prjdir%\test\test1.o
 for %%A in (fpcinit sysinit) do (
     %fpcx64% -dwinexe %srcsys%\%%A.pas
     if errorlevel 1 (goto buildError)

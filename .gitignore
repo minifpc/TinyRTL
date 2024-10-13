@@ -1,3 +1,5 @@
 
 /doc
 /src/sources/app-rtl
+/fpc
+script_sed_test1.sh

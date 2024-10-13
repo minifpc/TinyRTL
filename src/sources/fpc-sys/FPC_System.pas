@@ -40,7 +40,7 @@ procedure fpc_libinitializeunits; compilerproc;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 procedure fpc_copy_proc(Src, Dest, TypeInfo : Pointer); compilerproc; inline;
-procedure fpc_do_exit; external name 'fpc_do_exit'; compilerproc;
+procedure fpc_do_exit; external name 'FPC_DO_EXIT'; compilerproc;
 
 procedure EmptyMethod; external name 'FPC_EMPTYMETHOD';
 

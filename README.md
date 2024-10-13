@@ -1,5 +1,2 @@
-# Qt_FPC
-A little toying with FPC RTL Framework
-
-Preview Front-Window 1 (Intro):<br>
-![Preview](img/screen000.png)
+# fpc_qt_64
+ minimal 64-Bit FPC RTL implementation
