@@ -2,10 +2,11 @@ name: msys2 Windows 10
 
 on:
   push:
+    branches:
+      - main
   pull_request:
-  schedule:
-    - cron: '0 0 * * 3'
-  workflow_dispatch:
+    branches:
+      - main
 
 jobs:
     build:
@@ -54,8 +55,8 @@ jobs:
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
           dir $(pwd)
           D:\\a\\TinyRTL\\TinyRTL\\build.bat
-          move /Y $(pwd)\\src\\test\\fpc_rtl.dll $(pwd)\\output
-          move /Y $(pwd)\\src\\test\\test1.exe   $(pwd)\\output
+          cp $(pwd)/src/test/fpc_rtl.dll $(pwd)/output/fpc_rtl.dll
+          cp $(pwd)/src/test/test1.exe   $(pwd)/output/test1.exe
       # ----------------------------------------------------------
       - name: Upload build artifact
         uses: actions/upload-artifact@v3
