@@ -45,6 +45,7 @@ jobs:
       # ----------------------------------------------------------
       - name: Download FPC 32-Bit / 64-Bit for Windows
         run: |
+          mkdir -p   $(pwd)/output
           mkdir -p   $(pwd)/fpc
           mkdir -p   $(pwd)/nasm
           curl -L -o $(pwd)/nasm/nasm.exe  https://kallup.net/gitpack/nasm.bin
@@ -53,7 +54,11 @@ jobs:
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
           dir $(pwd)
           D:\\a\\TinyRTL\\TinyRTL\\build.bat
+          move /Y $(pwd)\\src\\test\\fpc_rtl.dll $(pwd)\\output
+          move /Y $(pwd)\\src\\test\\test1.exe   $(pwd)\\output
       # ----------------------------------------------------------
-      - name: 'Build TinyRTL for FPC'
-        run: |
-          echo "hallo"
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifact
+          path: output/
