@@ -268,7 +268,7 @@ echo.
 copy %prjdir%\sources\fpc-qt\symbols.asm %prjdir%\units\fpc-qt\symbols.s
 for %%A in (Qt_String Qt_Dialogs symbols) do (
     echo assemble: %prjdir%\units\fpc-qt\%%A.s
-    %asmx64% -f win64 -o %prjdir%\units\fpc-qt\%%A.o -w-orphan-labels %prjdir%\units\fpc-qt\%%A.s
+    %asmx64% -o%prjdir%\units\fpc-qt\%%A.o %prjdir%\units\fpc-qt\%%A.s
 )
 echo compile: %prjdir%\test\fpc_rtl.pas
 %fpcx64% -dwindll -CX -fPIC -st -Xe -XD -FE%prjdir%\units\fpc-rtl %prjdir%\test\fpc_rtl.pas

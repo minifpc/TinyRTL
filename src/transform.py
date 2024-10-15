@@ -49,5 +49,6 @@ if __name__ == "__main__":
     delete_pattern(filename,
     r"\%LINE.*[\r\n]")
     
+    print("transform done.")
     sys.exit(0)
     

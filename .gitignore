@@ -3,3 +3,11 @@
 /src/sources/app-rtl
 /fpc
 script_sed_test1.sh
+/bin
+*.a
+*.res
+*.o
+*.ppu
+core.tar.gz
+src/test/fpc_rtl.dll
+src/test/test1.exe
