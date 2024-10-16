@@ -197,6 +197,10 @@ cd %prjdir%
 :: -----------------------------------------------------------------
 echo =[ begin compile stage     ]=    4 %%  done
 echo compile: %srcsys%\system.pas
+echo %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- -Us %srcsys%\system.pas
+dir
+dir src
+dir fpc
 %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- -Us %srcsys%\system.pas
 if errorlevel 1 (goto buildError)
 
