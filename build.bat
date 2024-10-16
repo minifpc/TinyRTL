@@ -58,19 +58,16 @@ set fpcdst=^
     -Fi%prjdir%\sources\fpc-win ^
     -Fi%prjdir%\sources\fpc-rtl ^
     -Fi%prjdir%\sources\fpc-gnu ^
-    -Fi%prjdir%\sources\fpc-qt  ^
-    -Fi%prjdir%\sources\app-rtl
+    -Fi%prjdir%\sources\fpc-qt
 
 set fpcsys1=^
     -Fu%prjdir%\sources\fpc-sys ^
     -Fu%prjdir%\sources\fpc-qt  ^
-    -Fu%prjdir%\sources\app-rtl ^
     ^
     -Fu%prjdir%\units\fpc-rtl   ^
     -Fu%prjdir%\units\fpc-sys   ^
     -Fu%prjdir%\units\fpc-win   ^
-    -Fu%prjdir%\units\fpc-qt    ^
-    -Fu%prjdir%\units\app-rtl
+    -Fu%prjdir%\units\fpc-qt
 
 set fpcsys2=^
     -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -Anasmwin64 -a
@@ -177,7 +174,7 @@ if errorlevel 1 (goto buildError)
 ::cp %prjdir%\sources\fpc-rtl\fpc_rtl.pas %prjdir%\test\fpc_rtl.pas
 
 cd %prjdir%\units
-for %%A in (fpc-qt fpc-rtl fpc-sys fpc-win app-rtl) do (
+for %%A in (fpc-qt fpc-rtl fpc-sys fpc-win) do (
     echo create: %prjdir%\units\%%A
     mkdir .\%%A
     if errorlevel 1 (goto buildError)
