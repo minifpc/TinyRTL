@@ -46,7 +46,7 @@ set gccdir2=%prjdrv%\msys64\mingw64\bin
 
 set asmdir=%prjdrv%\a\TinyRTL\TinyRTL\nasm
 
-set fpcdir=%fpcdir1%
+set fpcdir=%fpcdir2%
 set gccdir=%gccdir2%
 set gdbdir=%gccdir2%
 
@@ -197,13 +197,9 @@ cd %prjdir%
 :: -----------------------------------------------------------------
 echo =[ begin compile stage     ]=    4 %%  done
 echo compile: %srcsys%\system.pas
-echo.
-echo zuzu
-echo %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- -Us %srcsys%\system.pas
-echo.
 %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- -Us %srcsys%\system.pas
 if errorlevel 1 (goto buildError)
-echo 111
+
 echo compile: %srcsys%\fpintres.pp
 %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- %srcsys%\fpintres.pp
 if errorlevel 1 (goto buildError)
