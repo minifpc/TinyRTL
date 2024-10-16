@@ -11,3 +11,15 @@ script_sed_test1.sh
 core.tar.gz
 src/test/fpc_rtl.dll
 src/test/test1.exe
+src/test/X
+src/test/Y
+src/test/Z
+src/units/fpc-qt/Qt_Dialogs.s
+src/units/fpc-qt/Qt_String.s
+src/units/fpc-qt/symbols.s
+src/units/fpc-qt/system.s
+src/units/fpc-rtl/fpc_rtl.s
+src/units/fpc-rtl/RTL_Memory.s
+src/units/fpc-rtl/RTL_Memory_ppas.bat
+/src/units
+src/test/MyLibrary_exports.txt

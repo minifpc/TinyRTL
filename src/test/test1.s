@@ -3,6 +3,7 @@ default rel
 CPU x64
 
 
+EXTERN	RTL_MEMORY_$$_MOVE$formal$formal$LONGDWORD
 EXTERN	_$dll$user32$MessageBoxA
 EXTERN	_$dll$kernel32$ExitProcess
 
@@ -12,6 +13,11 @@ P$TEST1_$$_ENTRY:
 ..@c1:
 
 ..@c3:
+		mov	qword [rsp+32],rax
+		lea	rdx,[rsp+32]
+		lea	rcx,[rsp+32]
+		mov	r8d,4
+		call	RTL_MEMORY_$$_MOVE$formal$formal$LONGDWORD
 		xor	r9d,r9d
 		lea	r8,[_$TEST1$_Ld2]
 		lea	rdx,[_$TEST1$_Ld3]

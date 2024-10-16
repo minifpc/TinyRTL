@@ -155,6 +155,7 @@ echo =[ clean up directories    ]=    1 %%  done
 :: delete old crap ...
 :: -----------------------------------------------------------------
 rm -rf %prjdir%\units
+rm -rf %prjdir%\test\*.res
 rm -rf %prjdir%\test\fpc_rtl.dll
 rm -rf %prjdir%\test\test1.exe
 
@@ -216,6 +217,11 @@ echo.
 echo =[ create library files... ]=    5 %%  done
 echo.
 
+for %%A in (RTL_Memory) do (
+    echo compile: %prjdir%\sources\fpc-rtl\%%A.pas
+    %fpcx64% -dwindll -CX -fPIC -st -Xe -XD -FE%prjdir%\units\fpc-rtl %prjdir%\sources\fpc-rtl\%%A.pas
+)
+
 for %%A in (Qt_String Qt_Dialogs) do (
     echo compile: %prjdir%\sources\fpc-qt\%%A.pas
     %fpcx64% -dwindll -CX -fPIC -st -Xe -XD -FE%prjdir%\units\fpc-qt %prjdir%\sources\fpc-qt\%%A.pas
@@ -223,6 +229,38 @@ for %%A in (Qt_String Qt_Dialogs) do (
 :: -----------------------------------------------------------------
 :: remove not wanted rtti information's ...
 :: -----------------------------------------------------------------
+for %%A in (RTL_Memory) do (
+    echo sedding: %prjdir%\units\fpc-rtl\%%A.s
+    sed '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/\; Begin asmlist al_dwarf_frame.*/,/\; End asmlist al_dwarf_frame.*/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/\.\.\@.*strlab\:/,+3d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/\; Begin asmlist al_indirectglobals.*/,/\; End asmlist al_indirectglobals.*/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/\; Begin asmlist al_globals.*/,/\; End asmlist al_globals.*/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+
+    sed '/call\tfpc\_reraise/,/\t\tcall\tFPC\_DONEEXCEPTION/d' %prjdir%\units\fpc-rtl\%%A.s > %prjdir%\units\fpc-rtl\%%A.tmp
+    if errorlevel 1 (goto buildError)
+    move /Y "%prjdir%\units\fpc-rtl\%%A.tmp" %prjdir%\units\fpc-rtl\%%A.s >nul: 2>nul:
+    if errorlevel 1 (goto buildError)
+)
 for %%A in (Qt_String Qt_Dialogs) do (
     echo sedding: %prjdir%\units\fpc-qt\%%A.s
     sed '/\; Begin asmlist al_rtti/,/\; End asmlist al_rtti/d' %prjdir%\units\fpc-qt\%%A.s > %prjdir%\units\fpc-qt\%%A.tmp
@@ -272,7 +310,6 @@ for %%A in (Qt_String Qt_Dialogs symbols) do (
 )
 echo compile: %prjdir%\test\fpc_rtl.pas
 %fpcx64% -dwindll -CX -fPIC -st -Xe -XD -FE%prjdir%\units\fpc-rtl %prjdir%\test\fpc_rtl.pas
-
 if errorlevel 1 (goto buildError)
 
 echo.
@@ -466,7 +503,7 @@ echo.                                   >> %prjdir%\units\fpc-rtl\fpc_rtl.s
 :: -----------------------------------------------------------------
 :: assemble all new files for this build ...
 :: -----------------------------------------------------------------
-for %%A in (system rtl_utils fpc_rtl) do (
+for %%A in (system rtl_utils fpc_rtl rtl_memory) do (
     echo assemble: %punits%\fpc-rtl\%%A.s
     %asmx64% -o %prjdir%\units\fpc-rtl\%%A.o %punits%\fpc-rtl\%%A.s
     if errorlevel 1 (goto buildError)
@@ -657,21 +694,20 @@ echo =[ Linking fpc_rtl.dll ... ]=   30 %%  done
 
 gcc -fPIC -nostdlib -nostartfiles --shared -Wl,--entry=_DLLMainCRTStartup -o ^
 %prjdir%\test\fpc_rtl.dll        ^
+%prjdir%\units\fpc-rtl\rtl_memory.o  ^
 %prjdir%\units\fpc-rtl\system.o   ^
 %prjdir%\units\fpc-rtl\fpc_rtl.o  ^
 %prjdir%\units\fpc-qt\Qt_String.o ^
 %prjdir%\units\fpc-qt\symbols.o   ^
 %prjdir%\units\merge\*.o          ^
 -L %prjdir%\units\fpc-rtl
-::-L %prjdir%\units\app-rtl
-::-l impapp_rtl
 if errorlevel 1 (goto buildError)
 
 :: -----------------------------------------------------------------
 :: discards all debug symbols - todo !
 :: -----------------------------------------------------------------
-strip %prjdir%\test\fpc_rtl.dll
-if errorlevel 1 (goto buildError)
+::strip %prjdir%\test\fpc_rtl.dll
+::if errorlevel 1 (goto buildError)
 
 ::strip %prjdir%\test\app_rtl.dll
 ::if errorlevel 1 (goto buildError)
@@ -769,18 +805,21 @@ for %%A in (system test1) do (
 ::echo mupso
 ::%asmx64% -o %prjdir%\units\fpc-rtl\symbols.o %prjdir%\sources\fpc-qt\symbols.asm
 
+echo -[ create FPC_RTL.a ...    ]-   65 %%  done
+dlltool -d %prjdir%\test\impFPC_RTL.def -l %prjdir%\test\libimpFPC_RTL.a
+
 echo =[ linking test1.exe...    ]=   70 %%  done
 
 %gcc64% -nostartfiles -nostdlib -Wl,--entry=_mainCRTStartup -o ^
 %prjdir%\test\test1.exe  ^
 %prjdir%\test\test1.o    ^
+%prjdir%\units\fpc-rtl\rtl_memory.o ^
 %prjdir%\units\fpc-rtl\rtl_utils.o ^
 %prjdir%\units\fpc-qt\Qt_String.o  ^
 %prjdir%\units\fpc-qt\symbols.o    ^
 -L %prjdir%\test ^
--L %prjdir%\units\app-rtl ^
--l impsystem
-::-l impapp_rtl
+-l impsystem  ^
+-l imptest1
 if errorlevel 1 (goto buildError)
 
 :: -----------------------------------------------------------------
@@ -822,8 +861,8 @@ echo =[ build bundle zip file...]=   80 %%  done
 :: after compile, delete old crap ...
 :: -----------------------------------------------------------------
 echo =[ clean up dev files...   ]=   90 %%  done
-rmdir %prjdir%\units /S /Q >nul 2>nul
-if errorlevel 1 (goto buildError)
+::rmdir %prjdir%\units /S /Q >nul 2>nul
+::if errorlevel 1 (goto buildError)
 
 ::echo =[ start test1.exe...      ]=  100 %%  done
 ::%prjdir%\test\test1.exe

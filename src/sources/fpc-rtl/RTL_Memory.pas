@@ -1,9 +1,9 @@
 unit RTL_Memory;
 interface
-procedure move(const source; var dest; count: DWord); assembler;
+procedure move(const source; var dest; count: DWord); stdcall; export;
 implementation
 
-procedure move(const source; var dest; count: DWord); [public, alias:'FPC_move']; assembler; nostackframe;
+procedure move(const source; var dest; count: DWord); [public, alias:'FPC_move']; assembler; nostackframe; stdcall;
 asm
     mov    %r8, %rax
     sub    %rdx, %rcx            { rcx = src - dest }

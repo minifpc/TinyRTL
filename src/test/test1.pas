@@ -8,7 +8,7 @@
 {$mode delphi}
 program test1;
 
-uses Qt_String;
+uses RTL_Memory, Qt_String;
 
 procedure ExitProcess(AValue: Integer); external 'kernel32.dll';
 
@@ -18,6 +18,7 @@ var
     qs: QString;
 begin
     qs := QString.Create('one string');
+    move(qs, qs, 4);
         
     MessageBox(0,'qs','Information',0);
     ExitProcess(0);

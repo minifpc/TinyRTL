@@ -1,7 +1,7 @@
 @echo off
 SET THEFILE=D:\a\TinyRTL\TinyRTL\src\test\test1.exe
 echo Linking %THEFILE%
-D:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32\ld.exe -b pei-x86-64      --entry=_mainCRTStartup    -o D:\a\TinyRTL\TinyRTL\src\test\test1.exe D:\a\TinyRTL\TinyRTL\src\test\link14848.res
+D:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32\ld.exe -b pei-x86-64      --entry=_mainCRTStartup    -o D:\a\TinyRTL\TinyRTL\src\test\test1.exe D:\a\TinyRTL\TinyRTL\src\test\link19044.res
 if errorlevel 1 goto linkend
 goto end
 :asmend

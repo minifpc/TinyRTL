@@ -7,6 +7,7 @@
 // -----------------------------------------------------------------
 {$mode delphi}
 library fpc_rtl;
+uses RTL_Memory;
 
 {$define windows_header}
 
@@ -115,6 +116,9 @@ begin
         end;
     end;
 end;    
+
+exports
+    move;
 
 begin
     ShowInfo('hello');
