@@ -134,8 +134,8 @@ set strip64=strip.exe
 
 set dlltool=D:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32\dlltool.exe
 
-set punits=D:\a\TinyRTL\TinyRTL\units
-set sunits=D:\a\TinyRTL\TinyRTL\sources
+set punits=D:\a\TinyRTL\TinyRTL\src\units
+set sunits=D:\a\TinyRTL\TinyRTL\src\sources
 
 set srcsys=-FE%punits%\fpc-sys %sunits%\fpc-sys
 set srcrtl=-FE%punits%\fpc-rtl %sunits%\fpc-rtl
