@@ -46,7 +46,7 @@ set gccdir2=%prjdrv%\msys64\mingw64\bin
 
 set asmdir=%prjdrv%\a\TinyRTL\TinyRTL\nasm
 
-set fpcdir=%fpcdir2%
+set fpcdir=%fpcdir1%
 set gccdir=%gccdir2%
 set gdbdir=%gccdir2%
 
