@@ -134,8 +134,8 @@ set strip64=strip.exe
 
 set dlltool=D:\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32\dlltool.exe
 
-set punits=D:\a\TinyRTL\TinyRTL\src\units
-set sunits=D:\a\TinyRTL\TinyRTL\src\sources
+set punits=D:\a\TinyRTL\TinyRTL\units
+set sunits=D:\a\TinyRTL\TinyRTL\sources
 
 set srcsys=-FE%punits%\fpc-sys %sunits%\fpc-sys
 set srcrtl=-FE%punits%\fpc-rtl %sunits%\fpc-rtl
@@ -197,13 +197,13 @@ cd %prjdir%
 :: -----------------------------------------------------------------
 echo =[ begin compile stage     ]=    4 %%  done
 echo compile: %srcsys%\system.pas
+echo.
+echo zuzu
 echo %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- -Us %srcsys%\system.pas
-dir
-dir src
-dir fpc
+echo.
 %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- -Us %srcsys%\system.pas
 if errorlevel 1 (goto buildError)
-
+echo 111
 echo compile: %srcsys%\fpintres.pp
 %fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- %srcsys%\fpintres.pp
 if errorlevel 1 (goto buildError)
