@@ -1,4 +1,4 @@
-# fpc_qt_64
+# TinyRTL - minimal RTL for FPC 3.2.
 <p>
 minimal 64-Bit FPC RTL implementation
 </p>
