@@ -35,10 +35,12 @@ type
 // ---------------------------------------------------------------------------
 constructor TObject.Create;
 begin
+    MessageBox(0,'tobject create','info',0);
 end;
 
 destructor TObject.Destroy;
 begin
+    MessageBox(0,'tobject destroy','info',0);
 end;
 procedure TObject.AfterConstruction;
 begin
@@ -58,6 +60,10 @@ begin
 end;
 
 procedure TObject.FreeInstance;
+begin
+end;
+
+function SafeCallException( obj: codepointer; exceptaddr: codepointer ): HResult;
 begin
 end;
 

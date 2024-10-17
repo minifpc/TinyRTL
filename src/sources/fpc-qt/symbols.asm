@@ -10,7 +10,6 @@
 
 extern QString_Create_PChar
 
-section .data
 global VMT_$SYSTEM_$$_QSTRING
 VMT_$SYSTEM_$$_QSTRING:
     dq 0

@@ -8,7 +8,7 @@
 {$mode delphi}
 program test1;
 
-uses RTL_Memory, Qt_String;
+uses Qt_String;
 
 procedure ExitProcess(AValue: Integer); external 'kernel32.dll';
 
@@ -18,12 +18,20 @@ var
     qs: QString;
 begin
     qs := QString.Create('one string');
-    move(qs, qs, 4);
+    //move(qs, qs, 4);
         
     MessageBox(0,'qs','Information',0);
     ExitProcess(0);
 end;
 
+var
+    MemoryManager: TAnsiStringMemoryManager;
 begin
+    MemoryManager := TAnsiStringMemoryManager.Create;
+    try
+    finally
+        MemoryManager.Free;
+    end;
+    
     Entry;
 end.

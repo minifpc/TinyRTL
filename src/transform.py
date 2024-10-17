@@ -18,7 +18,7 @@ if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python script.py <filename>")
         sys.exit(1)
-    
+    sys.exit(0)
     filename = sys.argv[1]
     #
     # delete comments
@@ -28,8 +28,8 @@ if __name__ == "__main__":
     delete_pattern(filename, r"EXTERN\tFPC\_DO\_EXIT[\r\n]")
     delete_pattern(filename, r"EXTERN\tfpc\_initializeunits[\r\n]")
     #
-    delete_pattern(filename,
-    r"EXTERN[ \t]*VMT.*[\r\n]")
+    #delete_pattern(filename,
+    #r"EXTERN[ \t]*VMT.*[\r\n]")
     #
     delete_pattern(filename,
     r"EXTERN[ \t]*QT_STRING.*CREATE.*QSTRING")

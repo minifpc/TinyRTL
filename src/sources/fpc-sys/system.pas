@@ -39,6 +39,9 @@ const rtl_dll = 'fpc_rtl.dll';
 // TObject Framework - win32api ...
 // ---------------------------------------------------------------------------
 {$I RTL_Object.pas}
+{$I RTL_List.pas}
+{$I RTL_Memory.pas}
+
 { $ I R T L_Queue.pas}
 
 // ---------------------------------------------------------------------------
@@ -66,6 +69,9 @@ implementation
 {$I FPC_SysUtils.pas}
 
 {$I RTL_Object.pas}
+{$I RTL_List.pas}
+{$I RTL_Memory.pas}
+
 { $ I R T L_Queue.pas}
 
 // ---------------------------------------------------------------------------

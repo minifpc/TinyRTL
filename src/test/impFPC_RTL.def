@@ -1,3 +1,4 @@
 LIBRARY impFPC_RTL
 EXPORTS
-  move=SYSTEM_$$_MOVE$formal$formal$LONGDWORD
+  FPU_move
+  move
