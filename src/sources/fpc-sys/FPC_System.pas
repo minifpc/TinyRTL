@@ -8,7 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
-
+{$M-}
 procedure fpc_ansistr_decr_ref (Var S : Pointer); compilerproc;
 procedure fpc_AnsiStr_Incr_Ref (    S : Pointer); compilerproc; inline;
 
@@ -48,6 +48,7 @@ procedure move(const source; var dest; count: DWord); stdcall;
 {$endif}
 
 {$ifdef windows_source}
+{$M-}
 function sizeByte : Byte; inline; begin result :=  1; end;
 function sizeChar : Byte; inline; begin result :=  2; end;
 function sizeWord : Byte; inline; begin result :=  4; end;

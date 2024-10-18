@@ -1,3 +1,5 @@
+{$mode delphi}
+{$M-}
 unit RTL_Utils;
 interface
 

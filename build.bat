@@ -71,7 +71,8 @@ set fpcsys1=^
     -Fu%prjdir%\test
 
 set fpcsys2=^
-    -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -Anasmwin64 -a
+    -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -Anasmwin64 -a ^
+    -dNoRTTI
 
 set fpcsys3=
 

@@ -8,6 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$M-}
 type
     TQueue = class(TObject)
     private
@@ -24,6 +25,7 @@ type
 {$endif}
 
 {$ifdef windows_source}
+{$M-}
 {$L TQueue_extern.o}
 var
     TQueue_mem_temp: TQueue; external name 'TQueue_mem_temp';

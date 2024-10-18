@@ -6,6 +6,7 @@
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
 {$mode delphi}
+{$M-}
 unit RTL_DataCollection;
 interface
 

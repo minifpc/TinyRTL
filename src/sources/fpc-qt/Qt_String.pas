@@ -8,6 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$mode delphi}
+{$M-}
 unit Qt_String;
 
 interface

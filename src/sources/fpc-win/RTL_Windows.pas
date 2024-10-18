@@ -6,6 +6,7 @@
 // only for education, and non-profit usage !
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$M-}
 {$ifndef __RTL_WINDOWS__PAS_}
 {$define __RTL_WINDOWS__PAS_}
 {$if declared(PVOID) = false}

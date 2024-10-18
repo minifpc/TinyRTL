@@ -5,6 +5,7 @@
 // only for non-profit usage !!!
 // ----------------------------------------------------------
 {$mode delphi}
+{$M-}
 unit sysinit;
 
 interface

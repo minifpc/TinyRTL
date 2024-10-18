@@ -7,7 +7,7 @@
 // ---------------------------------------------------------------------------
 {$ifndef __WINDOWS_ERRORS_HDR__}
 {$define __WINDOWS_ERRORS_HDR__}
-
+{$M-}
 const ERROR_SUCCESS             = 0;
 const ERROR_INVALID_FUNCTION    = 1;
 const ERROR_FILE_NOT_FOUND      = 2;

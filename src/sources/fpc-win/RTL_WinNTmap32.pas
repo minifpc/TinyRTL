@@ -6,7 +6,7 @@
 // only for education, and non-profit usage !
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
-
+{$M-}
 
 // WINDOWS NT STATUS CODE               WIN32 ERROR CODE
 {------------------------------------------------------------------}

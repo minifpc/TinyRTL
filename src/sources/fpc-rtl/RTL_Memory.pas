@@ -8,6 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$M-}
     TAnsiStringMemoryManager = class
     private
         FMemoryPool: TList;
@@ -18,6 +19,7 @@
 {$endif}
 
 {$ifdef windows_source}
+{$M-}
 constructor TAnsiStringMemoryManager.Create;
 begin
     MessageBox(0,'AnsiManager create','info',0);

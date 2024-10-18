@@ -8,6 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$M-}
 type
     TList = class
     end;

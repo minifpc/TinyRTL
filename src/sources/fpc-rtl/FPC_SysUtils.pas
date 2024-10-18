@@ -8,6 +8,8 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$M-}
+
 {$ifndef __FPC_SYSUTILS__PAS_}
 {$define __FPC_SYSUTILS__PAS_}
 

@@ -6,6 +6,7 @@
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
 {$mode delphi}
+{$M-}
 library fpc_rtl;
 uses RTL_Memory;
 

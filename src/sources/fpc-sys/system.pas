@@ -7,11 +7,13 @@
 // (c) Copyright 2024 Jens Kallup - paule32
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
-{$mode objfpc}{$H+}{$modeswitch advancedrecords}
+{$mode objfpc}{$H+}
+{$modeswitch advancedrecords}
 unit system;
 
 interface
 {$define windows_header}
+{$M-}
 const rtl_dll = 'fpc_rtl.dll';
 // ---------------------------------------------------------------------------
 // FPC core ...
@@ -56,7 +58,7 @@ implementation
 
 {$undef  windows_header}  // interface
 {$define windows_source}  // impl
-
+{$M-}
 // ---------------------------------------------------------------------------
 // TObject Framework - win32api ...
 // ---------------------------------------------------------------------------

@@ -8,6 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$M-}
 
 function malloc (s: DWORD                  ): PVOID ; cdecl; external 'ucrtbase.dll'   name 'malloc';
 function strcat (d: PChar; s: PChar): PChar; cdecl; external 'ucrtbase.dll'   name 'strcat';

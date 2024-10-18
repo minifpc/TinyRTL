@@ -5,8 +5,9 @@
 //
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
-{$mode delphi}
 {$ENTRYPOINT PASCALMAIN}
+{$mode delphi}
+{$M-}
 program test1;
 
 uses sysinit, Qt_String;

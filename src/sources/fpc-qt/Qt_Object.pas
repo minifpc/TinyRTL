@@ -8,6 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$M-}
 {$I fpc_types.pas}
 {$ifndef __QT_OBJECT_HDR__}
 {$define __QT_OBJECT_HDR__}
