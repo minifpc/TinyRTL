@@ -16,16 +16,12 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_CREATE$$QSTRING
 QT_STRING$_$QSTRING_$__$$_CREATE$$QSTRING:
 ..@c1:
-; [Qt_String.pas]
-; [46] asm
-%LINE 46+0 Qt_String.pas
 		push	rbp
 ..@c3:
 ..@c4:
 		mov	rbp,rsp
 ..@c5:
 		lea	rsp,[rsp-48]
-; Var $vmt_afterconstruction_local located at rbp-8, size=OS_S64
 		cmp	rdx,1
 		je	..@j5
 		jmp	..@j6
@@ -47,16 +43,10 @@ QT_STRING$_$QSTRING_$__$$_CREATE$$QSTRING:
 		mov	qword [rbp-8],-1
 CPU x64
 
-; [47] nop
-%LINE 47+0
 		nop
-; [48] ret
-%LINE 48+0
 		ret
 CPU x64
 
-; [49] end;
-%LINE 49+0
 		mov	qword [rbp-8],1
 		test	rcx,rcx
 		jne	..@j15
@@ -69,10 +59,8 @@ CPU x64
 		mov	rax,qword [rcx]
 		call	[rax+136]
 ..@j16:
-%LINE 46+0
 		jmp	..@j11
 ..@j10:
-%LINE 49+0
 		test	rdx,rdx
 		jne	..@j18
 		jmp	..@j19
@@ -82,13 +70,11 @@ CPU x64
 		call	[rax+160]
 ..@j19:
 		call	fpc_reraise
-%LINE 46+0
 		call	FPC_DONEEXCEPTION
 ..@j20:
 		nop
 ..@j11:
 ..@j3:
-%LINE 49+0
 		nop
 		lea	rsp,[rbp]
 		pop	rbp
@@ -102,15 +88,12 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_CREATE$PCHAR$$QSTRING
 QT_STRING$_$QSTRING_$__$$_CREATE$PCHAR$$QSTRING:
 ..@c6:
-; [51] asm
-%LINE 51+0
 		push	rbp
 ..@c8:
 ..@c9:
 		mov	rbp,rsp
 ..@c10:
 		lea	rsp,[rsp-48]
-; Var $vmt_afterconstruction_local located at rbp-8, size=OS_S64
 		cmp	rdx,1
 		je	..@j23
 		jmp	..@j24
@@ -132,16 +115,10 @@ QT_STRING$_$QSTRING_$__$$_CREATE$PCHAR$$QSTRING:
 		mov	qword [rbp-8],-1
 CPU x64
 
-; [52] nop
-%LINE 52+0
 		nop
-; [53] ret
-%LINE 53+0
 		ret
 CPU x64
 
-; [54] end;
-%LINE 54+0
 		mov	qword [rbp-8],1
 		test	rcx,rcx
 		jne	..@j33
@@ -154,10 +131,8 @@ CPU x64
 		mov	rax,qword [rcx]
 		call	[rax+136]
 ..@j34:
-%LINE 51+0
 		jmp	..@j29
 ..@j28:
-%LINE 54+0
 		test	rdx,rdx
 		jne	..@j36
 		jmp	..@j37
@@ -167,13 +142,11 @@ CPU x64
 		call	[rax+160]
 ..@j37:
 		call	fpc_reraise
-%LINE 51+0
 		call	FPC_DONEEXCEPTION
 ..@j38:
 		nop
 ..@j29:
 ..@j21:
-%LINE 54+0
 		nop
 		lea	rsp,[rbp]
 		pop	rbp
@@ -187,15 +160,12 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_CREATE$QSTRING$$QSTRING
 QT_STRING$_$QSTRING_$__$$_CREATE$QSTRING$$QSTRING:
 ..@c11:
-; [55] constructor QString.Create(other: QString); assembler; asm end;
-%LINE 55+0
 		push	rbp
 ..@c13:
 ..@c14:
 		mov	rbp,rsp
 ..@c15:
 		lea	rsp,[rsp-48]
-; Var $vmt_afterconstruction_local located at rbp-8, size=OS_S64
 		cmp	rdx,1
 		je	..@j41
 		jmp	..@j42
@@ -260,8 +230,6 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_DESTROY
 QT_STRING$_$QSTRING_$__$$_DESTROY:
 ..@c16:
-; [56] destructor QString.Destroy; assembler; asm end;
-%LINE 56+0
 		lea	rsp,[rsp-8]
 ..@c18:
 		cmp	rdx,0
@@ -299,11 +267,6 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_APPEND$QSTRING$$QSTRING
 QT_STRING$_$QSTRING_$__$$_APPEND$QSTRING$$QSTRING:
 ..@c19:
-; Var $result located in register rdx
-; Var $self located in register rcx
-; Var other located in register rdx
-; [58] function QString.append(other: QString): QString; begin end;
-%LINE 58+0 Qt_String.pas
 		mov	rax,rdx
 		ret
 ..@c20:
@@ -312,11 +275,6 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_APPEND$PCHAR$$QSTRING
 QT_STRING$_$QSTRING_$__$$_APPEND$PCHAR$$QSTRING:
 ..@c21:
-; Var $result located in register rdx
-; Var $self located in register rcx
-; Var str located in register rdx
-; [59] function QString.append(str  : PChar  ): QString; begin end;
-%LINE 59+0
 		mov	rax,rdx
 		ret
 ..@c22:
@@ -325,16 +283,7 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_GETTEXT$$PCHAR
 QT_STRING$_$QSTRING_$__$$_GETTEXT$$PCHAR:
 ..@c23:
-; Var $result located in register rax
-; Var $self located in register rcx
-; [62] begin
-%LINE 62+0
-; Var $result located in register rax
-; [63] result := FString;
-%LINE 63+0
 		mov	rax,qword [rcx+8]
-; [64] end;
-%LINE 64+0
 		ret
 ..@c24:
 
@@ -342,17 +291,8 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_SETTEXT$PCHAR
 QT_STRING$_$QSTRING_$__$$_SETTEXT$PCHAR:
 ..@c25:
-; [67] begin
-%LINE 67+0
 		mov	rax,rcx
-; Var $self located in register rax
-; Var AString located in register rdx
-; Var AString located in register rdx
-; [68] FString := AString;
-%LINE 68+0
 		mov	qword [rax+8],rdx
-; [69] end;
-%LINE 69+0
 		ret
 ..@c26:
 
@@ -360,21 +300,12 @@ SECTION .text
 	GLOBAL QT_STRING$_$QSTRING_$__$$_SETTEXT$QSTRING
 QT_STRING$_$QSTRING_$__$$_SETTEXT$QSTRING:
 ..@c27:
-; [72] begin
-%LINE 72+0
 		lea	rsp,[rsp-40]
 ..@c29:
 		mov	rax,rcx
-; Var $self located in register rax
-; Var AString located in register rdx
-; [73] setText( AString.FString );
-%LINE 73+0
 		mov	rdx,qword [rdx+8]
 		mov	rcx,rax
-; Var $self located in register rcx
 		call	QT_STRING$_$QSTRING_$__$$_SETTEXT$PCHAR
-; [74] end;
-%LINE 74+0
 		nop
 		lea	rsp,[rsp+40]
 		ret
@@ -386,17 +317,8 @@ QT_STRING_$$_QSTRING_CREATE_PCHAR$POINTER$PCHAR:
 	GLOBAL QString_Create_PChar
 QString_Create_PChar:
 ..@c30:
-; [77] begin
-%LINE 77+0
 		mov	rax,rcx
-; Var ref located in register rax
-; Var s located in register rdx
-; Var s located in register rdx
-; [78] QString(ref).FString := s;
-%LINE 78+0
 		mov	qword [rax+8],rdx
-; [79] end;
-%LINE 79+0
 		ret
 ..@c31:
 ; End asmlist al_procedures
@@ -409,8 +331,6 @@ VMT_$QT_STRING_$$_QSTRING	DQ	16,-16,VMT_$SYSTEM_$$_QOBJECT$indirect,..@d1,0,0,0,
 	DQ	0,0,0,0,SYSTEM$_$TOBJECT_$__$$_DESTROY,FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
 	DQ	FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,SYSTEM$_$QOBJECT_$__$$_DESTROY
 	DQ	QT_STRING$_$QSTRING_$__$$_DESTROY,0
-; [81] end.
-%LINE 81+0 Qt_String.pas
 ; End asmlist al_globals
 ; Begin asmlist al_const
 
@@ -426,8 +346,6 @@ SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL INIT_$QT_STRING_$$_QSTRING
 INIT_$QT_STRING_$$_QSTRING	DB	15,7
-; [83] 
-%LINE 83+0 Qt_String.pas
 		DB	"QString"
 	DQ	0
 	DD	8
@@ -451,13 +369,11 @@ SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL VMT_$QT_STRING_$$_QSTRING$indirect
 VMT_$QT_STRING_$$_QSTRING$indirect	DQ	VMT_$QT_STRING_$$_QSTRING
-%LINE 81+0 Qt_String.pas
 
 SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL INIT_$QT_STRING_$$_QSTRING$indirect
 INIT_$QT_STRING_$$_QSTRING$indirect	DQ	INIT_$QT_STRING_$$_QSTRING
-%LINE 83+0
 
 SECTION .data
 	ALIGN 8,DB 0

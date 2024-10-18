@@ -67,7 +67,8 @@ set fpcsys1=^
     -Fu%prjdir%\units\fpc-rtl   ^
     -Fu%prjdir%\units\fpc-sys   ^
     -Fu%prjdir%\units\fpc-win   ^
-    -Fu%prjdir%\units\fpc-qt
+    -Fu%prjdir%\units\fpc-qt    ^
+    -Fu%prjdir%\test
 
 set fpcsys2=^
     -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -Anasmwin64 -a
@@ -87,7 +88,7 @@ set asmx64=%asmdir%\nasm.exe -f win64 -w-orphan-labels
 :: the files was manualy copied from a 32-Bit, and 64-Bit Relase
 :: -----------------------------------------------------------------
 set fpcx32=%fpcdir%\fpc.exe        %fpcdst% %fpcsys2% %fpcsys1%
-set fpcx64=%fpcdir%\ppcrossx64.exe %fpcdst% %fpcsys2% %fpcsys1%
+set fpcx64=ppcrossx64.exe %fpcdst% %fpcsys2% %fpcsys1%
 set fplx64=%fpcdir%\ppcrossx64.exe %fpcdst% %fpcsys1%
 
 :: -----------------------------------------------------------------
@@ -189,23 +190,28 @@ echo.
 
 cd %prjdir%
 
-:: -----------------------------------------------------------------
-:: create .dll file ...
-:: -----------------------------------------------------------------
 echo =[ begin compile stage     ]=    4 %%  done
-echo compile: %srcsys%\system.pas
-%fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- -Us %srcsys%\system.pas
+echo compile: D:\a\TinyRTL\TinyRTL\src\sources\fpc-sys\system.pas
+%fpcx64% -dwinexe -Cn -Us D:\a\TinyRTL\TinyRTL\src\sources\fpc-sys\system.pas
 if errorlevel 1 (goto buildError)
 
-echo compile: %srcsys%\fpintres.pp
-%fpcx64% -dwindll -CX+ -fPIC -st -Xe -XD- %srcsys%\fpintres.pp
+echo compile: D:\a\TinyRTL\TinyRTL\src\sources\fpc-sys\fpintres.pp
+%fpcx64% -dwinexe -Cn D:\a\TinyRTL\TinyRTL\src\sources\fpc-sys\fpintres.pp
 if errorlevel 1 (goto buildError)
 ::
 for %%A in (fpcinit sysinit) do (
-    echo compile: %srcsys%\%%A.pas
-    %fpcx64% -dwindll -CX -fPIC -st -Xe -XD-  %srcsys%\%%A.pas
+    echo compile: D:\a\TinyRTL\TinyRTL\src\sources\fpc-sys\%%A.pas
+    %fpcx64% -dwinexe -Cn D:\a\TinyRTL\TinyRTL\src\sources\fpc-sys\%%A.pas
     if errorlevel 1 (goto buildError)
 )
+
+cd %prjdir%\test
+%fpcx64% -dwinexe -XMPASCALMAIN test1.pas
+strip test1.exe
+exit
+
+
+
 
 echo compile: %srcrtl%\rtl_utils.pas
 %fpcx64% -dwindll -CX -fPIC -st -Xe -XD %srcrtl%\rtl_utils.pas
@@ -354,21 +360,22 @@ echo =[ Linking fpc_rtl.dll ... ]=   30 %%  done
 ::%prjdir%\units\app-rtl\libimpapp_rtl.a  
 ::if errorlevel 1 (goto buildError)
 
-gcc -fPIC -nostdlib -nostartfiles --shared -Wl,--entry=_DLLMainCRTStartup -o ^
-%prjdir%\test\fpc_rtl.dll            ^
-%prjdir%\units\fpc-rtl\system.o      ^
-%prjdir%\units\fpc-rtl\fpc_rtl.o     ^
-%prjdir%\units\fpc-qt\Qt_String.o    ^
-%prjdir%\units\fpc-qt\symbols.o      ^
--L %prjdir%\units\fpc-rtl ^
--l impsystem
-if errorlevel 1 (goto buildError)
+::gcc -fPIC -nostdlib -nostartfiles --shared -Wl,--entry=_DLLMainCRTStartup -o ^
+::%prjdir%\test\fpc_rtl.dll            ^
+::%prjdir%\units\fpc-rtl\system.o      ^
+::%prjdir%\units\fpc-rtl\fpc_rtl.o     ^
+::%prjdir%\units\fpc-sys\sysinit.o     ^
+::%prjdir%\units\fpc-qt\Qt_String.o    ^
+::%prjdir%\units\fpc-qt\symbols.o      ^
+::-L %prjdir%\units\fpc-rtl ^
+::-l impsystem
+::if errorlevel 1 (goto buildError)
 
 :: -----------------------------------------------------------------
 :: discards all debug symbols - todo !
 :: -----------------------------------------------------------------
-strip %prjdir%\test\fpc_rtl.dll
-if errorlevel 1 (goto buildError)
+::strip %prjdir%\test\fpc_rtl.dll
+::if errorlevel 1 (goto buildError)
 
 ::strip %prjdir%\test\app_rtl.dll
 ::if errorlevel 1 (goto buildError)
@@ -377,6 +384,12 @@ if errorlevel 1 (goto buildError)
 :: create the .exe file ...
 :: -----------------------------------------------------------------
 echo =[ build exe file...       ]=   40 %%  done
+::
+%fpcx64% -dwinexe -Cn -FE%prjdir%\test %prjdir%\test\test1.pas
+
+
+exit
+
 ::
 %fpcx64% -dwinexe -Us %srcsys%\system.pas
 if errorlevel 1 (goto buildError)
@@ -416,19 +429,16 @@ for %%A in (fpcinit sysinit) do (
 %fpcx64% -dwinexe %srcrtl%\rtl_utils.pas
 if errorlevel 1 (goto buildError)
 
-echo =[ sed .asm files...       ]=   50 %%  done
-echo.
-
 :: -----------------------------------------------------------------
 :: remove not wanted rtti information's ...
 :: -----------------------------------------------------------------
-del %prjdir%\test\system.s      /F /S /Q >nul: 2>nul:
-del %prjdir%\test\system.ppu    /F /S /Q >nul: 2>nul:
-del %prjdir%\test\sysinit.ppu   /F /S /Q >nul: 2>nul:
-del %prjdir%\test\fpintres.ppu  /F /S /Q >nul: 2>nul:
-del %prjdir%\test\test1.exe     /F /S /Q >nul: 2>nul:
+::del %prjdir%\test\system.s      /F /S /Q >nul: 2>nul:
+::del %prjdir%\test\system.ppu    /F /S /Q >nul: 2>nul:
+::del %prjdir%\test\sysinit.ppu   /F /S /Q >nul: 2>nul:
+::del %prjdir%\test\fpintres.ppu  /F /S /Q >nul: 2>nul:
+::del %prjdir%\test\test1.exe     /F /S /Q >nul: 2>nul:
 
-type nul > %prjdir%\test\system.s
+::type nul > %prjdir%\test\system.s
 
 for %%A in (system rtl_utils fpc_rtl) do (
     echo assemble: %sysrtl%\%%A.s
@@ -436,6 +446,8 @@ for %%A in (system rtl_utils fpc_rtl) do (
     if errorlevel 1 (goto buildError)
 )
 ::sed -i '/\tGLOBAL\s*PASCALMAIN/,/\t\tret/d'  %prjdir%\test\test1.s
+
+%asmx64% -o %prjdir%\units\fpc-sys\sysinit.o %prjdir%\units\fpc-sys\sysinit.s
 
 echo =[ Assembling exe files... ]=   60 %%  done
 for %%A in (system test1) do (
@@ -451,14 +463,20 @@ for %%A in (system test1) do (
 
 echo =[ linking test1.exe...    ]=   70 %%  done
 
-%gcc64% -nostartfiles -nostdlib -Wl,--entry=PASCALMAIN -o ^
-%prjdir%\test\test1.exe  ^
-%prjdir%\test\test1.o    ^
-%prjdir%\units\fpc-rtl\system.o ^
-%prjdir%\units\fpc-rtl\vmt.o ^
--L %prjdir%\test ^
--l impsystem
-if errorlevel 1 (goto buildError)
+::%asmx64% -o %prjdir%\units\fpc-sys\sysinit.o %prjdir%\units\fpc-sys\sysinit.s
+
+
+::%gcc64% -nostartfiles -nostdlib -Wl,--entry=PASCALMAIN -o ^
+::%prjdir%\test\test1.exe  ^
+::%prjdir%\test\test1.o    ^
+::%prjdir%\units\fpc-sys\sysinit.o ^
+::%prjdir%\units\fpc-rtl\system.o  ^
+::%prjdir%\units\fpc-rtl\vmt.o     ^
+::-L %prjdir%\test ^
+::-l impsystem ^
+::-l impsysinit ^
+::-l imptest1
+::if errorlevel 1 (goto buildError)
 
 :: -----------------------------------------------------------------
 :: for debugger luurkers ...
