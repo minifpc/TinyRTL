@@ -21,7 +21,7 @@ type LPCVOID   = ^LPVOID;
 type HANDLE    = PVOID;
 type FARPROC   = PVOID;
 
-type THANDLE   =  Uint64;       // onject handle
+type THANDLE   =  DWORD;       // onject handle: Uint64
 type PHandle   = ^THANDLE;
 
 type LCID      = LongDWord;     // a local identifier

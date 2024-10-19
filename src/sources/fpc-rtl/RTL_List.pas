@@ -24,14 +24,11 @@ type
 {$M-}
 constructor TList.Create;
 begin
-    MessageBoxA(0, PChar('TList CTOR'), PChar('info'), 0);
     inherited Create;
-    MessageBoxA(0, PChar('After TList CTOR'), PChar('info'), 0);
 end;
 
 destructor TList.Destroy;
 begin
-    MessageBoxA(0, PChar('TList Destroy'), PChar('info'), 0);
-    //inherited Destroy;
+    inherited Destroy;
 end;
 {$endif}

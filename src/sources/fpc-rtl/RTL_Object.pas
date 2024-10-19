@@ -14,17 +14,16 @@
 // ---------------------------------------------------------------------------
 type
     TObject = class
-    protected
-        class procedure InitInstance(Instance: Pointer); virtual;
-        class function NewInstance : TObject; virtual;
     public
         constructor Create;
         destructor Destroy; virtual;
         
         function ClassName: String; virtual;
         class function ClassParent: TObject; virtual;
-        
-        procedure FreeInstance; virtual;
+
+        class procedure InitInstance(Instance: Pointer); virtual;
+        class function NewInstance : TObject; virtual;
+        class procedure FreeInstance; virtual;
         
         function SafeCallException( exceptobject: tobject; exceptaddr: codepointer ): HResult; virtual;
         procedure DefaultHandler(var message); virtual;
@@ -46,22 +45,20 @@ type
 // ---------------------------------------------------------------------------
 constructor TObject.Create;
 begin
-    MessageBoxA(0, PChar('tobject create'), PChar('info'), 0);
     TObject.InitInstance(self);
-    MessageBoxA(0, PChar('tobject successfully created'), PChar('info'), 0);
 end;
 
 destructor TObject.Destroy;
 begin
-    MessageBoxA(0, PChar('tobject destroy'), PChar('info'), 0);
+    FreeInstance;
 end;
 procedure TObject.AfterConstruction;
 begin
-    MessageBoxA(0, PChar('Tobject AfterConstruction'), PChar('info'), 0);
+//
 end;
 procedure TObject.BeforeDestruction;
 begin
-    MessageBoxA(0, PChar('Tobject BeforeDestruction'), PChar('info'), 0);
+//
 end;
 
 function TObject.ClassName: String;
@@ -76,40 +73,51 @@ end;
 
 procedure TObject.Free;
 begin
-    MessageBoxA(0, PChar('tobject FREE'), PChar('info'), 0);
     if self <> nil then
-    self.Destroy;
+    FreeInstance;
 end;
 
 class function TObject.NewInstance : TObject;
 begin
-    MessageBoxA(0, PChar('tobject NEWINSTANCE'), PChar('info'), 0);
+    result := TObject(
+        VirtualAlloc(nil, SizeOf(TObject),
+        MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE));
+
+    if result = nil then
+    begin
+        MessageBoxA(0,
+            PChar('internal Error.'),
+            PChar('Error'),
+            MB_OK or MB_ICONERROR);
+        ExitProcess(1);
+    end;
 end;
 
 class procedure TObject.InitInstance(Instance: Pointer);
 begin
-    MessageBoxA(0, PChar('INIT INSTANCE'), PChar('info'), 0);
     PPointer(Instance)^ := Pointer(self);
 end;
 
-procedure TObject.FreeInstance;
+class procedure TObject.FreeInstance;
 begin
-    MessageBoxA(0, PChar('tobject FREEINSTANCE'), PChar('info'), 0);
+    if self <> nil then
+    begin
+        VirtualFree(Pointer(self), 0, MEM_RELEASE);
+    end;
 end;
 
 function SafeCallException( obj: codepointer; exceptaddr: codepointer ): HResult;
 begin
-    MessageBoxA(0, PChar('tobject SAFECALLEXCEPTION'), PChar('info'), 0);
+//
 end;
 
 function TObject.SafeCallException(exceptobject : tobject; exceptaddr : codepointer) : HResult;
 begin
-    MessageBoxA(0, PChar('SAFECALLEXCEPTION'), PChar('info'), 0);
   result := 1;
 end;
 
 procedure TObject.DefaultHandler(var message);
 begin
-    MessageBoxA(0, PChar('tobject DEFAULT HANDLER'), PChar('info'), 0);
+    //MessageBoxA(0, PChar('tobject DEFAULT HANDLER'), PChar('info'), 0);
 end;
 {$endif}

@@ -45,6 +45,118 @@ type
         lPrivate : DWORD;
     end;
 {$endif}
+
+// ---------------------------------------------------------------------------
+// win32api - Console:
+// ---------------------------------------------------------------------------
+const STD_INPUT_HANDLE  = DWORD(-10);
+const STD_OUTPUT_HANDLE = DWORD(-11);
+const STD_ERROR_HANDLE  = DWORD(-12);
+
+type
+    STD_HANDLES  = (
+        shInput  = STD_INPUT_HANDLE ,
+        shOutput = STD_OUTPUT_HANDLE,
+        shError  = STD_ERROR_HANDLE
+    );
+
+const ATTACH_PARENT_PROCESS = DWORD(-1);
+
+{$if declared(COORD) = false}
+type
+    PCORD = ^COORD;
+    COORD = record
+        X: Smallint;
+        Y: Smallint;
+    end;
+{$endif}
+{$if declared(SMALL_RECT) = false}
+type
+    PSMALL_RECT = ^SMALL_RECT;
+    SMALL_RECT = record
+        Left: Smallint;
+        Top: Smallint;
+        Right: Smallint;
+        Bottom: Smallint;
+    end;
+{$endif}
+{$if declared(CONSOLE_SCREEN_BUFFER_INFO) = false}
+type
+    PCONSOLE_SCREEN_BUFFER_INFO = ^CONSOLE_SCREEN_BUFFER_INFO;
+    CONSOLE_SCREEN_BUFFER_INFO = record
+        dwSize: COORD;
+        dwCursorPosition: COORD;
+        wAttributes: WORD;
+        srWindow: SMALL_RECT;
+        dwMaximumWindowSize: COORD;
+    end;
+{$endif}
+// ---------------------------------------------------------------------------
+function AllocConsole
+:   DWORD; stdcall;
+    external 'kernel32.dll' name 'AllocConsole';
+
+function AttachConsole(
+    dwProcessId: DWORD
+):  DWORD; stdcall;
+    external 'kernel32.dll' name 'AttachConsole';
+    
+function GetConsoleScreenBufferInfo(
+    hConsoleOutput: DWORD;
+    var lpConsoleScreenBufferInfo: CONSOLE_SCREEN_BUFFER_INFO
+):  DWORD; stdcall;
+    external 'kernel32.dll' name 'GetConsoleScreenBufferInfo';
+
+function GetStdHandle(
+    nStdHandle: DWORD
+):  DWORD; stdcall;
+    external 'kernel32.dll' name 'GetStdHandle';
+
+function SetStdHandle(
+    nStdHandle: DWORD;
+    hHandle: DWORD
+):  Boolean; stdcall;
+    external 'kernel32.dll' name 'SetStdHandle';
+
+function FillConsoleOutputCharacter(
+    hConsoleOutput: DWORD;
+    cCharacter: Char;
+    nLength: DWORD;
+    dwWriteCoord: COORD;
+    var lpNumberOfCharsWritten: DWORD
+):  DWORD; stdcall;
+    external 'kernel32.dll' name 'FillConsoleOutputCharacterA';
+
+function FillConsoleOutputAttribute(
+    hConsoleOutput: DWORD;
+    wAttribute: WORD;
+    nLength: DWORD;
+    dwWriteCoord: COORD;
+    var lpNumberOfAttrsWritten: DWORD
+):  DWORD; stdcall;
+    external 'kernel32.dll' name 'FillConsoleOutputAttribute';
+
+function SetConsoleCursorPosition(
+    hConsoleOutput: DWORD;
+    dwCursorPosition: COORD
+):  DWORD; stdcall;
+    external 'kernel32.dll' name 'SetConsoleCursorPosition';
+
+function WriteConsoleA(
+    hConsoleOutput: DWORD;
+    lpBuffer: Pointer;
+    nNumberOfCharsToWrite: DWORD;
+    var lpNumberOfCharsWritten: DWORD;
+    lpReserved: Pointer
+):  DWORD; stdcall;
+    external 'kernel32.dll' name 'WriteConsoleA';
+
+function printf(
+    format: PChar
+):  Integer; cdecl; varargs;
+    external 'msvcrt.dll'
+    name 'printf';
+
 // ---------------------------------------------------------------------------
 // security structures ...
 // ---------------------------------------------------------------------------

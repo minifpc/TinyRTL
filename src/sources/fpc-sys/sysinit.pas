@@ -10,141 +10,41 @@ unit sysinit;
 
 interface
 
-const STD_INPUT_HANDLE  = DWORD(-10);
-const STD_OUTPUT_HANDLE = DWORD(-11);
-const STD_ERROR_HANDLE  = DWORD(-12);
-
 type
-    STD_HANDLES  = (
-        shInput  = STD_INPUT_HANDLE ,
-        shOutput = STD_OUTPUT_HANDLE,
-        shError  = STD_ERROR_HANDLE
-    );
-
-const ATTACH_PARENT_PROCESS = -1;
-
-type
-    COORD = record
-        X: Smallint;
-        Y: Smallint;
-    end;
-type
-    SMALL_RECT = record
-        Left: Smallint;
-        Top: Smallint;
-        Right: Smallint;
-        Bottom: Smallint;
-    end;
-type
-    CONSOLE_SCREEN_BUFFER_INFO = record
-        dwSize: COORD;
-        dwCursorPosition: COORD;
-        wAttributes: WORD;
-        srWindow: SMALL_RECT;
-        dwMaximumWindowSize: COORD;
-    end;
-
-type
-    DOS_Class = class
+    DOS_Class = class(TObject)
     private
-        FConsoleHandle: THandle;
+        FConsoleHandle: DWORD;
         FNewLine: String;
-        FStdIn, FStdOut, FStdErr: THandle;
-    protected
-        procedure set_StdIn (AValue: THandle);
-        procedure set_StdOut(AValue: THandle);
-        procedure set_StdErr(AValue: THandle);
-        
-        procedure SetConsoleHandle(AValue: THandle);
+        FStdIn, FStdOut, FStdErr: DWORD;
     public
         constructor Create;
-        destructor Destroy;
+        destructor Destroy; override;
         
         procedure ClrScr;
         procedure ClearScreen;
         procedure Cls;
         
         function MessageBox(AText, ATitle: String): DWORD;
-        procedure Write(const msg: String);
+        
+        procedure Write  (const msg: String);
         procedure WriteLn(const msg: String);
-    published
-        property StdIn : THandle read FStdIn  write set_StdIn ;
-        property StdOut: THandle read FStdOut write set_StdOut;
-        property StdErr: THandle read FStdErr write set_StdErr;
-        //
+
+        function  get_StdIn : DWORD;
+        function  get_StdOut: DWORD;
+        function  get_StdErr: DWORD;
+        
+        procedure set_StdIn (AValueDST, AValueSRC: DWORD);
+        procedure set_StdOut(AValueDST, AValueSRC: DWORD);
+        procedure set_StdErr(AValueDST, AValueSRC: DWORD);
+
+        property StdIn : DWORD read get_StdIn ;
+        property StdOut: DWORD read get_StdOut;
+        property StdErr: DWORD read get_StdErr;
+        
         property NewLine: String read FNewLine;
     end;
 var
     DOS: DOS_Class;
-
-function MessageBoxA(
-    hWnd: HWND;
-    lpText, lpCaption: PChar;
-    uType: UINT
-):  Integer; stdcall;
-    external 'user32.dll'
-    name 'MessageBoxA';
-
-function AllocConsole
-:   DWORD; stdcall;
-    external 'kernel32.dll'
-    name 'AllocConsole';
-
-function AttachConsole(
-    dwProcessId: DWORD
-):  DWORD; stdcall;
-    external 'kernel32.dll'
-    name 'AttachConsole';
-
-function GetConsoleScreenBufferInfo(
-    hConsoleOutput: THandle;
-    var lpConsoleScreenBufferInfo: CONSOLE_SCREEN_BUFFER_INFO
-):  DWORD; stdcall;
-    external 'kernel32.dll'
-    name 'GetConsoleScreenBufferInfo';
-
-function GetStdHandle(
-    nStdHandle: DWORD
-):  THandle; stdcall;
-    external 'kernel32.dll'
-    name 'GetStdHandle';
-
-function FillConsoleOutputCharacter(
-    hConsoleOutput: THandle;
-    cCharacter: Char;
-    nLength: DWORD;
-    dwWriteCoord: COORD;
-    var lpNumberOfCharsWritten: DWORD
-):  DWORD; stdcall;
-    external 'kernel32.dll'
-    name 'FillConsoleOutputCharacterA';
-
-function FillConsoleOutputAttribute(
-    hConsoleOutput: THandle;
-    wAttribute: WORD;
-    nLength: DWORD;
-    dwWriteCoord: COORD;
-    var lpNumberOfAttrsWritten: DWORD
-):  DWORD; stdcall;
-    external 'kernel32.dll'
-    name 'FillConsoleOutputAttribute';
-
-function SetConsoleCursorPosition(
-    hConsoleOutput: THandle;
-    dwCursorPosition: COORD
-):  DWORD; stdcall;
-    external 'kernel32.dll'
-    name 'SetConsoleCursorPosition';
-
-function WriteConsoleA(
-    hConsoleOutput: THandle;
-    lpBuffer: Pointer;
-    nNumberOfCharsToWrite: DWORD;
-    var lpNumberOfCharsWritten: DWORD;
-    lpReserved: Pointer
-):  BOOL; stdcall;
-    external 'kernel32.dll'
-    name 'WriteConsoleA';
 
 type
     Windows_Class = class
@@ -207,157 +107,52 @@ end;
 
 procedure InitConsole;
 begin
-    MessageBoxA(0,'before create','info',0);
     DOS := DOS_Class.Create;
-    MessageBoxA(0,'after DOOOOSSSS create','info',0);
 end;
 
 constructor DOS_Class.Create;
 begin
-    MessageBoxA(0,'before DOS class create','info',0);
+    inherited Create;
+    
     FNewLine := #13#10;
-    FConsoleHandle := GetStdHandle(STD_OUTPUT_HANDLE);
-    
-    if (FConsoleHandle = 0) or (FConsoleHandle = INVALID_HANDLE_VALUE) then
-    begin
-        if AllocConsole = 0 then
-        begin
-            if AttachConsole(ATTACH_PARENT_PROCESS) = 0 then
-            begin
-                MessageBoxA(0,
-                PChar('Error: Console handle invalid.'),
-                PChar('Error'), 0);
-                ExitProcess(1);
-            end;
-        end;
-    end;
-    
-    FConsoleHandle := GetStdHandle(STD_OUTPUT_HANDLE);
-    
-    if (FConsoleHandle = 0) or (FConsoleHandle = INVALID_HANDLE_VALUE) then
-    begin
-        MessageBoxA(0,
-        PChar('Error: could not create a console.'),
-        PChar('Error'), 0);
-        ExitProcess(1);
-    end;
-    
-    MessageBoxA(0,'AAAAAAAAAAAAAAAAAAAAAAAAAAAA','cxxxxx',0);
-    self.SetConsoleHandle(GetStdHandle(STD_OUTPUT_HANDLE));
-
-    //self.Write('hallo ich');
-    MessageBoxA(0, PChar('after class create'), PChar('info'), 0);
 end;
 
 destructor DOS_Class.Destroy;
 begin
-    MessageBoxA(0, PChar('before destroy'), PChar('info'), 0);
+    inherited Destroy;
 end;
 
 procedure DOS_Class.Cls;
-var
-  coordScreen: COORD;
-  cCharsWritten: DWORD;
-  csbi: CONSOLE_SCREEN_BUFFER_INFO;
-  dwConSize: DWORD;
 begin
-  coordScreen.X := 0;
-  coordScreen.Y := 0;
-
-  // Get the number of character cells in the current buffer.
-  if GetConsoleScreenBufferInfo(
-  FConsoleHandle, csbi) = 0 then exit;
-
-  dwConSize := csbi.dwSize.X * csbi.dwSize.Y;
-
-  // Fill the entire screen with blanks.
-  if FillConsoleOutputCharacter(
-  FConsoleHandle, ' ',
-  dwConSize,
-  coordScreen,
-  cCharsWritten) = 0 then exit;
-
-  // Get the current text attribute.
-  if GetConsoleScreenBufferInfo(
-  FConsoleHandle, csbi) = 0 then exit;
-
-  // Set the buffer's attributes accordingly.
-  if FillConsoleOutputAttribute(
-  FConsoleHandle,
-  csbi.wAttributes,
-  dwConSize,
-  coordScreen,
-  cCharsWritten) = 0 then exit;
-
-  // Put the cursor at its home coordinates.
-  SetConsoleCursorPosition(FConsoleHandle, coordScreen);
+//
 end;
 procedure DOS_CLass.ClrScr;      begin Cls; end;
 procedure DOS_Class.ClearScreen; begin Cls; end;
 
 function DOS_Class.MessageBox(AText, ATitle: String): DWORD;
 begin
-    self.MessageBox(AText, ATitle);
+    printf('Message: %s', PChar(AText ));
+    printf('Title  : %s', PChar(ATitle));
     result := 0;
 end;
 
 procedure DOS_Class.Write(const msg: String);
-var
-    written: DWORD;
 begin
-    if (FConsoleHandle = 0)
-    or (FConsoleHandle = INVALID_HANDLE_VALUE) then
-    begin
-        MessageBoxA(0,
-        PChar('Error: no valid console handle.'),
-        PChar('Error'), 0);
-        ExitProcess(1)
-    end;
-    if WriteConsoleA(
-    FConsoleHandle, PChar(msg), 5, written, nil) = 0 then
-    begin
-        MessageBoxA(0,
-        PChar('Error: error during console write.'),
-        PChar('Error'), 0);
-        ExitProcess(1);
-    end;
+    printf('%s', PChar(msg));
 end;
 
 procedure DOS_Class.WriteLn(const msg: String);
-var
-    written: DWORD;
-    //s: String;
 begin
-    //s := msg + NewLine;
-    //
-    WriteConsoleA(
-    FConsoleHandle,
-    PChar(msg),         // todo: strCopy !
-    StringLength(msg),  // todo: Length implementation !
-    written,
-    nil);
+    printf('%s'#13#10, PChar(msg));
 end;
 
-procedure DOS_Class.set_StdIn (AValue: THandle); begin self.SetConsoleHandle(AValue); end;
-procedure DOS_Class.set_StdOut(AValue: THandle); begin self.SetConsoleHandle(AValue); end;
-procedure DOS_CLass.set_StdErr(AValue: THandle); begin self.SetConsoleHandle(AValue); end;
+function  DOS_Class.get_StdIn : DWORD; begin result := GetStdHandle(STD_INPUT_HANDLE ); end;
+function  DOS_Class.get_StdOut: DWORD; begin result := GetStdHandle(STD_OUTPUT_HANDLE); end;
+function  DOS_Class.get_StdErr: DWORD; begin result := GetStdHandle(STD_ERROR_HANDLE ); end;
 
-procedure DOS_Class.SetConsoleHandle(AValue: THandle);
-begin
-    case AValue of
-        STD_INPUT_HANDLE : begin FStdIn  := AValue; end;
-        STD_OUTPUT_HANDLE: begin FStdOut := AValue; end;
-        STD_ERROR_HANDLE : begin FStdErr := AValue; end;
-        else begin
-            self.MessageBox(
-            'console handle can not be set',
-            'Error');
-            ExitProcess(0);
-        end;
-    end;
-    FConsoleHandle := AValue;
-end;
-
+procedure DOS_Class.set_StdIn (AValueDST, AValueSRC: DWORD); begin SetStdHandle(AValueSRC, GetStdHandle(AValueDST)); end;
+procedure DOS_Class.set_StdOut(AValueDST, AValueSRC: DWORD); begin SetStdHandle(AValueSRC, GetStdHandle(AValueDST)); end;
+procedure DOS_CLass.set_StdErr(AValueDST, AValueSRC: DWORD); begin SetStdHandle(AValueSRC, GetStdHandle(AValueDST)); end;
 
 { Windows_Class }
 
