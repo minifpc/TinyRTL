@@ -1,12 +1,12 @@
-ame: msys2 Windows 10
+name: msys2 Windows 10
 
 on:
   push:
     branches:
-      - main
+      - paule32
   pull_request:
     branches:
-      - main
+      - paule32
 
 jobs:
     build:
