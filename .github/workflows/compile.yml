@@ -50,7 +50,6 @@ jobs:
           tar -xf    $(pwd)/fpc/fpc.tar -C $(pwd)/fpc
           dir $(pwd)
           D:\\a\\TinyRTL\\TinyRTL\\build.bat
-          cp $(pwd)/src/test/fpc_rtl.dll $(pwd)/output/fpc_rtl.dll
           cp $(pwd)/src/test/test1.exe   $(pwd)/output/test1.exe
       # ----------------------------------------------------------
       - name: Upload build artifact
