@@ -3,10 +3,10 @@ name: msys2 Windows 10
 on:
   push:
     branches:
-      - paule32
+      - paule32-1
   pull_request:
     branches:
-      - paule32
+      - paule32-1
 
 jobs:
     build:
