@@ -36,7 +36,8 @@ type SIZE_T = LongDWORD;
 
 type PByte  = ^Byte;
 
-type CodePointer  = Pointer;
+type CodePointer  =  Pointer;
+type PPointer     = ^Pointer;
 
 type PChar        = ^Char;
 type PShortString = ^ShortString;
@@ -261,4 +262,14 @@ const
 {$endif}    //  __FPC_TYPES_HDR__
 {$endif}    //  windows_header
 
+{$ifdef windows_source}
+{$mode delphi}
 
+function Tvmt.GetvParent: Pvmt;
+begin
+    if vParentRef <> nil then
+    result := vParentRef^ else
+    result := nil;
+end;
+
+{$endif}

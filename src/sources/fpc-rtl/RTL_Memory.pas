@@ -8,8 +8,9 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$mode delphi}
 {$M-}
-    TAnsiStringMemoryManager = class
+    TAnsiStringMemoryManager = class(TObject)
     private
         FMemoryPool: TList;
     public
@@ -19,18 +20,22 @@
 {$endif}
 
 {$ifdef windows_source}
+{$mode delphi}
 {$M-}
 constructor TAnsiStringMemoryManager.Create;
 begin
-    MessageBox(0,'AnsiManager create','info',0);
+    MessageBoxA(0, PChar('AnsiManager create'), PChar('info'), 0);
     inherited Create;
+    MessageBoxA(0, PChar('Ansi CTOR'), PChar('info'), 0);
     FMemoryPool := TList.Create;
+    MessageBoxA(0, PChar('ANSI CTOR...'), PChar('info'), 0);
 end;
 
 destructor TAnsiStringMemoryManager.Destroy;
 begin
-    MessageBox(0,'AnsiManager destroy','info',0);
+    MessageBoxA(0, PChar('AnsiManager destroy'), PChar('info'), 0);
     FMemoryPool.Free;
+    MessageBoxA(0, PChar('Manager FREE'), PChar('info'), 0);
     inherited Destroy;
 end;
 

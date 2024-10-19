@@ -9,6 +9,13 @@
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
 {$M-}
+function MessageBoxA(
+    hWnd: HWND;
+    lpText, lpCaption: PChar;
+    uType: UINT
+):  Integer; stdcall;
+    external 'user32.dll';
+
 procedure fpc_ansistr_decr_ref (Var S : Pointer); compilerproc;
 procedure fpc_AnsiStr_Incr_Ref (    S : Pointer); compilerproc; inline;
 
@@ -57,7 +64,7 @@ function sizeQWord: Byte; inline; begin result := 16; end;
 
 procedure fpc_doneexception; [public, alias: 'FPC_DONEEXCEPTION'] compilerproc;
 begin
-    MessageBox(0,'fpc_doneexceptions','system.pas',0);
+    MessageBoxA(0, PChar('fpc_doneexceptions'), PChar('system.pas'), 0);
 end;
 
 procedure fpc_emptymethod; [public, alias : 'FPC_EMPTYMETHOD'];
@@ -97,11 +104,14 @@ var
     MyHeap: THandle;
     DestS: PChar;
 begin
-MessageBox(0,'s11111 111','s2',0);
+MessageBoxA(0, PChar('s11111 111'), PChar('s2'), 0);
     MyHeap := THandle( HeapCreate( HEAP_NO_SERIALIZE, $ffff, 0 ) );
     if MyHeap = 0 then
     begin
-        MessageBox( 0,'Error: creating private heap.', 'Error', 0 );
+        MessageBoxA(0,
+        PChar('Error: creating private heap.'),
+        PChar('Error'),
+        0);
         exit;
     end;
     DestS  := PChar( LocalAlloc( LHND, 2 ) );
@@ -228,7 +238,7 @@ end;
 
 function TVmt.GetvParent: PVMT;
 begin
-    MessageBox(0,'getparent','system',0);
+    MessageBoxA(0, PChar('getparent'), PChar('system'), 0);
 	result := nil;
 end;
 
@@ -242,7 +252,7 @@ begin end;
 
 procedure fpc_do_exit; [public,alias: 'FPC_DO_EXIT']; compilerproc;
 begin
-    MessageBox(0,'fpc_do_exit','system.pas',0);
+    MessageBoxA(0, PChar('fpc_do_exit'), PChar('system.pas'), 0);
     ExitProcess(0);
 end;
 
@@ -263,7 +273,7 @@ begin end;
 
 procedure fpc_ReRaise; [public, alias:'fpc_reraise']; compilerproc;
 begin
-    MessageBox(0,'fpc_ReRaise','inform',0)
+    MessageBoxA(0, PChar('fpc_ReRaise'), PChar('inform'),0)
 end;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
@@ -271,7 +281,7 @@ begin end;
 
 procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
 begin
-    MessageBox(0,'uzy','2121212',0);
+    MessageBoxA(0, PChar('uzy'), PChar('2121212'), 0);
 end;
 procedure fpc_libinitializeunits; [public, alias:'FPC_LIBINITIALIZEUNITS']; compilerproc; begin end;
 

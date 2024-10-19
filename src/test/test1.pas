@@ -13,6 +13,12 @@ program test1;
 uses sysinit, Qt_String;
 
 procedure ExitProcess(AValue: Integer); external 'kernel32.dll';
+function MessageBoxA(
+    hWnd: HWND;
+    lpText, lpCaption: PChar;
+    uType: UINT
+):  Integer; stdcall;
+    external 'user32.dll';
 
 var
     MemoryManager: TAnsiStringMemoryManager;
@@ -24,9 +30,14 @@ var
 begin
     MemoryManager := TAnsiStringMemoryManager.Create;
     try
+        MessageBoxA(0, PChar('start...'), PChar('info'), 0);
         InitConsole;
+        DOS.Write('Hello World !');
+        MessageBoxA(0, PChar('next...'), PChar('info'), 0);
     finally
+        MessageBoxA(0, PChar('next end...'), PChar('info'), 0);
         MemoryManager.Free;
+        MessageBoxA(0, PChar('ende...'), PChar('info'), 0);
     end;
 
     //InitConsole;

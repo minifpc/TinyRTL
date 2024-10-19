@@ -4,16 +4,18 @@ CPU x64
 
 EXTERN	VMT_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER
 EXTERN	SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_CREATE$$TANSISTRINGMEMORYMANAGER
-EXTERN	SYSINIT_$$_INITCONSOLE
-EXTERN	SYSTEM$_$TOBJECT_$__$$_FREE
 EXTERN	_$dll$user32$MessageBoxA
+EXTERN	SYSINIT_$$_INITCONSOLE
+EXTERN	U_$SYSINIT_$$_DOS
+EXTERN	SYSINIT$_$DOS_CLASS_$__$$_WRITE$ANSISTRING
+EXTERN	SYSTEM$_$TOBJECT_$__$$_FREE
 EXTERN	_$dll$kernel32$ExitProcess
 EXTERN	fpc_initializeunits
 EXTERN	FPC_DO_EXIT
 ; Begin asmlist al_procedures
 
 SECTION .text
-P$TEST1$_$ENTRY_$$_fin$00000002:
+P$TEST1$_$ENTRY_$$_fin$00000003:
 ..@c1:
 		push	rbp
 ..@c3:
@@ -21,8 +23,19 @@ P$TEST1$_$ENTRY_$$_fin$00000002:
 		mov	rbp,rcx
 ..@c5:
 		lea	rsp,[rsp-32]
+		xor	eax,eax
+		lea	r8,[_$TEST1$_Ld1]
+		lea	rdx,[_$TEST1$_Ld5]
+		xor	ecx,ecx
+		mov	r9d,eax
+		call	_$dll$user32$MessageBoxA
 		mov	rcx,qword [U_$P$TEST1_$$_MEMORYMANAGER]
 		call	SYSTEM$_$TOBJECT_$__$$_FREE
+		xor	r9d,r9d
+		lea	r8,[_$TEST1$_Ld1]
+		lea	rdx,[_$TEST1$_Ld6]
+		xor	ecx,ecx
+		call	_$dll$user32$MessageBoxA
 		nop
 		lea	rsp,[rsp+32]
 		pop	rbp
@@ -49,15 +62,28 @@ _mainCRTStartup:
 ..@j11:
 		nop
 ..@j7:
+		xor	r9d,r9d
+		lea	r8,[_$TEST1$_Ld1]
+		lea	rdx,[_$TEST1$_Ld2]
+		xor	ecx,ecx
+		call	_$dll$user32$MessageBoxA
 		call	SYSINIT_$$_INITCONSOLE
+		mov	rcx,qword [U_$SYSINIT_$$_DOS]
+		lea	rdx,[..@d3]
+		call	SYSINIT$_$DOS_CLASS_$__$$_WRITE$ANSISTRING
+		xor	r9d,r9d
+		lea	r8,[_$TEST1$_Ld1]
+		lea	rdx,[_$TEST1$_Ld4]
+		xor	ecx,ecx
+		call	_$dll$user32$MessageBoxA
 ..@j9:
 		nop
 ..@j8:
 		mov	rcx,rbp
-		call	P$TEST1$_$ENTRY_$$_fin$00000002
+		call	P$TEST1$_$ENTRY_$$_fin$00000003
 		xor	r9d,r9d
-		lea	r8,[_$TEST1$_Ld1]
-		lea	rdx,[_$TEST1$_Ld2]
+		lea	r8,[_$TEST1$_Ld7]
+		lea	rdx,[_$TEST1$_Ld8]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		xor	ecx,ecx
@@ -134,10 +160,38 @@ __fpc_valgrind	DB	0
 
 SECTION .rodata
 _$TEST1$_Ld1:
-		DB	"Information",0
+		DB	"info",0
 
 SECTION .rodata
 _$TEST1$_Ld2:
+		DB	"start...",0
+
+SECTION .rodata
+..@d3$strlab:
+	DW	0,1
+	DD	0
+	DQ	-1,13
+..@d3:
+		DB	"Hello World !",0
+
+SECTION .rodata
+_$TEST1$_Ld4:
+		DB	"next...",0
+
+SECTION .rodata
+_$TEST1$_Ld5:
+		DB	"next end...",0
+
+SECTION .rodata
+_$TEST1$_Ld6:
+		DB	"ende...",0
+
+SECTION .rodata
+_$TEST1$_Ld7:
+		DB	"Information",0
+
+SECTION .rodata
+_$TEST1$_Ld8:
 		DB	"qs",0
 ; End asmlist al_typedconsts
 ; Begin asmlist al_dwarf_frame

@@ -218,7 +218,7 @@ const MB_ICONASTERISK         = $00000040;
 const MB_ICONQUESTION         = $00000020;
 //
 const MB_ICONSTOP             = $00000010;
-const NB_ICONERROR            = $00000010;
+const MB_ICONERROR            = $00000010;
 const MB_ICONHAND             = $00000010;
 
 const MB_DEFBUTTON1           = $00000000;

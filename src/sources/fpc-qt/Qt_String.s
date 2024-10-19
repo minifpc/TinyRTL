@@ -5,9 +5,16 @@ CPU x64
 EXTERN	fpc_reraise
 EXTERN	FPC_DONEEXCEPTION
 EXTERN	VMT_$SYSTEM_$$_QOBJECT$indirect
+EXTERN	SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
+EXTERN	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
 EXTERN	SYSTEM$_$TOBJECT_$__$$_DESTROY
-EXTERN	FPC_EMPTYMETHOD
+EXTERN	SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING
+EXTERN	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT
+EXTERN	SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
 EXTERN	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
+EXTERN	SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal
+EXTERN	SYSTEM$_$TOBJECT_$__$$_AFTERCONSTRUCTION
+EXTERN	SYSTEM$_$TOBJECT_$__$$_BEFOREDESTRUCTION
 EXTERN	SYSTEM$_$QOBJECT_$__$$_DESTROY
 EXTERN	RTTI_$SYSTEM_$$_QOBJECT$indirect
 ; Begin asmlist al_pure_assembler
@@ -57,7 +64,7 @@ CPU x64
 		jmp	..@j16
 ..@j17:
 		mov	rax,qword [rcx]
-		call	[rax+136]
+		call	[rax+160]
 ..@j16:
 		jmp	..@j11
 ..@j10:
@@ -67,7 +74,7 @@ CPU x64
 ..@j18:
 		mov	rdx,qword [rbp-8]
 		mov	rax,qword [rcx]
-		call	[rax+160]
+		call	[rax+184]
 ..@j19:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
@@ -129,7 +136,7 @@ CPU x64
 		jmp	..@j34
 ..@j35:
 		mov	rax,qword [rcx]
-		call	[rax+136]
+		call	[rax+160]
 ..@j34:
 		jmp	..@j29
 ..@j28:
@@ -139,7 +146,7 @@ CPU x64
 ..@j36:
 		mov	rdx,qword [rbp-8]
 		mov	rax,qword [rcx]
-		call	[rax+160]
+		call	[rax+184]
 ..@j37:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
@@ -199,7 +206,7 @@ CPU x64
 		jmp	..@j52
 ..@j53:
 		mov	rax,qword [rcx]
-		call	[rax+136]
+		call	[rax+160]
 ..@j52:
 		jmp	..@j47
 ..@j46:
@@ -209,7 +216,7 @@ CPU x64
 ..@j54:
 		mov	rdx,qword [rbp-8]
 		mov	rax,qword [rcx]
-		call	[rax+160]
+		call	[rax+184]
 ..@j55:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
@@ -239,7 +246,7 @@ QT_STRING$_$QSTRING_$__$$_DESTROY:
 		mov	rax,rcx
 		mov	rdx,qword [rcx]
 		mov	rcx,rax
-		call	[rdx+144]
+		call	[rdx+168]
 ..@j60:
 CPU x64
 
@@ -254,7 +261,7 @@ CPU x64
 		jmp	..@j62
 ..@j63:
 		mov	rax,qword [rcx]
-		call	[rax+112]
+		call	[rax+136]
 ..@j62:
 		nop
 		lea	rsp,[rsp+8]
@@ -328,8 +335,12 @@ SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL VMT_$QT_STRING_$$_QSTRING
 VMT_$QT_STRING_$$_QSTRING	DQ	16,-16,VMT_$SYSTEM_$$_QOBJECT$indirect,..@d1,0,0,0,RTTI_$QT_STRING_$$_QSTRING
-	DQ	0,0,0,0,SYSTEM$_$TOBJECT_$__$$_DESTROY,FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
-	DQ	FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,SYSTEM$_$QOBJECT_$__$$_DESTROY
+	DQ	0,0,0,0,SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER,SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
+	DQ	SYSTEM$_$TOBJECT_$__$$_DESTROY,SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING
+	DQ	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
+	DQ	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
+	DQ	SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal,SYSTEM$_$TOBJECT_$__$$_AFTERCONSTRUCTION
+	DQ	SYSTEM$_$TOBJECT_$__$$_BEFOREDESTRUCTION,SYSTEM$_$QOBJECT_$__$$_DESTROY
 	DQ	QT_STRING$_$QSTRING_$__$$_DESTROY,0
 ; End asmlist al_globals
 ; Begin asmlist al_const
