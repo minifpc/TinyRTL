@@ -78,8 +78,8 @@ SECTION .text
 SECTION .text
 	GLOBAL PASCALMAIN
 PASCALMAIN:
-	GLOBAL PASCALMAIN
-PASCALMAIN:
+	GLOBAL main
+main:
 ..@c11:
 		lea	rsp,[rsp-40]
 ..@c13:

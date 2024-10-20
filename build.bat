@@ -74,7 +74,7 @@ set sysrtl=%punits%\fpc-rtl
 set /a counter=0
 
 cd %prjdir%\test
-%fpcx64% -WC -dwinexe -XMPASCALMAIN test1.pas
+%fpcx64% -WC -dwinexe test1.pas
 strip test1.exe
 goto allok
 
