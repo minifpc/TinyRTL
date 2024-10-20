@@ -23,3 +23,5 @@ src/units/fpc-rtl/RTL_Memory.s
 src/units/fpc-rtl/RTL_Memory_ppas.bat
 /src/units
 src/test/MyLibrary_exports.txt
+src/sources/fpc-sys/sysinit.s
+src/sources/fpc-sys/system.s
