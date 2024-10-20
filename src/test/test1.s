@@ -2,12 +2,11 @@ BITS 64
 default rel
 CPU x64
 
-EXTERN	VMT_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER
-EXTERN	SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_CREATE$$TANSISTRINGMEMORYMANAGER
+EXTERN	SYSTEM_$$_INITMEMORY
 EXTERN	SYSINIT_$$_INITCONSOLE
 EXTERN	U_$SYSINIT_$$_DOS
-EXTERN	SYSINIT$_$DOS_CLASS_$__$$_WRITE$ANSISTRING
-EXTERN	SYSTEM$_$TOBJECT_$__$$_FREE
+EXTERN	SYSINIT$_$DOS_CLASS_$__$$_WRITELN$ANSISTRING
+EXTERN	SYSTEM_$$_DONEMEMORY
 EXTERN	_$dll$user32$MessageBoxA
 EXTERN	_$dll$kernel32$ExitProcess
 EXTERN	fpc_initializeunits
@@ -15,7 +14,7 @@ EXTERN	FPC_DO_EXIT
 ; Begin asmlist al_procedures
 
 SECTION .text
-P$TEST1$_$ENTRY_$$_fin$00000002:
+P$TEST1$_$ENTRY_$$_fin$00000001:
 ..@c1:
 		push	rbp
 ..@c3:
@@ -23,8 +22,18 @@ P$TEST1$_$ENTRY_$$_fin$00000002:
 		mov	rbp,rcx
 ..@c5:
 		lea	rsp,[rsp-32]
-		mov	rcx,qword [U_$P$TEST1_$$_MEMORYMANAGER]
-		call	SYSTEM$_$TOBJECT_$__$$_FREE
+		mov	rax,qword [U_$SYSINIT_$$_DOS]
+		lea	rdx,[..@d2]
+		mov	rcx,rax
+		call	SYSINIT$_$DOS_CLASS_$__$$_WRITELN$ANSISTRING
+		call	SYSTEM_$$_DONEMEMORY
+		xor	r9d,r9d
+		lea	r8,[_$TEST1$_Ld3]
+		lea	rdx,[_$TEST1$_Ld4]
+		xor	ecx,ecx
+		call	_$dll$user32$MessageBoxA
+		xor	ecx,ecx
+		call	_$dll$kernel32$ExitProcess
 		nop
 		lea	rsp,[rsp+32]
 		pop	rbp
@@ -42,31 +51,21 @@ _mainCRTStartup:
 ..@c9:
 		mov	rbp,rsp
 ..@c10:
-		lea	rsp,[rsp-48]
-		mov	eax,1
-		lea	rcx,[VMT_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER]
-		mov	rdx,rax
-		call	SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_CREATE$$TANSISTRINGMEMORYMANAGER
-		mov	qword [U_$P$TEST1_$$_MEMORYMANAGER],rax
+		lea	rsp,[rsp-32]
 ..@j11:
 		nop
 ..@j7:
+		call	SYSTEM_$$_INITMEMORY
 		call	SYSINIT_$$_INITCONSOLE
-		mov	rcx,qword [U_$SYSINIT_$$_DOS]
+		mov	rax,qword [U_$SYSINIT_$$_DOS]
 		lea	rdx,[..@d1]
-		call	SYSINIT$_$DOS_CLASS_$__$$_WRITE$ANSISTRING
+		mov	rcx,rax
+		call	SYSINIT$_$DOS_CLASS_$__$$_WRITELN$ANSISTRING
 ..@j9:
 		nop
 ..@j8:
 		mov	rcx,rbp
-		call	P$TEST1$_$ENTRY_$$_fin$00000002
-		xor	r9d,r9d
-		lea	r8,[_$TEST1$_Ld2]
-		lea	rdx,[_$TEST1$_Ld3]
-		xor	ecx,ecx
-		call	_$dll$user32$MessageBoxA
-		xor	ecx,ecx
-		call	_$dll$kernel32$ExitProcess
+		call	P$TEST1$_$ENTRY_$$_fin$00000001
 		nop
 		lea	rsp,[rbp]
 		pop	rbp
@@ -92,10 +91,6 @@ PASCALMAIN:
 ..@c12:
 ; End asmlist al_procedures
 ; Begin asmlist al_globals
-
-SECTION .bss
-	ALIGNB 8
-U_$P$TEST1_$$_MEMORYMANAGER:	RESB	8
 
 SECTION .data
 	ALIGN 8,DB 0
@@ -141,17 +136,25 @@ SECTION .rodata
 ..@d1$strlab:
 	DW	0,1
 	DD	0
-	DQ	-1,13
+	DQ	-1,32
 ..@d1:
-		DB	"Hello World !",0
+		DB	"mem, windows: initialized... ok.",0
 
 SECTION .rodata
-_$TEST1$_Ld2:
-		DB	"Information",0
+..@d2$strlab:
+	DW	0,1
+	DD	0
+	DQ	-1,11
+..@d2:
+		DB	"clean up...",0
 
 SECTION .rodata
 _$TEST1$_Ld3:
-		DB	"qs",0
+		DB	"Information",0
+
+SECTION .rodata
+_$TEST1$_Ld4:
+		DB	"Hello Fresh",0
 ; End asmlist al_typedconsts
 ; Begin asmlist al_dwarf_frame
 

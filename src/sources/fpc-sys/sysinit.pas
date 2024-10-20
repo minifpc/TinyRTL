@@ -5,7 +5,6 @@
 // only for non-profit usage !!!
 // ----------------------------------------------------------
 {$mode delphi}
-{$M-}
 unit sysinit;
 
 interface
@@ -19,6 +18,8 @@ type
     public
         constructor Create;
         destructor Destroy; override;
+        
+        procedure Free; virtual;
         
         procedure ClrScr;
         procedure ClearScreen;
@@ -52,13 +53,18 @@ type
         constructor Create;
         destructor Destroy;
         
+        procedure Free; virtual;
+        
         function MessageBox(AText, ATitle: String): DWORD;
     end;
 var
     Windows: Windows_Class;
     
-procedure InitConsole;  // TUI
-procedure InitWindows;  // GUI
+procedure InitConsole;  // constructor: TUI
+procedure InitWindows;  // constructor; GUI
+
+procedure DoneConsole;  // destroy: TUI
+procedure DoneWindows;  // destroy: GUI
 
 procedure WriteLn(const msg: String);
 procedure Write  (const msg: String);
@@ -109,6 +115,11 @@ procedure InitConsole;
 begin
     DOS := DOS_Class.Create;
 end;
+procedure DoneConsole;
+begin
+    //if DOS <> nil then
+    //DOS.Free;
+end;
 
 constructor DOS_Class.Create;
 begin
@@ -120,6 +131,11 @@ end;
 destructor DOS_Class.Destroy;
 begin
     inherited Destroy;
+end;
+procedure DOS_Class.Free;
+begin
+    if self <> nil then
+    self.Destroy;
 end;
 
 procedure DOS_Class.Cls;
@@ -160,13 +176,25 @@ procedure InitWindows;
 begin
     Windows := Windows_Class.Create;
 end;
+procedure DoneWindows;
+begin
+    if Windows <> nil then
+    Windows.Free;
+end;
 
 constructor Windows_Class.Create;
 begin
+    inherited Create;
 end;
 
 destructor Windows_Class.Destroy;
 begin
+    inherited Destroy;
+end;
+procedure Windows_Class.Free;
+begin
+    if self <> nil then
+    self.Destroy;
 end;
 
 function Windows_Class.MessageBox(AText, ATitle: String): DWORD;

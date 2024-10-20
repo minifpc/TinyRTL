@@ -267,9 +267,9 @@ begin end;
 procedure fpc_help_fail(_self:pointer;var _vmt:pointer;vmt_pos:cardinal);compilerproc;
 begin end;
 
-procedure fpc_ReRaise; [public, alias:'fpc_reraise']; compilerproc;
+procedure fpc_reraise; [public, alias:'fpc_reraise']; compilerproc;
 begin
-    MessageBoxA(0, PChar('fpc_ReRaise'), PChar('inform'),0)
+    
 end;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;

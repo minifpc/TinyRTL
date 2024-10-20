@@ -5,33 +5,26 @@
 //
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
-{$ENTRYPOINT PASCALMAIN}
 {$mode delphi}
-{$M-}
 program test1;
 
-uses sysinit, Qt_String;
-
-procedure ExitProcess(AValue: Integer); external 'kernel32.dll';
-
-var
-    MemoryManager: TAnsiStringMemoryManager;
+uses sysinit;
 
 procedure Entry; [public, alias: '_mainCRTStartup'];
-var
-    hm: HMODULE;
-    qs: QString;
 begin
-    MemoryManager := TAnsiStringMemoryManager.Create;
     try
+        InitMemory;
         InitConsole;
-        DOS.Write('Hello World !');
+        //
+        DOS.WriteLn('mem, windows: initialized... ok.');
     finally
-        MemoryManager.Free;
+        DOS.WriteLn('clean up...');
+        DoneConsole;
+        DoneMemory;
+        
+        MessageBoxA(0,'Hello Fresh','Information',0);
+        ExitProcess(0);
     end;
-
-    MessageBoxA(0,'qs','Information',0);
-    ExitProcess(0);
 end;
 
 begin

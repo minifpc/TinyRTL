@@ -8,12 +8,15 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
-{$M-}
 // ---------------------------------------------------------------------------
 // TObjectm and IUnknown has to be defined first as forward class ...
 // ---------------------------------------------------------------------------
+
 type
     TObject = class
+    private
+        class var   FClassInstance: TObject;
+        class function GetInstance: TObject; static;
     public
         constructor Create;
         destructor Destroy; virtual;
@@ -22,16 +25,18 @@ type
         class function ClassParent: TObject; virtual;
 
         class procedure InitInstance(Instance: Pointer); virtual;
-        class function NewInstance : TObject; virtual;
+        class function  NewInstance : TObject; virtual;
         class procedure FreeInstance; virtual;
         
         function SafeCallException( exceptobject: tobject; exceptaddr: codepointer ): HResult; virtual;
         procedure DefaultHandler(var message); virtual;
         
-        procedure Free;
+        procedure Free; virtual;
 
         procedure AfterConstruction; virtual;
         procedure BeforeDestruction; virtual;
+        
+        class property Instance: TObject read GetInstance;
     end;
 
     TClass = class of TObject;
@@ -66,6 +71,18 @@ begin
     result := 'TObject';
 end;
 
+class function TObject.GetInstance: TObject;
+begin
+    result := nil;
+    if FClassInstance = nil then
+    begin
+        MessageBoxA(0,
+        PChar('Error: instance is not allocated.'),
+        PChar('Error'), 0);
+        exit;
+    end;
+    result := FClassInstance;
+end;
 class function TObject.ClassParent: TObject;
 begin
     result := nil;
@@ -79,11 +96,11 @@ end;
 
 class function TObject.NewInstance : TObject;
 begin
-    result := TObject(
+    FClassInstance := TObject(
         VirtualAlloc(nil, SizeOf(TObject),
         MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE));
 
-    if result = nil then
+    if FClassInstance = nil then
     begin
         MessageBoxA(0,
             PChar('internal Error.'),
@@ -100,6 +117,9 @@ end;
 
 class procedure TObject.FreeInstance;
 begin
+    if FClassInstance <> nil then
+    VirtualFree(FClassInstance, 0, MEM_RELEASE);
+    
     if self <> nil then
     begin
         VirtualFree(Pointer(self), 0, MEM_RELEASE);

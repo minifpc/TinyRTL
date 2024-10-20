@@ -46,8 +46,7 @@ set fpcdst=^
     -Fu%prjdir%\sources\fpc-qt
 
 set fpcsys2=^
-    -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -Anasmwin64 -a ^
-    -dNoRTTI
+    -n -Mdelphi -Twin64 -dwindows -dwin64 -O2 -Os -Anasmwin64 -a
 
 :: -----------------------------------------------------------------
 :: location of nasm.exe (the netwide assembler)

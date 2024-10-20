@@ -13,6 +13,7 @@ EXTERN	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
 EXTERN	SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
 EXTERN	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
 EXTERN	FPC_EMPTYMETHOD
+EXTERN	SYSTEM$_$TOBJECT_$__$$_FREE
 EXTERN	SYSTEM$_$QOBJECT_$__$$_DESTROY
 EXTERN	RTTI_$SYSTEM_$$_QOBJECT$indirect
 ; Begin asmlist al_pure_assembler
@@ -62,7 +63,7 @@ CPU x64
 		jmp	..@j16
 ..@j17:
 		mov	rax,qword [rcx]
-		call	[rax+160]
+		call	[rax+168]
 ..@j16:
 		jmp	..@j11
 ..@j10:
@@ -72,7 +73,7 @@ CPU x64
 ..@j18:
 		mov	rdx,qword [rbp-8]
 		mov	rax,qword [rcx]
-		call	[rax+184]
+		call	[rax+192]
 ..@j19:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
@@ -134,7 +135,7 @@ CPU x64
 		jmp	..@j34
 ..@j35:
 		mov	rax,qword [rcx]
-		call	[rax+160]
+		call	[rax+168]
 ..@j34:
 		jmp	..@j29
 ..@j28:
@@ -144,7 +145,7 @@ CPU x64
 ..@j36:
 		mov	rdx,qword [rbp-8]
 		mov	rax,qword [rcx]
-		call	[rax+184]
+		call	[rax+192]
 ..@j37:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
@@ -204,7 +205,7 @@ CPU x64
 		jmp	..@j52
 ..@j53:
 		mov	rax,qword [rcx]
-		call	[rax+160]
+		call	[rax+168]
 ..@j52:
 		jmp	..@j47
 ..@j46:
@@ -214,7 +215,7 @@ CPU x64
 ..@j54:
 		mov	rdx,qword [rbp-8]
 		mov	rax,qword [rcx]
-		call	[rax+184]
+		call	[rax+192]
 ..@j55:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
@@ -244,7 +245,7 @@ QT_STRING$_$QSTRING_$__$$_DESTROY:
 		mov	rax,rcx
 		mov	rdx,qword [rcx]
 		mov	rcx,rax
-		call	[rdx+168]
+		call	[rdx+176]
 ..@j60:
 CPU x64
 
@@ -338,8 +339,8 @@ VMT_$QT_STRING_$$_QSTRING	DQ	16,-16,VMT_$SYSTEM_$$_QOBJECT$indirect,..@d1,0,0,0,
 	DQ	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
 	DQ	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
 	DQ	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
-	DQ	FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,FPC_EMPTYMETHOD,SYSTEM$_$QOBJECT_$__$$_DESTROY
-	DQ	QT_STRING$_$QSTRING_$__$$_DESTROY,0
+	DQ	FPC_EMPTYMETHOD,SYSTEM$_$TOBJECT_$__$$_FREE,FPC_EMPTYMETHOD,FPC_EMPTYMETHOD
+	DQ	SYSTEM$_$QOBJECT_$__$$_DESTROY,QT_STRING$_$QSTRING_$__$$_DESTROY,0
 ; End asmlist al_globals
 ; Begin asmlist al_const
 
