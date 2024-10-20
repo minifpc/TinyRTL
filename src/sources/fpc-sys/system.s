@@ -11,6 +11,8 @@ EXTERN	_$dll$kernel32$LocalFree
 EXTERN	_$dll$ucrtbase$strcpy
 EXTERN	_$dll$kernel32$lstrlenA
 EXTERN	_$dll$ucrtbase$strcat
+EXTERN	_$dll$msvcrt$strcmp
+EXTERN	_$dll$msvcrt$memmove
 EXTERN	_$dll$kernel32$GetACP
 EXTERN	_$dll$kernel32$LockFile
 EXTERN	_$dll$kernel32$WriteFile
@@ -19,247 +21,6 @@ EXTERN	_$dll$kernel32$GetLastError
 EXTERN	_$dll$kernel32$DeleteFileA
 EXTERN	_$dll$kernel32$CreateFileA
 EXTERN	_$dll$kernel32$SetFilePointer
-; Begin asmlist al_pure_assembler
-
-SECTION .text
-	GLOBAL SYSTEM_$$_MOVE$formal$formal$LONGDWORD
-SYSTEM_$$_MOVE$formal$formal$LONGDWORD:
-	GLOBAL FPC_move
-FPC_move:
-..@c80:
-CPU x64
-
-		mov	rax,r8
-		sub	rcx,rdx
-		jz	..@j99
-		jnb	..@j100
-		add	rax,rcx
-		jb	..@j101
-..@j100:
-		cmp	r8,8
-		jl	..@j102
-		test	dl,7
-		je	..@j103
-		test	dl,1
-		je	..@j104
-		mov	al,byte [rcx+rdx*1]
-		dec	r8
-		mov	byte [rdx],al
-		add	rdx,1
-..@j104:
-		test	dl,2
-		je	..@j105
-		mov	ax,word [rcx+rdx*1]
-		sub	r8,2
-		mov	word [rdx],ax
-		add	rdx,2
-..@j105:
-		test	dl,4
-		je	..@j103
-		mov	eax,dword [rcx+rdx*1]
-		sub	r8,4
-		mov	dword [rdx],eax
-		add	rdx,4
-..@j103:
-		mov	r9,r8
-		shr	r9,5
-		jne	..@j106
-..@j107:
-		mov	r9,r8
-		shr	r9,3
-		je	..@j102
-	ALIGN 16
-..@j108:
-		mov	rax,qword [rcx+rdx*1]
-		mov	qword [rdx],rax
-		add	rdx,8
-		dec	r9
-		jne	..@j108
-		and	r8,7
-..@j102:
-		test	r8,r8
-		jle	..@j99
-	ALIGN 16
-..@j109:
-		mov	al,byte [rcx+rdx*1]
-		mov	byte [rdx],al
-		inc	rdx
-		dec	r8
-		jne	..@j109
-..@j99:
-		ret
-..@j106:
-		cmp	r9,8192
-		jnae	..@j110
-		cmp	rcx,4096
-		jnb	..@j111
-	ALIGN 16
-..@j110:
-		add	rdx,32
-		mov	rax,qword [rcx+rdx*1-32]
-		mov	r10,qword [rcx+rdx*1-24]
-		mov	qword [rdx-32],rax
-		mov	qword [rdx-24],r10
-		dec	r9
-		mov	rax,qword [rcx+rdx*1-16]
-		mov	r10,qword [rcx+rdx*1-8]
-		mov	qword [rdx-16],rax
-		mov	qword [rdx-8],r10
-		jne	..@j110
-		and	r8,31
-		jmp	..@j107
-..@j111:
-		mov	eax,32
-	ALIGN 16
-..@j112:
-		prefetchnta	[rcx+rdx*1]
-		prefetchnta	[rcx+rdx*1+64]
-		add	rdx,128
-		dec	eax
-		jne	..@j112
-		sub	rdx,4096
-		mov	eax,64
-	ALIGN 16
-..@j113:
-		add	rdx,64
-		mov	r9,qword [rcx+rdx*1-64]
-		mov	r10,qword [rcx+rdx*1-56]
-		movnti	qword [rdx-64],r9
-		movnti	qword [rdx-56],r10
-		mov	r9,qword [rcx+rdx*1-48]
-		mov	r10,qword [rcx+rdx*1-40]
-		movnti	qword [rdx-48],r9
-		movnti	qword [rdx-40],r10
-		dec	eax
-		mov	r9,qword [rcx+rdx*1-32]
-		mov	r10,qword [rcx+rdx*1-24]
-		movnti	qword [rdx-32],r9
-		movnti	qword [rdx-24],r10
-		mov	r9,qword [rcx+rdx*1-16]
-		mov	r10,qword [rcx+rdx*1-8]
-		movnti	qword [rdx-16],r9
-		movnti	qword [rdx-8],r10
-		jne	..@j113
-		sub	r8,4096
-		cmp	r8,4096
-		jae	..@j111
-		mfence
-		jmp	..@j103
-..@j101:
-		add	rdx,r8
-		cmp	r8,8
-		jl	..@j114
-		test	dl,7
-		je	..@j115
-		test	dl,1
-		je	..@j116
-		dec	rdx
-		mov	al,byte [rcx+rdx*1]
-		dec	r8
-		mov	byte [rdx],al
-..@j116:
-		test	dl,2
-		je	..@j117
-		sub	rdx,2
-		mov	ax,word [rcx+rdx*1]
-		sub	r8,2
-		mov	word [rdx],ax
-..@j117:
-		test	dl,4
-		je	..@j115
-		sub	rdx,4
-		mov	eax,dword [rcx+rdx*1]
-		sub	r8,4
-		mov	dword [rdx],eax
-..@j115:
-		mov	r9,r8
-		shr	r9,5
-		jne	..@j118
-..@j119:
-		mov	r9,r8
-		shr	r9,3
-		je	..@j114
-..@j120:
-		sub	rdx,8
-		mov	rax,qword [rcx+rdx*1]
-		dec	r9
-		mov	qword [rdx],rax
-		jne	..@j120
-		and	r8,7
-..@j114:
-		test	r8,r8
-		jle	..@j121
-	ALIGN 16
-..@j122:
-		dec	rdx
-		mov	al,byte [rcx+rdx*1]
-		dec	r8
-		mov	byte [rdx],al
-		jnz	..@j122
-..@j121:
-		ret
-..@j118:
-		cmp	r9,8192
-		jnae	..@j123
-		cmp	rcx,-4096
-		jb	..@j124
-	ALIGN 16
-..@j123:
-		sub	rdx,32
-		mov	rax,qword [rcx+rdx*1+24]
-		mov	r10,qword [rcx+rdx*1+16]
-		mov	qword [rdx+24],rax
-		mov	qword [rdx+16],r10
-		dec	r9
-		mov	rax,qword [rcx+rdx*1+8]
-		mov	r10,qword [rcx+rdx*1]
-		mov	qword [rdx+8],rax
-		mov	qword [rdx],r10
-		jne	..@j123
-		and	r8,31
-		jmp	..@j119
-..@j124:
-		mov	eax,32
-	ALIGN 16
-..@j125:
-		sub	rdx,128
-		prefetchnta	[rcx+rdx*1]
-		prefetchnta	[rcx+rdx*1+64]
-		dec	eax
-		jnz	..@j125
-		add	rdx,4096
-		mov	eax,64
-	ALIGN 16
-..@j126:
-		sub	rdx,64
-		mov	r9,qword [rcx+rdx*1+56]
-		mov	r10,qword [rcx+rdx*1+48]
-		movnti	qword [rdx+56],r9
-		movnti	qword [rdx+48],r10
-		mov	r9,qword [rcx+rdx*1+40]
-		mov	r10,qword [rcx+rdx*1+32]
-		movnti	qword [rdx+40],r9
-		movnti	qword [rdx+32],r10
-		dec	eax
-		mov	r9,qword [rcx+rdx*1+24]
-		mov	r10,qword [rcx+rdx*1+16]
-		movnti	qword [rdx+24],r9
-		movnti	qword [rdx+16],r10
-		mov	r9,qword [rcx+rdx*1+8]
-		mov	r10,qword [rcx+rdx*1]
-		movnti	qword [rdx+8],r9
-		movnti	qword [rdx],r10
-		jne	..@j126
-		sub	r8,4096
-		cmp	r8,4096
-		jae	..@j124
-		mfence
-		jmp	..@j115
-CPU x64
-
-		ret
-..@c81:
-; End asmlist al_pure_assembler
 ; Begin asmlist al_procedures
 
 SECTION .text
@@ -409,11 +170,6 @@ fpc_char_to_ansistr:
 		lea	rsp,[rsp-40]
 ..@c27:
 		mov	bl,dl
-		xor	r9d,r9d
-		lea	r8,[_$SYSTEM$_Ld5]
-		lea	rdx,[_$SYSTEM$_Ld6]
-		xor	ecx,ecx
-		call	_$dll$user32$MessageBoxA
 		xor	r8d,r8d
 		mov	edx,65535
 		mov	ecx,1
@@ -423,7 +179,7 @@ fpc_char_to_ansistr:
 		jne	..@j31
 		xor	r9d,r9d
 		lea	r8,[_$SYSTEM$_Ld3]
-		lea	rdx,[_$SYSTEM$_Ld7]
+		lea	rdx,[_$SYSTEM$_Ld5]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		jmp	..@j28
@@ -502,7 +258,7 @@ SYSTEM_$$_PCHARTOANSISTRING$PCHAR$$ANSISTRING:
 ..@c31:
 
 SECTION .text
-SYSTEM$_$fpc_pchar_to_ansistr$PANSICHAR$$ANSISTRING_$$_fin$00000160:
+SYSTEM$_$fpc_pchar_to_ansistr$PANSICHAR$$ANSISTRING_$$_fin$00000169:
 ..@c33:
 		push	rbp
 ..@c35:
@@ -536,7 +292,7 @@ fpc_pchar_to_ansistr:
 ..@j54:
 		nop
 ..@j50:
-		lea	rax,[_$SYSTEM$_Ld8]
+		lea	rax,[_$SYSTEM$_Ld6]
 		mov	qword [rbp-8],rax
 		xor	eax,eax
 		mov	edx,2
@@ -558,7 +314,7 @@ fpc_pchar_to_ansistr:
 		nop
 ..@j51:
 		mov	rcx,rbp
-		call	SYSTEM$_$fpc_pchar_to_ansistr$PANSICHAR$$ANSISTRING_$$_fin$00000160
+		call	SYSTEM$_$fpc_pchar_to_ansistr$PANSICHAR$$ANSISTRING_$$_fin$00000169
 		mov	rbx,qword [rbp-32]
 		mov	rsi,qword [rbp-24]
 		lea	rsp,[rbp]
@@ -602,7 +358,7 @@ FPC_ANSISTR_ASSIGN:
 ..@j58:
 		xor	r9d,r9d
 		lea	r8,[_$SYSTEM$_Ld3]
-		lea	rdx,[_$SYSTEM$_Ld9]
+		lea	rdx,[_$SYSTEM$_Ld7]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		mov	ecx,1
@@ -656,7 +412,7 @@ fpc_ansistr_concat:
 ..@j63:
 		xor	r9d,r9d
 		lea	r8,[_$SYSTEM$_Ld3]
-		lea	rdx,[_$SYSTEM$_Ld10]
+		lea	rdx,[_$SYSTEM$_Ld8]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		mov	ecx,1
@@ -677,43 +433,26 @@ fpc_ansistr_compare_equal:
 	GLOBAL FPC_ANSISTR_COMPARE_EQUAL
 FPC_ANSISTR_COMPARE_EQUAL:
 ..@c49:
-		push	rbx
-		push	rdi
-		push	rsi
-		lea	rsp,[rsp-32]
+		lea	rsp,[rsp-40]
 ..@c51:
-		mov	rbx,rdx
-		cmp	rbx,rcx
-		jne	..@j68
-		mov	edi,1
-		jmp	..@j65
-..@j68:
-		call	_$dll$kernel32$lstrlenA
-		mov	esi,eax
-		mov	rcx,rbx
-		call	_$dll$kernel32$lstrlenA
-		mov	edx,esi
-		and	eax,eax
-		sub	rdx,rax
-		mov	rdi,rdx
 		test	rdx,rdx
+		jne	..@j67
+		lea	rdx,[FPC_EMPTYCHAR]
+..@j67:
+		test	rcx,rcx
+		jne	..@j68
+		lea	rcx,[FPC_EMPTYCHAR]
+..@j68:
+		call	_$dll$msvcrt$strcmp
+		test	eax,eax
 		jne	..@j70
-		test	esi,esi
-		jna	..@j72
-		mov	edi,1
-		jmp	..@j65
-..@j72:
-		xor	edi,edi
-		jmp	..@j65
+		mov	eax,1
+		jmp	..@j71
 ..@j70:
-		mov	edi,1
-..@j65:
-		mov	rax,rdi
+		xor	eax,eax
+..@j71:
 		nop
-		lea	rsp,[rsp+32]
-		pop	rsi
-		pop	rdi
-		pop	rbx
+		lea	rsp,[rsp+40]
 		ret
 ..@c50:
 
@@ -721,182 +460,174 @@ SECTION .text
 	GLOBAL SYSTEM$_$TVMT_$__$$_GETVPARENT$$PVMT
 SYSTEM$_$TVMT_$__$$_GETVPARENT$$PVMT:
 ..@c52:
-		lea	rsp,[rsp-40]
-..@c54:
-		xor	r9d,r9d
-		lea	r8,[_$SYSTEM$_Ld11]
-		lea	rdx,[_$SYSTEM$_Ld12]
-		xor	ecx,ecx
-		call	_$dll$user32$MessageBoxA
 		xor	eax,eax
-		nop
-		lea	rsp,[rsp+40]
 		ret
 ..@c53:
 
 SECTION .text
 	GLOBAL fpc_get_input
 fpc_get_input:
-..@c55:
+..@c54:
 		xor	eax,eax
 		ret
-..@c56:
+..@c55:
 
 SECTION .text
 	GLOBAL fpc_readln_end
 fpc_readln_end:
 	GLOBAL FPC_READLN_END
 FPC_READLN_END:
-..@c57:
+..@c56:
 		mov	rax,rcx
 		ret
-..@c58:
+..@c57:
 
 SECTION .text
 	GLOBAL fpc_do_exit
 fpc_do_exit:
 	GLOBAL FPC_DO_EXIT
 FPC_DO_EXIT:
-..@c59:
+..@c58:
 		lea	rsp,[rsp-40]
-..@c61:
-		xor	eax,eax
-		lea	r8,[_$SYSTEM$_Ld1]
-		lea	rdx,[_$SYSTEM$_Ld13]
-		xor	ecx,ecx
-		mov	r9d,eax
-		call	_$dll$user32$MessageBoxA
+..@c60:
 		xor	ecx,ecx
 		call	_$dll$kernel32$ExitProcess
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c60:
+..@c59:
 
 SECTION .text
 	GLOBAL fpc_iocheck
 fpc_iocheck:
-..@c62:
+..@c61:
 		ret
-..@c63:
+..@c62:
 
 SECTION .text
 	GLOBAL fpc_help_constructor
 fpc_help_constructor:
-..@c64:
+..@c63:
 		xor	eax,eax
 		ret
-..@c65:
+..@c64:
 
 SECTION .text
 	GLOBAL fpc_help_destructor
 fpc_help_destructor:
-..@c66:
+..@c65:
 		mov	rax,rcx
 		ret
-..@c67:
+..@c66:
 
 SECTION .text
 	GLOBAL fpc_help_fail
 fpc_help_fail:
-..@c68:
+..@c67:
 		mov	rax,rcx
 		ret
-..@c69:
+..@c68:
 
 SECTION .text
 	GLOBAL fpc_reraise
 fpc_reraise:
 	GLOBAL fpc_reraise
 fpc_reraise:
-..@c70:
-		lea	rsp,[rsp-40]
-..@c72:
-		xor	eax,eax
-		lea	r8,[_$SYSTEM$_Ld14]
-		lea	rdx,[_$SYSTEM$_Ld15]
-		xor	ecx,ecx
-		mov	r9d,eax
-		call	_$dll$user32$MessageBoxA
-		nop
-		lea	rsp,[rsp+40]
+..@c69:
 		ret
-..@c71:
+..@c70:
 
 SECTION .text
 	GLOBAL fpc_finalize
 fpc_finalize:
-..@c73:
+..@c71:
 		mov	rax,rcx
 		ret
-..@c74:
+..@c72:
 
 SECTION .text
 	GLOBAL fpc_initializeunits
 fpc_initializeunits:
 	GLOBAL FPC_INITIALIZEUNITS
 FPC_INITIALIZEUNITS:
-..@c75:
+..@c73:
 		lea	rsp,[rsp-40]
-..@c77:
+..@c75:
 		xor	eax,eax
-		lea	r8,[_$SYSTEM$_Ld16]
-		lea	rdx,[_$SYSTEM$_Ld17]
+		lea	r8,[_$SYSTEM$_Ld9]
+		lea	rdx,[_$SYSTEM$_Ld10]
 		xor	ecx,ecx
 		mov	r9d,eax
 		call	_$dll$user32$MessageBoxA
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c76:
+..@c74:
 
 SECTION .text
 	GLOBAL fpc_libinitializeunits
 fpc_libinitializeunits:
 	GLOBAL FPC_LIBINITIALIZEUNITS
 FPC_LIBINITIALIZEUNITS:
+..@c76:
+		ret
+..@c77:
+
+SECTION .text
+	GLOBAL SYSTEM_$$_MOVE$formal$formal$LONGDWORD
+SYSTEM_$$_MOVE$formal$formal$LONGDWORD:
+	GLOBAL FPC_move
+FPC_move:
 ..@c78:
+		lea	rsp,[rsp-40]
+..@c80:
+		mov	rax,rcx
+		mov	rcx,rdx
+		mov	rdx,rax
+		call	_$dll$msvcrt$memmove
+		nop
+		lea	rsp,[rsp+40]
 		ret
 ..@c79:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_SHOWMESSAGE$PCHAR
 SYSTEM_$$_SHOWMESSAGE$PCHAR:
-..@c82:
+..@c81:
 		lea	rsp,[rsp-40]
-..@c84:
+..@c83:
 		mov	rdx,rcx
 		mov	r9d,64
-		lea	r8,[_$SYSTEM$_Ld18]
+		lea	r8,[_$SYSTEM$_Ld11]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c83:
+..@c82:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_SHOWWARN$PCHAR
 SYSTEM_$$_SHOWWARN$PCHAR:
-..@c85:
+..@c84:
 		lea	rsp,[rsp-40]
-..@c87:
+..@c86:
 		mov	rdx,rcx
 		mov	r9d,48
-		lea	r8,[_$SYSTEM$_Ld19]
+		lea	r8,[_$SYSTEM$_Ld12]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c86:
+..@c85:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_SHOWERROR$PCHAR
 SYSTEM_$$_SHOWERROR$PCHAR:
-..@c88:
+..@c87:
 		lea	rsp,[rsp-40]
-..@c90:
+..@c89:
 		mov	rdx,rcx
 		mov	r9d,48
 		lea	r8,[_$SYSTEM$_Ld3]
@@ -905,41 +636,41 @@ SYSTEM_$$_SHOWERROR$PCHAR:
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c89:
+..@c88:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_SHOWINFO$PCHAR
 SYSTEM_$$_SHOWINFO$PCHAR:
-..@c91:
+..@c90:
 		lea	rsp,[rsp-40]
-..@c93:
+..@c92:
 		call	SYSTEM_$$_SHOWMESSAGE$PCHAR
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c92:
+..@c91:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FILLCHAR$formal$QWORD$CHAR
 SYSTEM_$$_FILLCHAR$formal$QWORD$CHAR:
-..@c94:
+..@c93:
 		lea	rax,[rdx-1]
 		mov	rdx,-1
-..@j137:
+..@j108:
 		inc	rdx
 		mov	byte [rcx],r8b
 		inc	rcx
 		cmp	rax,rdx
-		jnbe	..@j137
+		jnbe	..@j108
 		ret
-..@c95:
+..@c94:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FREEMEM$POINTER
 SYSTEM_$$_FREEMEM$POINTER:
-..@c96:
+..@c95:
 		lea	rsp,[rsp-40]
-..@c98:
+..@c97:
 		mov	rax,rcx
 		mov	rcx,qword [rax]
 		mov	r8d,32768
@@ -948,15 +679,15 @@ SYSTEM_$$_FREEMEM$POINTER:
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c97:
+..@c96:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 SYSTEM_$$_GETMEM$POINTER$LONGDWORD:
-..@c99:
+..@c98:
 		push	rbx
 		lea	rsp,[rsp-32]
-..@c101:
+..@c100:
 		mov	rbx,rcx
 		mov	r9d,4
 		mov	r8d,12288
@@ -967,55 +698,55 @@ SYSTEM_$$_GETMEM$POINTER$LONGDWORD:
 		lea	rsp,[rsp+32]
 		pop	rbx
 		ret
-..@c100:
+..@c99:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_TSYSTEMCODEPAGE$$LONGDWORD
 SYSTEM_$$_TSYSTEMCODEPAGE$$LONGDWORD:
-..@c102:
+..@c101:
 		lea	rsp,[rsp-40]
-..@c104:
+..@c103:
 		call	_$dll$kernel32$GetACP
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c103:
+..@c102:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_LOCKFILE$POINTER$$BOOLEAN
 SYSTEM_$$_LOCKFILE$POINTER$$BOOLEAN:
-..@c105:
+..@c104:
 		push	rbx
 		lea	rsp,[rsp-48]
-..@c107:
+..@c106:
 		xor	bl,bl
 		mov	dword [rsp+32],0
 		xor	r8d,r8d
 		xor	edx,edx
 		call	_$dll$kernel32$LockFile
 		test	al,al
-		jne	..@j149
-		lea	rcx,[_$SYSTEM$_Ld20]
+		jne	..@j120
+		lea	rcx,[_$SYSTEM$_Ld13]
 		call	SYSTEM_$$_SHOWERROR$PCHAR
-		jmp	..@j146
-..@j149:
+		jmp	..@j117
+..@j120:
 		mov	bl,1
-..@j146:
+..@j117:
 		mov	al,bl
 		nop
 		lea	rsp,[rsp+48]
 		pop	rbx
 		ret
-..@c106:
+..@c105:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_WRITEFILE$LONGWORD$PCHAR$$QWORD
 SYSTEM_$$_WRITEFILE$LONGWORD$PCHAR$$QWORD:
-..@c108:
+..@c107:
 		push	rbx
 		push	rsi
 		lea	rsp,[rsp-40]
-..@c110:
+..@c109:
 		mov	ebx,ecx
 		mov	rsi,rdx
 		mov	qword [rsp+32],0
@@ -1032,14 +763,14 @@ SYSTEM_$$_WRITEFILE$LONGWORD$PCHAR$$QWORD:
 		pop	rsi
 		pop	rbx
 		ret
-..@c109:
+..@c108:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_WRITEFILE$LONGWORD$POINTER$$QWORD
 SYSTEM_$$_WRITEFILE$LONGWORD$POINTER$$QWORD:
-..@c111:
+..@c110:
 		lea	rsp,[rsp-56]
-..@c113:
+..@c112:
 		mov	qword [rsp+40],rdx
 		mov	qword [rsp+32],0
 		xor	r9,r9
@@ -1050,54 +781,54 @@ SYSTEM_$$_WRITEFILE$LONGWORD$POINTER$$QWORD:
 		nop
 		lea	rsp,[rsp+56]
 		ret
-..@c112:
+..@c111:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER
 SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
-..@c114:
+..@c113:
 		push	rbx
 		push	rdi
 		push	rsi
 		push	r12
 		push	r13
 		lea	rsp,[rsp-64]
-..@c116:
+..@c115:
 		mov	rbx,rcx
 		mov	sil,dl
-		lea	rcx,[_$SYSTEM$_Ld21]
+		lea	rcx,[_$SYSTEM$_Ld14]
 		call	SYSTEM_$$_SHOWINFO$PCHAR
 		mov	rcx,rbx
 		call	_$dll$shlwapi$PathFileExistsA
 		mov	rdi,rax
 		cmp	edi,1
-		jne	..@j157
+		jne	..@j128
 		test	sil,sil
-		jne	..@j159
+		jne	..@j130
 		xor	r12d,r12d
 		lea	rcx,[rsp+56]
 		mov	edx,255
 		call	SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 		mov	rcx,qword [rsp+56]
-		lea	rdx,[_$SYSTEM$_Ld22]
+		lea	rdx,[_$SYSTEM$_Ld15]
 		call	_$dll$ucrtbase$strcpy
 		mov	rdx,rbx
 		mov	rcx,qword [rsp+56]
 		call	_$dll$ucrtbase$strcat
 		mov	rcx,qword [rsp+56]
-		lea	rdx,[_$SYSTEM$_Ld23]
+		lea	rdx,[_$SYSTEM$_Ld16]
 		call	_$dll$ucrtbase$strcat
 		mov	rcx,qword [rsp+56]
-		lea	rdx,[_$SYSTEM$_Ld24]
+		lea	rdx,[_$SYSTEM$_Ld17]
 		call	_$dll$ucrtbase$strcat
 		mov	rdx,qword [rsp+56]
 		mov	r9d,4
-		lea	r8,[_$SYSTEM$_Ld18]
+		lea	r8,[_$SYSTEM$_Ld11]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		mov	edi,eax
 		cmp	edi,6
-		jne	..@j161
+		jne	..@j132
 		mov	rcx,rbx
 		call	SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN
 		mov	rcx,rbx
@@ -1106,26 +837,26 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 		mov	r13,rax
 		call	_$dll$kernel32$GetLastError
 		mov	r12d,eax
-..@j161:
+..@j132:
 		lea	rcx,[rsp+56]
 		call	SYSTEM_$$_FREEMEM$POINTER
 		test	r12d,r12d
-		je	..@j169
-		lea	rcx,[_$SYSTEM$_Ld25]
+		je	..@j140
+		lea	rcx,[_$SYSTEM$_Ld18]
 		call	SYSTEM_$$_SHOWERROR$PCHAR
-		jmp	..@j154
-		jmp	..@j169
-..@j159:
+		jmp	..@j125
+		jmp	..@j140
+..@j130:
 		test	sil,sil
-		je	..@j169
+		je	..@j140
 		mov	rcx,rbx
 		call	_$dll$kernel32$DeleteFileA
 		mov	dl,al
 		test	dil,dil
-		jne	..@j168
-		lea	rcx,[_$SYSTEM$_Ld26]
+		jne	..@j139
+		lea	rcx,[_$SYSTEM$_Ld19]
 		call	SYSTEM_$$_SHOWMESSAGE$PCHAR
-..@j168:
+..@j139:
 		mov	qword [rsp+48],0
 		mov	dword [rsp+40],128
 		mov	dword [rsp+32],1
@@ -1136,9 +867,9 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 		call	_$dll$kernel32$CreateFileA
 		mov	r13,rax
 		mov	rsi,r13
-		jmp	..@j154
-		jmp	..@j169
-..@j157:
+		jmp	..@j125
+		jmp	..@j140
+..@j128:
 		mov	qword [rsp+48],0
 		mov	dword [rsp+40],128
 		mov	dword [rsp+32],1
@@ -1150,36 +881,36 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 		mov	r13,rax
 		call	_$dll$kernel32$GetLastError
 		test	eax,eax
-		je	..@j171
-		lea	rcx,[_$SYSTEM$_Ld25]
+		je	..@j142
+		lea	rcx,[_$SYSTEM$_Ld18]
 		call	SYSTEM_$$_SHOWERROR$PCHAR
-		jmp	..@j154
-..@j171:
-..@j169:
+		jmp	..@j125
+..@j142:
+..@j140:
 		mov	eax,r13d
 		cmp	eax,-1
-		jne	..@j173
+		jne	..@j144
 		lea	rcx,[rsp+56]
 		mov	edx,255
 		call	SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 		mov	rcx,qword [rsp+56]
-		lea	rdx,[_$SYSTEM$_Ld22]
+		lea	rdx,[_$SYSTEM$_Ld15]
 		call	_$dll$ucrtbase$strcpy
 		mov	rdx,rbx
 		mov	rcx,qword [rsp+56]
 		call	_$dll$ucrtbase$strcat
 		mov	rcx,qword [rsp+56]
-		lea	rdx,[_$SYSTEM$_Ld27]
+		lea	rdx,[_$SYSTEM$_Ld20]
 		call	_$dll$ucrtbase$strcat
 		mov	rcx,qword [rsp+56]
 		call	SYSTEM_$$_SHOWERROR$PCHAR
 		lea	rcx,[rsp+56]
 		call	SYSTEM_$$_FREEMEM$POINTER
 		xor	esi,esi
-		jmp	..@j154
-..@j173:
+		jmp	..@j125
+..@j144:
 		mov	rsi,r13
-..@j154:
+..@j125:
 		mov	rax,rsi
 		nop
 		lea	rsp,[rsp+64]
@@ -1189,118 +920,119 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 		pop	rdi
 		pop	rbx
 		ret
-..@c115:
+..@c114:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FILECREATE$RAWBYTESTRING$BOOLEAN$$POINTER
 SYSTEM_$$_FILECREATE$RAWBYTESTRING$BOOLEAN$$POINTER:
-..@c117:
+..@c116:
 		lea	rsp,[rsp-40]
-..@c119:
+..@c118:
 		test	rcx,rcx
-		jne	..@j176
+		jne	..@j147
 		lea	rcx,[FPC_EMPTYCHAR]
-..@j176:
+..@j147:
 		call	SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c118:
+..@c117:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN
 SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN:
-..@c120:
+..@c119:
 		lea	rsp,[rsp-40]
-..@c122:
+..@c121:
 		call	_$dll$kernel32$DeleteFileA
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c121:
+..@c120:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FILEDELETE$RAWBYTESTRING$$BOOLEAN
 SYSTEM_$$_FILEDELETE$RAWBYTESTRING$$BOOLEAN:
-..@c123:
+..@c122:
 		lea	rsp,[rsp-40]
-..@c125:
+..@c124:
 		test	rcx,rcx
-		jne	..@j181
+		jne	..@j152
 		lea	rcx,[FPC_EMPTYCHAR]
-..@j181:
+..@j152:
 		call	SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c124:
+..@c123:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD
 SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD:
-..@c126:
+..@c125:
 		push	rbx
 		lea	rsp,[rsp-32]
-..@c128:
+..@c127:
 		mov	r9d,r8d
 		xor	r8,r8
 		call	_$dll$kernel32$SetFilePointer
 		mov	ebx,eax
 		call	_$dll$kernel32$GetLastError
 		cmp	ebx,-1
-		jne	..@j185
+		jne	..@j156
 		test	eax,eax
-		je	..@j185
-		lea	rcx,[_$SYSTEM$_Ld28]
+		je	..@j156
+		lea	rcx,[_$SYSTEM$_Ld21]
 		call	SYSTEM_$$_SHOWERROR$PCHAR
 		mov	eax,-1
-		jmp	..@j182
-..@j185:
+		jmp	..@j153
+..@j156:
 		mov	eax,ebx
-..@j182:
+..@j153:
 		nop
 		lea	rsp,[rsp+32]
 		pop	rbx
 		ret
-..@c127:
+..@c126:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_FILESEEK$POINTER$LONGDWORD$LONGDWORD$$LONGDWORD
 SYSTEM_$$_FILESEEK$POINTER$LONGDWORD$LONGDWORD$$LONGDWORD:
-..@c129:
+..@c128:
 		lea	rsp,[rsp-40]
-..@c131:
+..@c130:
 		call	SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD
+		mov	eax,edx
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c130:
+..@c129:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT
 SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT:
-..@c132:
+..@c131:
 		push	rbp
+..@c133:
 ..@c134:
-..@c135:
 		mov	rbp,rsp
-..@c136:
+..@c135:
 		lea	rsp,[rsp-64]
 		mov	qword [rbp-16],rcx
 		mov	qword [rbp-8],rdx
 		cmp	rdx,1
-		jne	..@j192
+		jne	..@j163
 		mov	rax,qword [rbp-16]
 		mov	rdx,qword [rbp-16]
 		mov	rcx,rax
 		call	[rdx+128]
 		mov	qword [rbp-16],rax
-..@j192:
+..@j163:
 		cmp	qword [rbp-16],0
-		je	..@j189
-..@j200:
+		je	..@j160
+..@j171:
 		nop
-..@j199:
+..@j170:
 		mov	qword [rbp-24],-1
 		mov	rdx,qword [rbp-16]
 		lea	rcx,[VMT_$SYSTEM_$$_TOBJECT]
@@ -1308,29 +1040,29 @@ SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT:
 		call	[rax+120]
 		mov	qword [rbp-24],1
 		cmp	qword [rbp-16],0
-		je	..@j197
+		je	..@j168
 		cmp	qword [rbp-8],0
-		je	..@j197
+		je	..@j168
 		mov	rcx,qword [rbp-16]
 		mov	rax,qword [rbp-16]
 		mov	rax,qword [rax]
 		call	[rax+160]
-		jmp	..@j197
-..@j196:
+		jmp	..@j168
+..@j167:
 		cmp	qword [rbp-8],0
-		je	..@j206
+		je	..@j177
 		mov	rdx,qword [rbp-24]
 		mov	rcx,qword [rbp-16]
 		mov	rax,qword [rbp-16]
 		mov	rax,qword [rax]
 		call	[rax+96]
-..@j206:
+..@j177:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
-..@j207:
+..@j178:
 		nop
-..@j197:
-..@j189:
+..@j168:
+..@j160:
 		mov	rax,qword [rbp-16]
 		nop
 		lea	rsp,[rbp]
@@ -1339,106 +1071,106 @@ SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT:
 	DD	1,1
 
 SECTION .text
-..@c133:
+..@c132:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_DESTROY
 SYSTEM$_$TOBJECT_$__$$_DESTROY:
-..@c137:
+..@c136:
 		push	rbx
 		push	rsi
 		lea	rsp,[rsp-40]
-..@c139:
+..@c138:
 		mov	rbx,rcx
 		mov	rsi,rdx
 		test	rsi,rsi
-		jng	..@j211
+		jng	..@j182
 		mov	rcx,rbx
 		mov	rax,qword [rbx]
 		call	[rax+168]
-..@j211:
+..@j182:
 		mov	rcx,qword [rbx]
 		mov	rax,qword [rbx]
 		call	[rax+136]
 		test	rbx,rbx
-		je	..@j213
+		je	..@j184
 		test	rsi,rsi
-		je	..@j213
+		je	..@j184
 		mov	rcx,qword [rbx]
 		mov	rax,qword [rbx]
 		call	[rax+136]
-..@j213:
+..@j184:
 		nop
 		lea	rsp,[rsp+40]
 		pop	rsi
 		pop	rbx
 		ret
-..@c138:
+..@c137:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_AFTERCONSTRUCTION
 SYSTEM$_$TOBJECT_$__$$_AFTERCONSTRUCTION:
-..@c140:
+..@c139:
 		mov	rax,rcx
 		ret
-..@c141:
+..@c140:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_BEFOREDESTRUCTION
 SYSTEM$_$TOBJECT_$__$$_BEFOREDESTRUCTION:
-..@c142:
+..@c141:
 		mov	rax,rcx
 		ret
-..@c143:
+..@c142:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING
 SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING:
-..@c144:
+..@c143:
 		lea	rsp,[rsp-40]
-..@c146:
+..@c145:
 		mov	rax,rcx
 		mov	rcx,rdx
-		lea	rdx,[..@d29]
+		lea	rdx,[..@d22]
 		call	fpc_ansistr_assign
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c145:
+..@c144:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT
 SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT:
-..@c147:
+..@c146:
 		xor	eax,eax
 		ret
-..@c148:
+..@c147:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_FREE
 SYSTEM$_$TOBJECT_$__$$_FREE:
-..@c149:
+..@c148:
 		lea	rsp,[rsp-40]
-..@c151:
+..@c150:
 		mov	rax,rcx
 		test	rcx,rcx
-		je	..@j226
+		je	..@j197
 		mov	rcx,qword [rax]
 		mov	rax,qword [rax]
 		call	[rax+136]
-..@j226:
+..@j197:
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c150:
+..@c149:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
 SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT:
-..@c152:
+..@c151:
 		push	rbx
 		lea	rsp,[rsp-32]
-..@c154:
+..@c153:
 		mov	r9d,4
 		mov	r8d,12288
 		mov	edx,8
@@ -1446,123 +1178,124 @@ SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT:
 		call	_$dll$kernel32$VirtualAlloc
 		mov	rbx,rax
 		test	rax,rax
-		jne	..@j230
+		jne	..@j201
 		mov	r9d,16
 		lea	r8,[_$SYSTEM$_Ld3]
-		lea	rdx,[_$SYSTEM$_Ld30]
+		lea	rdx,[_$SYSTEM$_Ld23]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		mov	ecx,1
 		call	_$dll$kernel32$ExitProcess
-..@j230:
+..@j201:
 		mov	rax,rbx
 		nop
 		lea	rsp,[rsp+32]
 		pop	rbx
 		ret
-..@c153:
+..@c152:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
 SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER:
-..@c155:
+..@c154:
 		mov	qword [rdx],rcx
 		ret
-..@c156:
+..@c155:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
 SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE:
-..@c157:
+..@c156:
 		lea	rsp,[rsp-40]
-..@c159:
+..@c158:
 		mov	rax,rcx
 		test	rcx,rcx
-		je	..@j236
+		je	..@j207
 		mov	rcx,rax
 		mov	r8d,32768
 		xor	edx,edx
 		call	_$dll$kernel32$VirtualAlloc
-..@j236:
+..@j207:
 		nop
 		lea	rsp,[rsp+40]
 		ret
-..@c158:
+..@c157:
 
 SECTION .text
 SYSTEM_$$_SAFECALLEXCEPTION$POINTER$POINTER$$SHORTDWORD:
-..@c160:
+..@c159:
+		mov	eax,edx
 		ret
-..@c161:
+..@c160:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
 SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD:
-..@c162:
+..@c161:
 		mov	eax,1
 		ret
-..@c163:
+..@c162:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal
 SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal:
-..@c164:
+..@c163:
 		mov	rax,rcx
 		ret
-..@c165:
+..@c164:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TLIST_$__$$_CREATE$$TLIST
 SYSTEM$_$TLIST_$__$$_CREATE$$TLIST:
-..@c166:
+..@c165:
 		push	rbp
+..@c167:
 ..@c168:
-..@c169:
 		mov	rbp,rsp
-..@c170:
+..@c169:
 		lea	rsp,[rsp-64]
 		mov	qword [rbp-16],rcx
 		mov	qword [rbp-8],rdx
 		cmp	rdx,1
-		jne	..@j246
+		jne	..@j217
 		mov	rax,qword [rbp-16]
 		mov	rdx,qword [rbp-16]
 		mov	rcx,rax
 		call	[rdx+128]
 		mov	qword [rbp-16],rax
-..@j246:
+..@j217:
 		cmp	qword [rbp-16],0
-		je	..@j243
-..@j254:
+		je	..@j214
+..@j225:
 		nop
-..@j253:
+..@j224:
 		mov	qword [rbp-24],-1
 		mov	rcx,qword [rbp-16]
 		xor	edx,edx
 		call	SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT
 		mov	qword [rbp-24],1
 		cmp	qword [rbp-16],0
-		je	..@j251
+		je	..@j222
 		cmp	qword [rbp-8],0
-		je	..@j251
+		je	..@j222
 		mov	rcx,qword [rbp-16]
 		mov	rax,qword [rbp-16]
 		mov	rax,qword [rax]
 		call	[rax+160]
-		jmp	..@j251
-..@j250:
+		jmp	..@j222
+..@j221:
 		cmp	qword [rbp-8],0
-		je	..@j260
+		je	..@j231
 		mov	rdx,qword [rbp-24]
 		mov	rcx,qword [rbp-16]
 		call	SYSTEM$_$TLIST_$__$$_DESTROY
-..@j260:
+..@j231:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
-..@j261:
+..@j232:
 		nop
-..@j251:
-..@j243:
+..@j222:
+..@j214:
 		mov	rax,qword [rbp-16]
 		nop
 		lea	rsp,[rbp]
@@ -1571,67 +1304,67 @@ SYSTEM$_$TLIST_$__$$_CREATE$$TLIST:
 	DD	1,1
 
 SECTION .text
-..@c167:
+..@c166:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TLIST_$__$$_DESTROY
 SYSTEM$_$TLIST_$__$$_DESTROY:
-..@c171:
+..@c170:
 		push	rbx
 		push	rsi
 		lea	rsp,[rsp-40]
-..@c173:
+..@c172:
 		mov	rbx,rcx
 		mov	rsi,rdx
 		test	rsi,rsi
-		jng	..@j265
+		jng	..@j236
 		mov	rcx,rbx
 		mov	rax,qword [rbx]
 		call	[rax+168]
-..@j265:
+..@j236:
 		mov	rcx,rbx
 		xor	edx,edx
 		call	SYSTEM$_$TOBJECT_$__$$_DESTROY
 		test	rbx,rbx
-		je	..@j267
+		je	..@j238
 		test	rsi,rsi
-		je	..@j267
+		je	..@j238
 		mov	rcx,qword [rbx]
 		mov	rax,qword [rbx]
 		call	[rax+136]
-..@j267:
+..@j238:
 		nop
 		lea	rsp,[rsp+40]
 		pop	rsi
 		pop	rbx
 		ret
-..@c172:
+..@c171:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_CREATE$$TANSISTRINGMEMORYMANAGER
 SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_CREATE$$TANSISTRINGMEMORYMANAGER:
-..@c174:
+..@c173:
 		push	rbp
+..@c175:
 ..@c176:
-..@c177:
 		mov	rbp,rsp
-..@c178:
+..@c177:
 		lea	rsp,[rsp-64]
 		mov	qword [rbp-16],rcx
 		mov	qword [rbp-8],rdx
 		cmp	rdx,1
-		jne	..@j272
+		jne	..@j243
 		mov	rax,qword [rbp-16]
 		mov	rdx,qword [rbp-16]
 		mov	rcx,rax
 		call	[rdx+128]
 		mov	qword [rbp-16],rax
-..@j272:
+..@j243:
 		cmp	qword [rbp-16],0
-		je	..@j269
-..@j280:
+		je	..@j240
+..@j251:
 		nop
-..@j279:
+..@j250:
 		mov	qword [rbp-24],-1
 		mov	rcx,qword [rbp-16]
 		xor	edx,edx
@@ -1643,27 +1376,27 @@ SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_CREATE$$TANSISTRINGMEMORYMANAGER:
 		mov	qword [rdx+8],rax
 		mov	qword [rbp-24],1
 		cmp	qword [rbp-16],0
-		je	..@j277
+		je	..@j248
 		cmp	qword [rbp-8],0
-		je	..@j277
+		je	..@j248
 		mov	rcx,qword [rbp-16]
 		mov	rax,qword [rbp-16]
 		mov	rax,qword [rax]
 		call	[rax+160]
-		jmp	..@j277
-..@j276:
+		jmp	..@j248
+..@j247:
 		cmp	qword [rbp-8],0
-		je	..@j286
+		je	..@j257
 		mov	rdx,qword [rbp-24]
 		mov	rcx,qword [rbp-16]
 		call	SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_DESTROY
-..@j286:
+..@j257:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
-..@j287:
+..@j258:
 		nop
-..@j277:
-..@j269:
+..@j248:
+..@j240:
 		mov	rax,qword [rbp-16]
 		nop
 		lea	rsp,[rbp]
@@ -1672,95 +1405,95 @@ SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_CREATE$$TANSISTRINGMEMORYMANAGER:
 	DD	1,1
 
 SECTION .text
-..@c175:
+..@c174:
 
 SECTION .text
 	GLOBAL SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_DESTROY
 SYSTEM$_$TANSISTRINGMEMORYMANAGER_$__$$_DESTROY:
-..@c179:
+..@c178:
 		push	rbx
 		push	rsi
 		lea	rsp,[rsp-40]
-..@c181:
+..@c180:
 		mov	rbx,rcx
 		mov	rsi,rdx
 		test	rsi,rsi
-		jng	..@j291
+		jng	..@j262
 		mov	rcx,rbx
 		mov	rax,qword [rbx]
 		call	[rax+168]
-..@j291:
+..@j262:
 		mov	rcx,qword [rbx+8]
 		call	SYSTEM$_$TOBJECT_$__$$_FREE
 		mov	rcx,rbx
 		xor	edx,edx
 		call	SYSTEM$_$TOBJECT_$__$$_DESTROY
 		test	rbx,rbx
-		je	..@j293
+		je	..@j264
 		test	rsi,rsi
-		je	..@j293
+		je	..@j264
 		mov	rcx,qword [rbx]
 		mov	rax,qword [rbx]
 		call	[rax+136]
-..@j293:
+..@j264:
 		nop
 		lea	rsp,[rsp+40]
 		pop	rsi
 		pop	rbx
 		ret
-..@c180:
+..@c179:
 
 SECTION .text
 	GLOBAL SYSTEM$_$QOBJECT_$__$$_CREATE$$QOBJECT
 SYSTEM$_$QOBJECT_$__$$_CREATE$$QOBJECT:
-..@c182:
+..@c181:
 		push	rbp
+..@c183:
 ..@c184:
-..@c185:
 		mov	rbp,rsp
-..@c186:
+..@c185:
 		lea	rsp,[rsp-64]
 		mov	qword [rbp-16],rcx
 		mov	qword [rbp-8],rdx
 		cmp	rdx,1
-		jne	..@j298
+		jne	..@j269
 		mov	rax,qword [rbp-16]
 		mov	rdx,qword [rbp-16]
 		mov	rcx,rax
 		call	[rdx+128]
 		mov	qword [rbp-16],rax
-..@j298:
+..@j269:
 		cmp	qword [rbp-16],0
-		je	..@j295
-..@j306:
+		je	..@j266
+..@j277:
 		nop
-..@j305:
+..@j276:
 		mov	qword [rbp-24],-1
 		mov	qword [rbp-24],1
 		cmp	qword [rbp-16],0
-		je	..@j303
+		je	..@j274
 		cmp	qword [rbp-8],0
-		je	..@j303
+		je	..@j274
 		mov	rcx,qword [rbp-16]
 		mov	rax,qword [rbp-16]
 		mov	rax,qword [rax]
 		call	[rax+160]
-		jmp	..@j303
-..@j302:
+		jmp	..@j274
+..@j273:
 		cmp	qword [rbp-8],0
-		je	..@j312
+		je	..@j283
 		mov	rdx,qword [rbp-24]
 		mov	rcx,qword [rbp-16]
 		mov	rax,qword [rbp-16]
 		mov	rax,qword [rax]
 		call	[rax+176]
-..@j312:
+..@j283:
 		call	fpc_reraise
 		call	FPC_DONEEXCEPTION
-..@j313:
+..@j284:
 		nop
-..@j303:
-..@j295:
+..@j274:
+..@j266:
 		mov	rax,qword [rbp-16]
 		nop
 		lea	rsp,[rbp]
@@ -1769,53 +1502,53 @@ SYSTEM$_$QOBJECT_$__$$_CREATE$$QOBJECT:
 	DD	1,1
 
 SECTION .text
-..@c183:
+..@c182:
 
 SECTION .text
 	GLOBAL SYSTEM$_$QOBJECT_$__$$_DESTROY
 SYSTEM$_$QOBJECT_$__$$_DESTROY:
-..@c187:
+..@c186:
 		push	rbx
 		push	rsi
 		lea	rsp,[rsp-40]
-..@c189:
+..@c188:
 		mov	rbx,rcx
 		mov	rsi,rdx
 		test	rsi,rsi
-		jng	..@j317
+		jng	..@j288
 		mov	rcx,rbx
 		mov	rax,qword [rbx]
 		call	[rax+168]
-..@j317:
+..@j288:
 		test	rbx,rbx
-		je	..@j319
+		je	..@j290
 		test	rsi,rsi
-		je	..@j319
+		je	..@j290
 		mov	rcx,qword [rbx]
 		mov	rax,qword [rbx]
 		call	[rax+136]
-..@j319:
+..@j290:
 		nop
 		lea	rsp,[rsp+40]
 		pop	rsi
 		pop	rbx
 		ret
-..@c188:
+..@c187:
 
 SECTION .text
 	GLOBAL SYSTEM_$$_Q_NULLPTR$$POINTER
 SYSTEM_$$_Q_NULLPTR$$POINTER:
-..@c190:
+..@c189:
 		xor	eax,eax
 		ret
-..@c191:
+..@c190:
 ; End asmlist al_procedures
 ; Begin asmlist al_globals
 
 SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL VMT_$SYSTEM_$$_TOBJECT
-VMT_$SYSTEM_$$_TOBJECT	DQ	8,-8,0,..@d31,0,0,0,RTTI_$SYSTEM_$$_TOBJECT,0,0,0,0,SYSTEM$_$TOBJECT_$__$$_DESTROY
+VMT_$SYSTEM_$$_TOBJECT	DQ	8,-8,0,..@d24,0,0,0,RTTI_$SYSTEM_$$_TOBJECT,0,0,0,0,SYSTEM$_$TOBJECT_$__$$_DESTROY
 	DQ	SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING,SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT
 	DQ	SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER,SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
 	DQ	SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE,SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
@@ -1824,7 +1557,7 @@ VMT_$SYSTEM_$$_TOBJECT	DQ	8,-8,0,..@d31,0,0,0,RTTI_$SYSTEM_$$_TOBJECT,0,0,0,0,SY
 SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL VMT_$SYSTEM_$$_TLIST
-VMT_$SYSTEM_$$_TLIST	DQ	8,-8,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d32,0,0,0,RTTI_$SYSTEM_$$_TLIST,0
+VMT_$SYSTEM_$$_TLIST	DQ	8,-8,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d25,0,0,0,RTTI_$SYSTEM_$$_TLIST,0
 	DQ	0,0,0,SYSTEM$_$TOBJECT_$__$$_DESTROY,SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING
 	DQ	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
 	DQ	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
@@ -1834,7 +1567,7 @@ VMT_$SYSTEM_$$_TLIST	DQ	8,-8,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d32,0,0,0,RTTI_$
 SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL VMT_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER
-VMT_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER	DQ	16,-16,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d33,0,0,0,RTTI_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER
+VMT_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER	DQ	16,-16,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d26,0,0,0,RTTI_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER
 	DQ	0,0,0,0,SYSTEM$_$TOBJECT_$__$$_DESTROY,SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING
 	DQ	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
 	DQ	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
@@ -1844,7 +1577,7 @@ VMT_$SYSTEM_$$_TANSISTRINGMEMORYMANAGER	DQ	16,-16,VMT_$SYSTEM_$$_TOBJECT$indirec
 SECTION .data
 	ALIGN 8,DB 0
 	GLOBAL VMT_$SYSTEM_$$_QOBJECT
-VMT_$SYSTEM_$$_QOBJECT	DQ	8,-8,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d34,0,0,0,RTTI_$SYSTEM_$$_QOBJECT
+VMT_$SYSTEM_$$_QOBJECT	DQ	8,-8,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d27,0,0,0,RTTI_$SYSTEM_$$_QOBJECT
 	DQ	0,0,0,0,SYSTEM$_$TOBJECT_$__$$_DESTROY,SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$ANSISTRING
 	DQ	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
 	DQ	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT,SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
@@ -1856,25 +1589,25 @@ VMT_$SYSTEM_$$_QOBJECT	DQ	8,-8,VMT_$SYSTEM_$$_TOBJECT$indirect,..@d34,0,0,0,RTTI
 
 SECTION .data
 	ALIGN 8,DB 0
-..@d31:
+..@d24:
 	DB	7
 		DB	"TObject"
 
 SECTION .data
 	ALIGN 8,DB 0
-..@d32:
+..@d25:
 	DB	5
 		DB	"TList"
 
 SECTION .data
 	ALIGN 8,DB 0
-..@d33:
+..@d26:
 	DB	24
 		DB	"TAnsiStringMemoryManager"
 
 SECTION .data
 	ALIGN 8,DB 0
-..@d34:
+..@d27:
 	DB	7
 		DB	"QObject"
 ; End asmlist al_const
@@ -1898,110 +1631,82 @@ _$SYSTEM$_Ld4:
 
 SECTION .rodata
 _$SYSTEM$_Ld5:
-		DB	"s2",0
-
-SECTION .rodata
-_$SYSTEM$_Ld6:
-		DB	"s11111 111",0
-
-SECTION .rodata
-_$SYSTEM$_Ld7:
 		DB	"Error: creating private heap.",0
 
 SECTION .rodata
-_$SYSTEM$_Ld8:
+_$SYSTEM$_Ld6:
 		DB	0
 
 SECTION .rodata
-_$SYSTEM$_Ld9:
+_$SYSTEM$_Ld7:
 		DB	"Error: fpc_AnsiStr_Assign memory allocation fail.",0
 
 SECTION .rodata
-_$SYSTEM$_Ld10:
+_$SYSTEM$_Ld8:
 		DB	"Error: fpc_AnsiStr_Concat memory allocation fail.",0
 
 SECTION .rodata
-_$SYSTEM$_Ld11:
-		DB	"system",0
-
-SECTION .rodata
-_$SYSTEM$_Ld12:
-		DB	"getparent",0
-
-SECTION .rodata
-_$SYSTEM$_Ld13:
-		DB	"fpc_do_exit",0
-
-SECTION .rodata
-_$SYSTEM$_Ld14:
-		DB	"inform",0
-
-SECTION .rodata
-_$SYSTEM$_Ld15:
-		DB	"fpc_ReRaise",0
-
-SECTION .rodata
-_$SYSTEM$_Ld16:
+_$SYSTEM$_Ld9:
 		DB	"2121212",0
 
 SECTION .rodata
-_$SYSTEM$_Ld17:
+_$SYSTEM$_Ld10:
 		DB	"uzy",0
 
 SECTION .rodata
-_$SYSTEM$_Ld18:
+_$SYSTEM$_Ld11:
 		DB	"Information",0
 
 SECTION .rodata
-_$SYSTEM$_Ld19:
+_$SYSTEM$_Ld12:
 		DB	"Warning",0
 
 SECTION .rodata
-_$SYSTEM$_Ld20:
+_$SYSTEM$_Ld13:
 		DB	"File can not be lock.",0
 
 SECTION .rodata
-_$SYSTEM$_Ld21:
+_$SYSTEM$_Ld14:
 		DB	"pacher",0
 
 SECTION .rodata
-_$SYSTEM$_Ld22:
+_$SYSTEM$_Ld15:
 		DB	"File: ",34,0
 
 SECTION .rodata
-_$SYSTEM$_Ld23:
+_$SYSTEM$_Ld16:
 		DB	34," already exists.\n",0
 
 SECTION .rodata
-_$SYSTEM$_Ld24:
+_$SYSTEM$_Ld17:
 		DB	"Would you like override it ?",0
 
 SECTION .rodata
-_$SYSTEM$_Ld25:
+_$SYSTEM$_Ld18:
 		DB	"file could not be created !",0
 
 SECTION .rodata
-_$SYSTEM$_Ld26:
+_$SYSTEM$_Ld19:
 		DB	"file not delete",0
 
 SECTION .rodata
-_$SYSTEM$_Ld27:
+_$SYSTEM$_Ld20:
 		DB	34," could not be open.",0
 
 SECTION .rodata
-_$SYSTEM$_Ld28:
+_$SYSTEM$_Ld21:
 		DB	"SetFilePointer() failed.",0
 
 SECTION .rodata
-..@d29$strlab:
+..@d22$strlab:
 	DW	0,1
 	DD	0
 	DQ	-1,7
-..@d29:
+..@d22:
 		DB	"TObject",0
 
 SECTION .rodata
-_$SYSTEM$_Ld30:
+_$SYSTEM$_Ld23:
 		DB	"internal Error.",0
 ; End asmlist al_typedconsts
 ; Begin asmlist al_rtti
@@ -4311,9 +4016,9 @@ RTTI_$SYSTEM_$$_QOBJECT$indirect	DQ	RTTI_$SYSTEM_$$_QOBJECT
 ; Begin asmlist al_dwarf_frame
 
 SECTION .debug_frame
+..@c191:
+	DD	..@c193-..@c192
 ..@c192:
-	DD	..@c194-..@c193
-..@c193:
 	DD	-1
 	DB	1,0
 ; Unsupported const type 	FIXME_ULEB128BIT	
@@ -4325,95 +4030,95 @@ SECTION .debug_frame
 ; Unsupported const type 	FIXME_ULEB128BIT	
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c193:
+	DD	..@c195-..@c194
 ..@c194:
-	DD	..@c196-..@c195
-..@c195:
 	DQ	..@c1,..@c2-..@c1
 	ALIGN 4,DB 0
+..@c195:
+	DD	..@c197-..@c196
 ..@c196:
-	DD	..@c198-..@c197
-..@c197:
 	DQ	..@c3,..@c4-..@c3
 	ALIGN 4,DB 0
+..@c197:
+	DD	..@c199-..@c198
 ..@c198:
-	DD	..@c200-..@c199
-..@c199:
 	DQ	..@c5,..@c6-..@c5
 	ALIGN 4,DB 0
+..@c199:
+	DD	..@c201-..@c200
 ..@c200:
-	DD	..@c202-..@c201
-..@c201:
 	DQ	..@c7,..@c8-..@c7
 	ALIGN 4,DB 0
+..@c201:
+	DD	..@c203-..@c202
 ..@c202:
-	DD	..@c204-..@c203
-..@c203:
 	DQ	..@c9,..@c10-..@c9
 	ALIGN 4,DB 0
+..@c203:
+	DD	..@c205-..@c204
 ..@c204:
-	DD	..@c206-..@c205
-..@c205:
 	DQ	..@c11,..@c12-..@c11
 	DB	4
 	DD	..@c13-..@c11
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c205:
+	DD	..@c207-..@c206
 ..@c206:
-	DD	..@c208-..@c207
-..@c207:
 	DQ	..@c14,..@c15-..@c14
 	ALIGN 4,DB 0
+..@c207:
+	DD	..@c209-..@c208
 ..@c208:
-	DD	..@c210-..@c209
-..@c209:
 	DQ	..@c16,..@c17-..@c16
 	ALIGN 4,DB 0
+..@c209:
+	DD	..@c211-..@c210
 ..@c210:
-	DD	..@c212-..@c211
-..@c211:
 	DQ	..@c18,..@c19-..@c18
 	DB	4
 	DD	..@c20-..@c18
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c211:
+	DD	..@c213-..@c212
 ..@c212:
-	DD	..@c214-..@c213
-..@c213:
 	DQ	..@c21,..@c22-..@c21
 	ALIGN 4,DB 0
+..@c213:
+	DD	..@c215-..@c214
 ..@c214:
-	DD	..@c216-..@c215
-..@c215:
 	DQ	..@c23,..@c24-..@c23
 	ALIGN 4,DB 0
+..@c215:
+	DD	..@c217-..@c216
 ..@c216:
-	DD	..@c218-..@c217
-..@c217:
 	DQ	..@c25,..@c26-..@c25
 	DB	4
 	DD	..@c27-..@c25
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c217:
+	DD	..@c219-..@c218
 ..@c218:
-	DD	..@c220-..@c219
-..@c219:
 	DQ	..@c28,..@c29-..@c28
 	ALIGN 4,DB 0
+..@c219:
+	DD	..@c221-..@c220
 ..@c220:
-	DD	..@c222-..@c221
-..@c221:
 	DQ	..@c30,..@c31-..@c30
 	DB	4
 	DD	..@c32-..@c30
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c221:
+	DD	..@c223-..@c222
 ..@c222:
-	DD	..@c224-..@c223
-..@c223:
 	DQ	..@c33,..@c34-..@c33
 	DB	4
 	DD	..@c35-..@c33
@@ -4429,9 +4134,9 @@ SECTION .debug_frame
 	DB	13
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c223:
+	DD	..@c225-..@c224
 ..@c224:
-	DD	..@c226-..@c225
-..@c225:
 	DQ	..@c38,..@c39-..@c38
 	DB	4
 	DD	..@c40-..@c38
@@ -4447,447 +4152,443 @@ SECTION .debug_frame
 	DB	13
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c225:
+	DD	..@c227-..@c226
 ..@c226:
-	DD	..@c228-..@c227
-..@c227:
 	DQ	..@c43,..@c44-..@c43
 	DB	4
 	DD	..@c45-..@c43
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c227:
+	DD	..@c229-..@c228
 ..@c228:
-	DD	..@c230-..@c229
-..@c229:
 	DQ	..@c46,..@c47-..@c46
 	DB	4
 	DD	..@c48-..@c46
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c229:
+	DD	..@c231-..@c230
 ..@c230:
-	DD	..@c232-..@c231
-..@c231:
 	DQ	..@c49,..@c50-..@c49
 	DB	4
 	DD	..@c51-..@c49
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c231:
+	DD	..@c233-..@c232
 ..@c232:
-	DD	..@c234-..@c233
-..@c233:
 	DQ	..@c52,..@c53-..@c52
-	DB	4
-	DD	..@c54-..@c52
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c233:
+	DD	..@c235-..@c234
 ..@c234:
-	DD	..@c236-..@c235
+	DQ	..@c54,..@c55-..@c54
+	ALIGN 4,DB 0
 ..@c235:
-	DQ	..@c55,..@c56-..@c55
-	ALIGN 4,DB 0
+	DD	..@c237-..@c236
 ..@c236:
-	DD	..@c238-..@c237
+	DQ	..@c56,..@c57-..@c56
+	ALIGN 4,DB 0
 ..@c237:
-	DQ	..@c57,..@c58-..@c57
-	ALIGN 4,DB 0
+	DD	..@c239-..@c238
 ..@c238:
-	DD	..@c240-..@c239
+	DQ	..@c58,..@c59-..@c58
+	DB	4
+	DD	..@c60-..@c58
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c239:
-	DQ	..@c59,..@c60-..@c59
-	DB	4
-	DD	..@c61-..@c59
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c241-..@c240
 ..@c240:
-	DD	..@c242-..@c241
+	DQ	..@c61,..@c62-..@c61
+	ALIGN 4,DB 0
 ..@c241:
-	DQ	..@c62,..@c63-..@c62
-	ALIGN 4,DB 0
+	DD	..@c243-..@c242
 ..@c242:
-	DD	..@c244-..@c243
+	DQ	..@c63,..@c64-..@c63
+	ALIGN 4,DB 0
 ..@c243:
-	DQ	..@c64,..@c65-..@c64
-	ALIGN 4,DB 0
+	DD	..@c245-..@c244
 ..@c244:
-	DD	..@c246-..@c245
+	DQ	..@c65,..@c66-..@c65
+	ALIGN 4,DB 0
 ..@c245:
-	DQ	..@c66,..@c67-..@c66
-	ALIGN 4,DB 0
+	DD	..@c247-..@c246
 ..@c246:
-	DD	..@c248-..@c247
+	DQ	..@c67,..@c68-..@c67
+	ALIGN 4,DB 0
 ..@c247:
-	DQ	..@c68,..@c69-..@c68
-	ALIGN 4,DB 0
+	DD	..@c249-..@c248
 ..@c248:
-	DD	..@c250-..@c249
+	DQ	..@c69,..@c70-..@c69
+	ALIGN 4,DB 0
 ..@c249:
-	DQ	..@c70,..@c71-..@c70
-	DB	4
-	DD	..@c72-..@c70
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c251-..@c250
 ..@c250:
-	DD	..@c252-..@c251
+	DQ	..@c71,..@c72-..@c71
+	ALIGN 4,DB 0
 ..@c251:
-	DQ	..@c73,..@c74-..@c73
-	ALIGN 4,DB 0
+	DD	..@c253-..@c252
 ..@c252:
-	DD	..@c254-..@c253
+	DQ	..@c73,..@c74-..@c73
+	DB	4
+	DD	..@c75-..@c73
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c253:
-	DQ	..@c75,..@c76-..@c75
-	DB	4
-	DD	..@c77-..@c75
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c255-..@c254
 ..@c254:
-	DD	..@c256-..@c255
+	DQ	..@c76,..@c77-..@c76
+	ALIGN 4,DB 0
 ..@c255:
-	DQ	..@c78,..@c79-..@c78
-	ALIGN 4,DB 0
+	DD	..@c257-..@c256
 ..@c256:
-	DD	..@c258-..@c257
+	DQ	..@c78,..@c79-..@c78
+	DB	4
+	DD	..@c80-..@c78
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c257:
-	DQ	..@c80,..@c81-..@c80
-	ALIGN 4,DB 0
+	DD	..@c259-..@c258
 ..@c258:
-	DD	..@c260-..@c259
+	DQ	..@c81,..@c82-..@c81
+	DB	4
+	DD	..@c83-..@c81
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c259:
-	DQ	..@c82,..@c83-..@c82
-	DB	4
-	DD	..@c84-..@c82
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c261-..@c260
 ..@c260:
-	DD	..@c262-..@c261
+	DQ	..@c84,..@c85-..@c84
+	DB	4
+	DD	..@c86-..@c84
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c261:
-	DQ	..@c85,..@c86-..@c85
-	DB	4
-	DD	..@c87-..@c85
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c263-..@c262
 ..@c262:
-	DD	..@c264-..@c263
+	DQ	..@c87,..@c88-..@c87
+	DB	4
+	DD	..@c89-..@c87
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c263:
-	DQ	..@c88,..@c89-..@c88
-	DB	4
-	DD	..@c90-..@c88
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c265-..@c264
 ..@c264:
-	DD	..@c266-..@c265
+	DQ	..@c90,..@c91-..@c90
+	DB	4
+	DD	..@c92-..@c90
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c265:
-	DQ	..@c91,..@c92-..@c91
-	DB	4
-	DD	..@c93-..@c91
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c267-..@c266
 ..@c266:
-	DD	..@c268-..@c267
+	DQ	..@c93,..@c94-..@c93
+	ALIGN 4,DB 0
 ..@c267:
-	DQ	..@c94,..@c95-..@c94
-	ALIGN 4,DB 0
+	DD	..@c269-..@c268
 ..@c268:
-	DD	..@c270-..@c269
+	DQ	..@c95,..@c96-..@c95
+	DB	4
+	DD	..@c97-..@c95
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c269:
-	DQ	..@c96,..@c97-..@c96
-	DB	4
-	DD	..@c98-..@c96
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c271-..@c270
 ..@c270:
-	DD	..@c272-..@c271
+	DQ	..@c98,..@c99-..@c98
+	DB	4
+	DD	..@c100-..@c98
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c271:
-	DQ	..@c99,..@c100-..@c99
-	DB	4
-	DD	..@c101-..@c99
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c273-..@c272
 ..@c272:
-	DD	..@c274-..@c273
+	DQ	..@c101,..@c102-..@c101
+	DB	4
+	DD	..@c103-..@c101
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c273:
-	DQ	..@c102,..@c103-..@c102
-	DB	4
-	DD	..@c104-..@c102
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c275-..@c274
 ..@c274:
-	DD	..@c276-..@c275
+	DQ	..@c104,..@c105-..@c104
+	DB	4
+	DD	..@c106-..@c104
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c275:
-	DQ	..@c105,..@c106-..@c105
-	DB	4
-	DD	..@c107-..@c105
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c277-..@c276
 ..@c276:
-	DD	..@c278-..@c277
+	DQ	..@c107,..@c108-..@c107
+	DB	4
+	DD	..@c109-..@c107
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c277:
-	DQ	..@c108,..@c109-..@c108
-	DB	4
-	DD	..@c110-..@c108
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c279-..@c278
 ..@c278:
-	DD	..@c280-..@c279
+	DQ	..@c110,..@c111-..@c110
+	DB	4
+	DD	..@c112-..@c110
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c279:
-	DQ	..@c111,..@c112-..@c111
-	DB	4
-	DD	..@c113-..@c111
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c281-..@c280
 ..@c280:
-	DD	..@c282-..@c281
+	DQ	..@c113,..@c114-..@c113
+	DB	4
+	DD	..@c115-..@c113
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c281:
-	DQ	..@c114,..@c115-..@c114
-	DB	4
-	DD	..@c116-..@c114
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c283-..@c282
 ..@c282:
-	DD	..@c284-..@c283
+	DQ	..@c116,..@c117-..@c116
+	DB	4
+	DD	..@c118-..@c116
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c283:
-	DQ	..@c117,..@c118-..@c117
-	DB	4
-	DD	..@c119-..@c117
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c285-..@c284
 ..@c284:
-	DD	..@c286-..@c285
+	DQ	..@c119,..@c120-..@c119
+	DB	4
+	DD	..@c121-..@c119
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c285:
-	DQ	..@c120,..@c121-..@c120
-	DB	4
-	DD	..@c122-..@c120
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c287-..@c286
 ..@c286:
-	DD	..@c288-..@c287
+	DQ	..@c122,..@c123-..@c122
+	DB	4
+	DD	..@c124-..@c122
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c287:
-	DQ	..@c123,..@c124-..@c123
-	DB	4
-	DD	..@c125-..@c123
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c289-..@c288
 ..@c288:
-	DD	..@c290-..@c289
+	DQ	..@c125,..@c126-..@c125
+	DB	4
+	DD	..@c127-..@c125
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c289:
-	DQ	..@c126,..@c127-..@c126
-	DB	4
-	DD	..@c128-..@c126
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c291-..@c290
 ..@c290:
-	DD	..@c292-..@c291
-..@c291:
-	DQ	..@c129,..@c130-..@c129
+	DQ	..@c128,..@c129-..@c128
 	DB	4
-	DD	..@c131-..@c129
+	DD	..@c130-..@c128
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c291:
+	DD	..@c293-..@c292
 ..@c292:
-	DD	..@c294-..@c293
-..@c293:
-	DQ	..@c132,..@c133-..@c132
+	DQ	..@c131,..@c132-..@c131
 	DB	4
-	DD	..@c134-..@c132
+	DD	..@c133-..@c131
 	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	DB	4
+	DD	..@c134-..@c133
+	DB	5
+; Unsupported const type 	FIXME_ULEB128BIT	
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	DB	4
 	DD	..@c135-..@c134
-	DB	5
-; Unsupported const type 	FIXME_ULEB128BIT	
-; Unsupported const type 	FIXME_ULEB128BIT	
-	DB	4
-	DD	..@c136-..@c135
 	DB	13
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c293:
+	DD	..@c295-..@c294
 ..@c294:
-	DD	..@c296-..@c295
+	DQ	..@c136,..@c137-..@c136
+	DB	4
+	DD	..@c138-..@c136
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c295:
-	DQ	..@c137,..@c138-..@c137
-	DB	4
-	DD	..@c139-..@c137
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c297-..@c296
 ..@c296:
-	DD	..@c298-..@c297
+	DQ	..@c139,..@c140-..@c139
+	ALIGN 4,DB 0
 ..@c297:
-	DQ	..@c140,..@c141-..@c140
-	ALIGN 4,DB 0
+	DD	..@c299-..@c298
 ..@c298:
-	DD	..@c300-..@c299
+	DQ	..@c141,..@c142-..@c141
+	ALIGN 4,DB 0
 ..@c299:
-	DQ	..@c142,..@c143-..@c142
-	ALIGN 4,DB 0
+	DD	..@c301-..@c300
 ..@c300:
-	DD	..@c302-..@c301
+	DQ	..@c143,..@c144-..@c143
+	DB	4
+	DD	..@c145-..@c143
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c301:
-	DQ	..@c144,..@c145-..@c144
-	DB	4
-	DD	..@c146-..@c144
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c303-..@c302
 ..@c302:
-	DD	..@c304-..@c303
+	DQ	..@c146,..@c147-..@c146
+	ALIGN 4,DB 0
 ..@c303:
-	DQ	..@c147,..@c148-..@c147
-	ALIGN 4,DB 0
+	DD	..@c305-..@c304
 ..@c304:
-	DD	..@c306-..@c305
+	DQ	..@c148,..@c149-..@c148
+	DB	4
+	DD	..@c150-..@c148
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c305:
-	DQ	..@c149,..@c150-..@c149
-	DB	4
-	DD	..@c151-..@c149
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c307-..@c306
 ..@c306:
-	DD	..@c308-..@c307
+	DQ	..@c151,..@c152-..@c151
+	DB	4
+	DD	..@c153-..@c151
+	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	ALIGN 4,DB 0
 ..@c307:
-	DQ	..@c152,..@c153-..@c152
-	DB	4
-	DD	..@c154-..@c152
-	DB	14
-; Unsupported const type 	FIXME_ULEB128BIT	
-	ALIGN 4,DB 0
+	DD	..@c309-..@c308
 ..@c308:
-	DD	..@c310-..@c309
-..@c309:
-	DQ	..@c155,..@c156-..@c155
+	DQ	..@c154,..@c155-..@c154
 	ALIGN 4,DB 0
+..@c309:
+	DD	..@c311-..@c310
 ..@c310:
-	DD	..@c312-..@c311
-..@c311:
-	DQ	..@c157,..@c158-..@c157
+	DQ	..@c156,..@c157-..@c156
 	DB	4
-	DD	..@c159-..@c157
+	DD	..@c158-..@c156
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c311:
+	DD	..@c313-..@c312
 ..@c312:
-	DD	..@c314-..@c313
+	DQ	..@c159,..@c160-..@c159
+	ALIGN 4,DB 0
 ..@c313:
-	DQ	..@c160,..@c161-..@c160
-	ALIGN 4,DB 0
+	DD	..@c315-..@c314
 ..@c314:
-	DD	..@c316-..@c315
+	DQ	..@c161,..@c162-..@c161
+	ALIGN 4,DB 0
 ..@c315:
-	DQ	..@c162,..@c163-..@c162
-	ALIGN 4,DB 0
+	DD	..@c317-..@c316
 ..@c316:
-	DD	..@c318-..@c317
-..@c317:
-	DQ	..@c164,..@c165-..@c164
+	DQ	..@c163,..@c164-..@c163
 	ALIGN 4,DB 0
+..@c317:
+	DD	..@c319-..@c318
 ..@c318:
-	DD	..@c320-..@c319
-..@c319:
-	DQ	..@c166,..@c167-..@c166
+	DQ	..@c165,..@c166-..@c165
 	DB	4
-	DD	..@c168-..@c166
+	DD	..@c167-..@c165
 	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	DB	4
+	DD	..@c168-..@c167
+	DB	5
+; Unsupported const type 	FIXME_ULEB128BIT	
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	DB	4
 	DD	..@c169-..@c168
-	DB	5
-; Unsupported const type 	FIXME_ULEB128BIT	
-; Unsupported const type 	FIXME_ULEB128BIT	
-	DB	4
-	DD	..@c170-..@c169
 	DB	13
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c319:
+	DD	..@c321-..@c320
 ..@c320:
-	DD	..@c322-..@c321
-..@c321:
-	DQ	..@c171,..@c172-..@c171
+	DQ	..@c170,..@c171-..@c170
 	DB	4
-	DD	..@c173-..@c171
+	DD	..@c172-..@c170
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c321:
+	DD	..@c323-..@c322
 ..@c322:
-	DD	..@c324-..@c323
-..@c323:
-	DQ	..@c174,..@c175-..@c174
+	DQ	..@c173,..@c174-..@c173
 	DB	4
-	DD	..@c176-..@c174
+	DD	..@c175-..@c173
 	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	DB	4
+	DD	..@c176-..@c175
+	DB	5
+; Unsupported const type 	FIXME_ULEB128BIT	
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	DB	4
 	DD	..@c177-..@c176
-	DB	5
-; Unsupported const type 	FIXME_ULEB128BIT	
-; Unsupported const type 	FIXME_ULEB128BIT	
-	DB	4
-	DD	..@c178-..@c177
 	DB	13
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c323:
+	DD	..@c325-..@c324
 ..@c324:
-	DD	..@c326-..@c325
-..@c325:
-	DQ	..@c179,..@c180-..@c179
+	DQ	..@c178,..@c179-..@c178
 	DB	4
-	DD	..@c181-..@c179
+	DD	..@c180-..@c178
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c325:
+	DD	..@c327-..@c326
 ..@c326:
-	DD	..@c328-..@c327
-..@c327:
-	DQ	..@c182,..@c183-..@c182
+	DQ	..@c181,..@c182-..@c181
 	DB	4
-	DD	..@c184-..@c182
+	DD	..@c183-..@c181
 	DB	14
+; Unsupported const type 	FIXME_ULEB128BIT	
+	DB	4
+	DD	..@c184-..@c183
+	DB	5
+; Unsupported const type 	FIXME_ULEB128BIT	
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	DB	4
 	DD	..@c185-..@c184
-	DB	5
-; Unsupported const type 	FIXME_ULEB128BIT	
-; Unsupported const type 	FIXME_ULEB128BIT	
-	DB	4
-	DD	..@c186-..@c185
 	DB	13
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c327:
+	DD	..@c329-..@c328
 ..@c328:
-	DD	..@c330-..@c329
-..@c329:
-	DQ	..@c187,..@c188-..@c187
+	DQ	..@c186,..@c187-..@c186
 	DB	4
-	DD	..@c189-..@c187
+	DD	..@c188-..@c186
 	DB	14
 ; Unsupported const type 	FIXME_ULEB128BIT	
 	ALIGN 4,DB 0
+..@c329:
+	DD	..@c331-..@c330
 ..@c330:
-	DD	..@c332-..@c331
-..@c331:
-	DQ	..@c190,..@c191-..@c190
+	DQ	..@c189,..@c190-..@c189
 	ALIGN 4,DB 0
-..@c332:
+..@c331:
 ; End asmlist al_dwarf_frame
 
