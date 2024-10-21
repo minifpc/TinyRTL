@@ -6,6 +6,7 @@
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
 {$mode delphi}
+{$L test1helper.o}
 program test1;
 
 uses sysinit;
@@ -17,6 +18,7 @@ begin
         InitConsole;
         //
         DOS.WriteLn('mem, windows: initialized... ok.');
+        mem.alloc(128);
     finally
         DOS.WriteLn('clean up...');
         DoneConsole;

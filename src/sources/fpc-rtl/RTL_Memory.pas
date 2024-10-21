@@ -11,31 +11,30 @@
 {$mode delphi}
     TMemory = class(TObject)
     private
-        class var     FClassMemory: Pointer;
-        class var     FClassParent: TObject;
-        class function   GetParent: TObject; static;
+        class var     FClassMemory : Pointer;
+        class var     FClassMemSize: DWORD;
+        class var     FClassParent : TObject;
+        class function   GetParent : TObject; static;
     public
-        constructor Create(AParent: TObject; var AValue: Pointer); overload;
-        constructor Create(AParent: TObject;     AValue: DWORD  ); overload;
-        constructor Create(AParent: TObject); overload;
+        constructor Create(AParent : TObject; AValue: DWORD); overload;
+        constructor Create(AParent : TObject); overload;
         //
         constructor Create(AValue: DWORD); overload;
         constructor Create; overload;
         //
         destructor Destroy;
         
-        function  Alloc(var AValue: Pointer; ASize: DWORD): Pointer; overload;
+        function  Alloc(ASize: DWORD): Pointer; overload;
         procedure Alloc; overload;
+        procedure Free;
         
         class function ClassParent: TObject; virtual;
-        
-        procedure Free (AValue: Pointer); overload;
-        procedure Free; overload;
         
         function ClassName: String; virtual;
 
         class property Parent: TObject read GetParent;
         class property Memory: Pointer read FClassMemory write FClassMemory;
+        class property Size: DWORD read FClassMemSize;
     end;
 var
     mem: TMemory;
@@ -70,33 +69,37 @@ end;
 constructor TMemory.Create(AValue: DWORD);
 begin
     inherited Create;
-    FClassMemory := self.Alloc(FClassMemory, AValue);
-    FClassParent := nil;
-end;
-constructor TMemory.Create(AParent: TObject);
-begin
-    inherited Create;
-    self.Create(AParent, sizeof(TObject));
-    
-    FClassParent := AParent;
+    FClassMemSize := 0;
+    FClassMemory  := self.Alloc(AValue);
+    FClassParent  := nil;
 end;
 constructor TMemory.Create(AParent: TObject; AValue: DWORD);
 begin
     self.Create(AValue);
     FClassParent := AParent;
 end;
-constructor TMemory.Create(AParent: TObject; var AValue: Pointer);
+constructor TMemory.Create(AParent: TObject);
 begin
     inherited Create;
-    FClassParent := AParent;
     
-    if AValue <> nil then
+    if AParent = nil then
     begin
-        FClassMemory := AValue;
+        FClassMemSize := sizeof(TObject);
+        FClassMemory  := VirtualAlloc(nil,
+        FClassMemSize,
+        MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE);
+        
+        if FClassMemory = nil then
+        begin
+            MessageBoxA(0,
+            PChar('Error: could not allocate memory.'),
+            PChar('Error'), 0);
+            exit;
+        end;
     end else
     begin
-        AValue := self.Alloc(AValue, sizeof(TObject));
-        FClassMemory := AValue;
+        FClassParent := AParent;
+        FClassMemory := self.Alloc(sizeof(TObject));
     end;
 end;
 
@@ -119,39 +122,33 @@ begin
     result := 'TMemory';
 end;
 
-function TMemory.Alloc(var AValue: Pointer; ASize: DWORD): Pointer;
+function TMemory.Alloc(ASize: DWORD): Pointer;
 begin
     result := nil;
     
-    AValue := VirtualAlloc(nil, ASize,
-    MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE);
-    
-    if AValue = nil then
+    if FClassMemSize = ASize then exit else
+    if FClassMemSize = 0 then
     begin
-        MessageBoxA(0,
-        PChar('Error: could not allocate memory.'),
-        PChar('Error'), 0);
-        exit;
+        FClassMemory := VirtualAlloc(nil, ASize,
+        MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE);
+        
+        if FClassMemory = nil then
+        begin
+            MessageBoxA(0,
+            PChar('Error: could not allocate memory.'),
+            PChar('Error'), 0);
+            exit;
+        end;
+        
+        FClassMemSize := ASize;
     end;
-    
-    result := AValue;
+    result := FClassMemory;
 end;
 procedure TMemory.Alloc;
 begin
-    Alloc(FClassMemory, 512);
+    self.Alloc(1024);
 end;
 
-procedure TMemory.Free(AValue: Pointer);
-begin
-    if FClassMemory <> nil then
-    VirtualFree(FClassMemory, 0, MEM_RELEASE);
-    
-    if FClassParent <> nil then
-    FClassParent.Free;
-    
-    if self <> nil then
-    self.Destroy;
-end;
 procedure TMemory.Free;
 begin
     if FClassMemory <> nil then

@@ -8,10 +8,6 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
-{$M-}
-{$I fpc_types.pas}
-{$ifndef __QT_OBJECT_HDR__}
-{$define __QT_OBJECT_HDR__}
 
 // ---------------------------------------------------------------------------
 // QString Qt-Framework GUI ...
@@ -25,7 +21,6 @@ type
 
 function Q_NULLPTR: Pointer; inline;
 
-{$endif}    // __QT_OBJECT_HDR__
 {$endif}
 
 {$ifdef windows_source}

@@ -265,9 +265,11 @@ procedure fpc_help_destructor(_self,_vmt:pointer;vmt_pos:cardinal);compilerproc;
 begin end;
 
 procedure fpc_help_fail(_self:pointer;var _vmt:pointer;vmt_pos:cardinal);compilerproc;
-begin end;
+begin
+    MessageBoxA(0,'ddddddd','dddddddd',0);
+end;
 
-procedure fpc_reraise; [public, alias:'fpc_reraise']; compilerproc;
+procedure fpc_reraise; compilerproc; //[public, alias:'fpc_reraise']; compilerproc;
 begin
     
 end;

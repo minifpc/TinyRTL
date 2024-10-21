@@ -23,10 +23,7 @@ set prjdir=%prjdrv%\a\TinyRTL\TinyRTL\src
 :: -----------------------------------------------------------------
 :: fpcdir1/2 => location of fpc.exe compiler tools ...
 :: -----------------------------------------------------------------
-set fpcdir1=%prjdrv%\a\TinyRTL\TinyRTL\fpc\3.2.0\bin\i386-win32
 set fpcdir2=%prjdrv%\a\TinyRTL\TinyRTL\fpc\3.2.2\bin\i386-win32
-
-set asmdir=%prjdrv%\a\TinyRTL\TinyRTL\nasm
 set fpcdir=%fpcdir2%
 
 :: -----------------------------------------------------------------
@@ -45,44 +42,24 @@ set fpcdst=^
     -Fu%prjdir%\sources\fpc-gnu ^
     -Fu%prjdir%\sources\fpc-qt
 
-set fpcsys2=^
-    -n -Mdelphi -Twin64 -dwindows -dwin64 -O2 -Os -Anasmwin64 -a
-
-:: -----------------------------------------------------------------
-:: location of nasm.exe (the netwide assembler)
-:: -----------------------------------------------------------------
-set asmx64=%asmdir%\nasm.exe -f win64 -w-orphan-labels
+set fpcsys2=-n -Mdelphi -Twin64 -dwindows -dwinexe -dwin64 -O2 -Os
 
 :: -----------------------------------------------------------------
 :: fpc64.exe is a copy of fpc 3.2 fpc.exe (64-Bit)
 :: -----------------------------------------------------------------
 set fpcx64=ppcrossx64.exe %fpcdst% %fpcsys2%
-
 set strip64=strip.exe
 
-set punits=D:\a\TinyRTL\TinyRTL\src\units
-set sunits=D:\a\TinyRTL\TinyRTL\src\sources
-
-set srcsys=-FE%punits%\fpc-sys %sunits%\fpc-sys
-set srcrtl=-FE%punits%\fpc-rtl %sunits%\fpc-rtl
-
-set sysrtl=%punits%\fpc-rtl
-
 :: -----------------------------------------------------------------
-:: counter for the iteration
+:: a hack for the RTTI ...
 :: -----------------------------------------------------------------
-set /a counter=0
+nasm.exe -f win64 ^
+    %prjdir%\test\test1helper.asm -o ^
+    %prjdir%\test\test1helper.o
 
 cd %prjdir%\test
-%fpcx64% -WC -dwinexe test1.pas
+%fpcx64% -WC test1.pas
 strip test1.exe
-goto allok
 
-:buildError
-echo =[ build error ]=
-exit
-goto eof
-:allok
 echo =[ done ]=
-goto eof
 :eof
