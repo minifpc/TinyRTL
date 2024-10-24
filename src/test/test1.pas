@@ -6,6 +6,8 @@
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
 {$mode delphi}
+{$linklib imptest1.a}
+{$linklib impzuzu.a}
 {$L test1helper.o}
 program test1;
 
@@ -30,4 +32,5 @@ begin
 end;
 
 begin
+    Entry;
 end.

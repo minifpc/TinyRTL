@@ -58,7 +58,7 @@ nasm.exe -f win64 ^
     %prjdir%\test\test1helper.o
 
 cd %prjdir%\test
-%fpcx64% -WC test1.pas
+%fpcx64% -Px86_64 -WC test1.pas
 strip test1.exe
 
 echo =[ done ]=
