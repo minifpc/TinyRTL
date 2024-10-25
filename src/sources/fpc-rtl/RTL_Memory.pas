@@ -9,6 +9,8 @@
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
 {$mode delphi}
+{$M-}
+type
     TMemory = class(TObject)
     private
         class var     FClassMemory : Pointer;
@@ -29,38 +31,104 @@
         procedure Free;
         
         class function ClassParent: TObject; virtual;
-        
-        function ClassName: String; virtual;
+        class function ClassName:    String; virtual;
 
         class property Parent: TObject read GetParent;
-        class property Memory: Pointer read FClassMemory write FClassMemory;
+        //
+        class property Data: Pointer read FClassMemory write FClassMemory;
         class property Size: DWORD read FClassMemSize;
     end;
+
+    TSystem = class(TObject)
+    private
+        class var      FSystemIO: TSystemIO;
+        class var   FClassParent: TObject;
+        class var      FMemClass: TMemory;
+        class var      FCpuClass: TCPU;
+        class var      FVgaClass: TVgaIO;
+        class var      FDosClass: TDosIO;
+        class function GetMemory: TMemory; static;
+    public
+        constructor Create;
+        destructor Destroy;
+        
+        class function ClassParent: TObject; virtual;
+        class function ClassName:    String; virtual;
+
+        class property Parent: TObject read FClassParent;
+        //
+        class property cpu: TCPU read FCpuClass;
+        class property mem: TMemory read GetMemory;
+        class property vga: TVgaIO read FVgaClass;
+        class property dos: TDosIO read FDosClass;
+        //
+        class property io : TSystemIO read FSystemIO;
+    end;
 var
+    sys: TSystem;
     mem: TMemory;
 
-procedure InitMemory;
-procedure DoneMemory;
+procedure InitSystem;
+procedure DoneSystem;
 
 {$endif}
 
 {$ifdef windows_source}
 {$mode delphi}
 
-{ TMemory }
-
-procedure InitMemory;
+procedure InitSystem;
 begin
-    if mem = nil then
+    if sys = nil then
     begin
-        mem := TMemory.Create;
+        sys := TSystem.Create;
     end;
 end;
-procedure DoneMemory;
+procedure DoneSystem;
 begin
-    if mem <> nil then
-    mem.Free;
+    if sys <> nil then
+    sys.Free;
 end;
+
+
+{ TSystem }
+
+constructor TSystem.Create;
+begin
+    inherited Create;
+    FMemClass := TMemory.Create;
+end;
+destructor TSystem.Destroy;
+begin
+    if FMemClass <> nil then
+    begin
+        FMemClass.Free;
+        FMemClass := nil;
+    end;
+    
+    inherited Destroy;
+end;
+
+class function TSystem.GetMemory: TMemory;
+begin
+    if FMemClass = nil then
+    FMemClass := TMemory.Create;
+    result := FMemClass;
+end;
+class function TSystem.ClassName: String;
+begin
+    result := 'TSystem';;
+end;
+class function TSystem.ClassParent: TObject;
+begin
+    result := Parent;
+end;
+class function TMemory.GetParent: TObject;
+begin
+    result := FClassParent;
+end;
+
+
+{ TMemory }
 
 constructor TMemory.Create;
 begin
@@ -108,16 +176,12 @@ begin
     inherited Destroy;
 end;
 
-class function TMemory.GetParent: TObject;
-begin
-    result := FClassParent;
-end;
 class function TMemory.ClassParent: TObject;
 begin
     result := Parent;
 end;
 
-function TMemory.ClassName: String;
+class function TMemory.ClassName: String;
 begin
     result := 'TMemory';
 end;
@@ -146,7 +210,7 @@ begin
 end;
 procedure TMemory.Alloc;
 begin
-    self.Alloc(1024);
+    self.Alloc(512);
 end;
 
 procedure TMemory.Free;

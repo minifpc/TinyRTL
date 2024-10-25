@@ -16,15 +16,13 @@ uses sysinit;
 procedure Entry; [public, alias: '_mainCRTStartup'];
 begin
     try
-        InitMemory;
-        InitConsole;
+        InitSystem;
         //
-        DOS.WriteLn('mem, windows: initialized... ok.');
-        mem.alloc(128);
+        //DOS.WriteLn('mem, windows: initialized... ok.');
+        sys.mem.alloc(128);
     finally
-        DOS.WriteLn('clean up...');
-        DoneConsole;
-        DoneMemory;
+        //DOS.WriteLn('clean up...');
+        DoneSystem;
         
         MessageBoxA(0,'Hello Fresh','Information',0);
         ExitProcess(0);
