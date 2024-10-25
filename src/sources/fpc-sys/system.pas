@@ -42,6 +42,16 @@ const rtl_dll = 'fpc_rtl.dll';
 // ---------------------------------------------------------------------------
 {$I RTL_Object.pas}
 {$I RTL_List.pas}
+
+{$I RTL_DosCmd.pas}
+{$I RTL_DosIO.pas}
+
+{$I RTL_win32.pas}
+
+{$I RTL_VgaIO.pas}
+{$I RTL_SystemIO.pas}
+{$I RTL_CpuInfo.pas}
+
 {$I RTL_Memory.pas}
 
 { $ I R T L_Queue.pas}
@@ -49,7 +59,7 @@ const rtl_dll = 'fpc_rtl.dll';
 // ---------------------------------------------------------------------------
 // Qt-Framework GUI ...
 // ---------------------------------------------------------------------------
-{$I Qt_Object.pas}
+{ $ I Q t _Object.pas}
 { $ I Q t _String.pas}
 { $ I Q t_Dialogs.pas}
 
@@ -72,6 +82,16 @@ implementation
 
 {$I RTL_Object.pas}
 {$I RTL_List.pas}
+
+{$I RTL_DosCmd.pas}
+{$I RTL_DosIO.pas}
+
+{$I RTL_win32.pas}
+
+{$I RTL_VgaIO.pas}
+{$I RTL_SystemIO.pas}
+{$I RTL_CpuInfo.pas}
+
 {$I RTL_Memory.pas}
 
 { $ I R T L_Queue.pas}
@@ -79,7 +99,7 @@ implementation
 // ---------------------------------------------------------------------------
 // Qt-Framework GUI ...
 // ---------------------------------------------------------------------------
-{$I Qt_Object.pas}
+{ $ I  Q t_Object.pas}
 { $ I  Q t_String.pas}
 { $ I  Q t_Dialogs.pas}
 

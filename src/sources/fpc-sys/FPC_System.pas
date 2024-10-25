@@ -40,7 +40,7 @@ procedure fpc_AnsiStr_Assign (var   DestS : Pointer;           S2: Pointer);    
 procedure fpc_AnsiStr_Concat (var   dst   : Pointer; const S1, S2: Pointer; cp: DWORD); compilerproc;
 function  fpc_AnsiStr_Unique (var   S     : Pointer):              Pointer;             compilerproc;
 
-function  fpc_AnsiStr_Compare_Equal (const S1, S2: String): BOOL compilerproc;
+function  fpc_AnsiStr_Compare_Equal (const S1, S2: Pointer): BOOL compilerproc;
 
 function  fpc_char_to_ansistr (c :  char): AnsiString; compilerproc;
 function  fpc_pchar_to_ansistr(const p : PAnsiChar): AnsiString; compilerproc; overload;
@@ -224,7 +224,7 @@ begin
         ExitProcess( 1 );
     end;
 end;
-function  fpc_AnsiStr_Compare_Equal(const S1, S2: String): BOOL; [public, alias: 'FPC_ANSISTR_COMPARE_EQUAL'] compilerproc;
+function  fpc_AnsiStr_Compare_Equal (const S1, S2: Pointer): BOOL; [public, alias: 'FPC_ANSISTR_COMPARE_EQUAL'] compilerproc;
 var
     res: DWORD;
 begin
@@ -265,14 +265,18 @@ procedure fpc_help_destructor(_self,_vmt:pointer;vmt_pos:cardinal);compilerproc;
 begin end;
 
 procedure fpc_help_fail(_self:pointer;var _vmt:pointer;vmt_pos:cardinal);compilerproc;
-begin end;
-
-procedure fpc_ReRaise; [public, alias:'fpc_reraise']; compilerproc;
 begin
+    MessageBoxA(0,'ddddddd','dddddddd',0);
+end;
+
+procedure fpc_reraise; compilerproc; //[public, alias:'fpc_reraise']; compilerproc;
+begin
+    
 end;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 begin end;
+
 procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
 begin
     MessageBoxA(0, PChar('uzy'), PChar('2121212'), 0);
