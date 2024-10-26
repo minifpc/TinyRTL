@@ -29,6 +29,12 @@ type
         procedure Write  (const msg: String);
         procedure WriteLn(const msg: String);
 
+        function ReadLn (const AString: String): String; overload;
+        function Read   (const AString: String): String; overload;
+        
+        function ReadLn: String; overload;
+        function Read:   String; overload;
+        
         function  get_StdIn : DWORD;
         function  get_StdOut: DWORD;
         function  get_StdErr: DWORD;
@@ -44,7 +50,7 @@ type
         property NewLine: String read FNewLine;
     end;
 var
-    DOS: TDosCmd;
+    dos: TDosCmd;
     
 procedure InitConsole;  // constructor: TUI
 procedure DoneConsole;  // destroy: TUI
@@ -64,41 +70,12 @@ begin
     result := len;
 end;
 
-(*
-procedure Write(const msg: String);
-begin
-    if (DOS = nil) or (Windows = nil) then
-    begin
-        MessageBoxA(0,
-        PChar('Error: Console not init.'),
-        PChar('Error'), 0);
-        ExitProcess(1);
-    end else
-    begin
-        DOS.Write(msg);
-    end;
-end;
-
-procedure WriteLn(const msg: String);
-begin
-    if (DOS = nil) or (Windows = nil) then
-    begin
-        MessageBoxA(0,
-        PChar('Error: Console not init.'),
-        PChar('Error'), 0);
-        ExitProcess(1);
-    end else
-    begin
-        DOS.WriteLn(msg);
-    end;
-end;*)
-
 
 { TDosCmd }
 
 procedure InitConsole;
 begin
-    DOS := TDosCmd.Create;
+    dos := TDosCmd.Create;
 end;
 procedure DoneConsole;
 begin
@@ -146,6 +123,41 @@ procedure TDosCmd.WriteLn(const msg: String);
 begin
     printf('%s'#13#10, PChar(msg));
 end;
+
+function TDosCmd.ReadLn(const AString: String): String;
+var
+    S1: String;
+begin
+    if dos = nil then
+    InitConsole;
+    
+    self.WriteLn(AString);
+    
+    scanf('%s', @S1);
+    result := S1;
+end;
+function TDosCmd.ReadLn: String;
+begin
+    result := self.ReadLn(' ');
+end;
+
+function TDosCmd.Read(const AString: String): String;
+var
+    S1: String;
+begin
+    if dos = nil then
+    InitConsole;
+
+    self.Write(AString);
+    
+    scanf('%s', @S1);
+    result := S1;
+end;
+function TDosCmd.Read: String;
+begin
+    result := self.Read(' ');
+end;
+
 
 function  TDosCmd.get_StdIn : DWORD; begin result := GetStdHandle(STD_INPUT_HANDLE ); end;
 function  TDosCmd.get_StdOut: DWORD; begin result := GetStdHandle(STD_OUTPUT_HANDLE); end;

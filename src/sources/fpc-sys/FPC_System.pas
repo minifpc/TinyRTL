@@ -33,6 +33,9 @@ function strcmp(
     str2: PChar
 ):  DWORD; cdecl; external 'msvcrt.dll' name 'strcmp';
 
+procedure fpc_Addref(Data,TypeInfo : Pointer); compilerproc;
+procedure fpc_DecRef(Data,TypeInfo : Pointer); compilerproc;
+
 procedure fpc_ansistr_decr_ref (Var S : Pointer); compilerproc;
 procedure fpc_AnsiStr_Incr_Ref (    S : Pointer); compilerproc; inline;
 
@@ -69,10 +72,18 @@ procedure fpc_do_exit; external name 'FPC_DO_EXIT'; compilerproc;
 procedure EmptyMethod; external name 'FPC_EMPTYMETHOD';
 
 procedure move(const source; var dest; count: DWORD); stdcall;
+
+procedure main; stdcall;
+procedure PascalMain; external name 'PASCALMAIN';
 {$endif}
 
 {$ifdef windows_source}
 {$M-}
+procedure main; stdcall; [public, alias: '_mainCRTStartup'];
+begin
+    PascalMain;
+end;
+
 function sizeByte : Byte; inline; begin result :=  1; end;
 function sizeChar : Byte; inline; begin result :=  2; end;
 function sizeWord : Byte; inline; begin result :=  4; end;
@@ -106,6 +117,14 @@ begin
         ExitProcess( 1 );
     end;
     // TODO: delete DestS
+end;
+
+procedure fpc_Addref(Data,TypeInfo : Pointer); [public, alias: 'FPC_ADDREF']; compilerproc;
+begin
+end;
+
+procedure fpc_decref(Data,TypeInfo : Pointer); [public, alias: 'FPC_DECREF']; compilerproc;
+begin
 end;
 
 procedure fpc_ansistr_decr_ref(Var S: Pointer); [public, alias: 'FPC_ANSISTR_DECR_REF'];  compilerproc;
@@ -279,7 +298,7 @@ begin end;
 
 procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
 begin
-    MessageBoxA(0, PChar('uzy'), PChar('2121212'), 0);
+    //MessageBoxA(0, PChar('uzy'), PChar('2121212'), 0);
 end;
 procedure fpc_libinitializeunits; [public, alias:'FPC_LIBINITIALIZEUNITS']; compilerproc; begin end;
 

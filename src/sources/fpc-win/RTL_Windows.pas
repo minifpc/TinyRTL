@@ -157,6 +157,13 @@ function printf(
     external 'msvcrt.dll'
     name 'printf';
 
+function scanf(
+    format: PChar;
+    args: Pointer
+): DWORD; cdecl;
+    external 'msvcrt'
+    name 'scanf';
+
 // ---------------------------------------------------------------------------
 // security structures ...
 // ---------------------------------------------------------------------------

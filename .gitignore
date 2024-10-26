@@ -27,3 +27,7 @@ src/sources/fpc-qt/Qt_String.s
 src/sources/fpc-qt/Qt_String.s
 src/sources/fpc-sys/system.s
 src/sources/fpc-sys/sysinit.s
+src/sources/fpc-sys/system.s
+src/test/test1.s
+src/sources/fpc-sys/sysinit.s
+src/sources/fpc-sys/sysinit.s

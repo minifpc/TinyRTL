@@ -53,7 +53,7 @@ const rtl_dll = 'fpc_rtl.dll';
 {$I RTL_CpuInfo.pas}
 
 {$I RTL_Memory.pas}
-
+{$I RTL_System.pas}
 { $ I R T L_Queue.pas}
 
 // ---------------------------------------------------------------------------
@@ -93,7 +93,7 @@ implementation
 {$I RTL_CpuInfo.pas}
 
 {$I RTL_Memory.pas}
-
+{$I RTL_System.pas}
 { $ I R T L_Queue.pas}
 
 // ---------------------------------------------------------------------------

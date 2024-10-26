@@ -5,34 +5,32 @@
 //
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
-{$ENTRYPOINT PASCALMAIN}
 {$mode delphi}
 {$M-}
 program test1;
 
-uses sysinit, Qt_String;
-
-procedure ExitProcess(AValue: Integer); external 'kernel32.dll';
-
 var
-    MemoryManager: TAnsiStringMemoryManager;
-
-procedure Entry; [public, alias: '_mainCRTStartup'];
-var
-    hm: HMODULE;
-    qs: QString;
+    S1: String;
 begin
-    MemoryManager := TAnsiStringMemoryManager.Create;
     try
-        InitConsole;
-        DOS.Write('Hello World !');
+        InitSystem;
+        // ----------------------------------------------
+        // you can use all these three variants to write
+        // text to a Windows Console (WriteLn) ...
+        // ----------------------------------------------
+        if sys.dos < 'Hello World !'then;
+        sys.dos.WriteLn('next String');
+        dos.WriteLn('dos string');
+        
+        // ----------------------------------------------
+        // to read text from a Windows Console, you can
+        // use these variants (ReadLn) ...
+        // ----------------------------------------------
+        if sys.dos > 'Input:' then;
+        //sys.dos.ReadLn;
     finally
-        MemoryManager.Free;
+        DoneSystem;
     end;
 
-    MessageBoxA(0,'qs','Information',0);
-    ExitProcess(0);
-end;
-
-begin
+    MessageBoxA(0,'Jump and Down','Information',0);
 end.

@@ -15,6 +15,7 @@ type
     public
         class operator < (A: TSystemIO; AString: String): Boolean;
         class operator > (A: TSystemIO; AString: String): Boolean;
+        class operator > (A: TSystemIO; AValue :  DWORD): Integer;
     end;
 {$endif}
 
@@ -24,10 +25,21 @@ type
 
 class operator TSystemIO.<(A: TSystemIO; AString: String): Boolean;
 begin
-    //DOS := TDosCmd.Create;
+    if dos = nil then
+    InitConsole;
+    dos.WriteLn(AString);
 end;
 class operator TSystemIO.>(A: TSystemIO; AString: String): Boolean;
 begin
+    if dos = nil then
+    InitConsole;
+    result := True;
+end;
+class operator TSystemIO.>(A: TSystemIO; AValue: DWORD): Integer;
+begin
+    if dos = nil then
+    InitConsole;
+    result := 1;
 end;
 
 {$endif}
