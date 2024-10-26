@@ -22,6 +22,8 @@ EXTERN	_$dll$kernel32$GetLastError
 EXTERN	_$dll$kernel32$DeleteFileA
 EXTERN	_$dll$kernel32$CreateFileA
 EXTERN	_$dll$kernel32$SetFilePointer
+EXTERN	_$dll$kernel32$SetConsoleOutputCP
+EXTERN	_$dll$kernel32$SetConsoleCP
 EXTERN	_$dll$msvcrt$printf
 EXTERN	_$dll$msvcrt$scanf
 EXTERN	_$dll$kernel32$GetStdHandle
@@ -1415,6 +1417,10 @@ SYSTEM$_$TDOSCMD_$__$$_CREATE$$TDOSCMD:
 		lea	rcx,[rax+16]
 		lea	rdx,[..@d24]
 		call	fpc_ansistr_assign
+		mov	ecx,65001
+		call	_$dll$kernel32$SetConsoleOutputCP
+		mov	ecx,65001
+		call	_$dll$kernel32$SetConsoleCP
 		mov	qword [rbp-24],1
 		cmp	qword [rbp-16],0
 		je	..@j261
@@ -1536,7 +1542,7 @@ SYSTEM$_$TDOSCMD_$__$$_CLEARSCREEN:
 ..@c199:
 
 SECTION .text
-SYSTEM$_$TDOSCMD_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001F1:
+SYSTEM$_$TDOSCMD_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001F5:
 ..@c201:
 		push	rbp
 ..@c203:
@@ -1593,7 +1599,7 @@ SYSTEM$_$TDOSCMD_$__$$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD:
 		nop
 ..@j294:
 		mov	rcx,rbp
-		call	SYSTEM$_$TDOSCMD_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001F1
+		call	SYSTEM$_$TDOSCMD_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001F5
 		mov	eax,ebx
 		mov	rbx,qword [rbp-24]
 		lea	rsp,[rbp]
@@ -1633,7 +1639,7 @@ SYSTEM$_$TDOSCMD_$__$$_WRITELN$POINTER:
 ..@c215:
 
 SECTION .text
-SYSTEM$_$TDOSCMD_$_READLN$ANSISTRING$$ANSISTRING_$$_fin$000001F2:
+SYSTEM$_$TDOSCMD_$_READLN$ANSISTRING$$ANSISTRING_$$_fin$000001F6:
 ..@c217:
 		push	rbp
 ..@c219:
@@ -1695,7 +1701,7 @@ SYSTEM$_$TDOSCMD_$__$$_READLN$ANSISTRING$$ANSISTRING:
 		nop
 ..@j309:
 		mov	rcx,rbp
-		call	SYSTEM$_$TDOSCMD_$_READLN$ANSISTRING$$ANSISTRING_$$_fin$000001F2
+		call	SYSTEM$_$TDOSCMD_$_READLN$ANSISTRING$$ANSISTRING_$$_fin$000001F6
 		mov	rbx,qword [rbp-24]
 		mov	rsi,qword [rbp-16]
 		lea	rsp,[rbp]
@@ -1720,7 +1726,7 @@ SYSTEM$_$TDOSCMD_$__$$_READLN$$ANSISTRING:
 ..@c228:
 
 SECTION .text
-SYSTEM$_$TDOSCMD_$_READ$ANSISTRING$$ANSISTRING_$$_fin$000001F3:
+SYSTEM$_$TDOSCMD_$_READ$ANSISTRING$$ANSISTRING_$$_fin$000001F7:
 ..@c230:
 		push	rbp
 ..@c232:
@@ -1780,7 +1786,7 @@ SYSTEM$_$TDOSCMD_$__$$_READ$ANSISTRING$$ANSISTRING:
 		nop
 ..@j323:
 		mov	rcx,rbp
-		call	SYSTEM$_$TDOSCMD_$_READ$ANSISTRING$$ANSISTRING_$$_fin$000001F3
+		call	SYSTEM$_$TDOSCMD_$_READ$ANSISTRING$$ANSISTRING_$$_fin$000001F7
 		mov	rbx,qword [rbp-32]
 		mov	rdi,qword [rbp-24]
 		mov	rsi,qword [rbp-16]
@@ -1905,7 +1911,7 @@ SYSTEM$_$TDOSCMD_$__$$_SET_STDERR$LONGDWORD$LONGDWORD:
 ..@c259:
 
 SECTION .text
-SYSTEM$_$TDOSIO_$_lower$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F4:
+SYSTEM$_$TDOSIO_$_lower$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F8:
 ..@c261:
 		push	rbp
 ..@c263:
@@ -1956,7 +1962,7 @@ SYSTEM$_$TDOSIO_$__$$_$lower$TDOSIO$ANSISTRING$$BOOLEAN:
 		nop
 ..@j349:
 		mov	rcx,rbp
-		call	SYSTEM$_$TDOSIO_$_lower$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F4
+		call	SYSTEM$_$TDOSIO_$_lower$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F8
 		mov	al,dl
 		mov	rdi,qword [rbp-32]
 		mov	rsi,qword [rbp-24]
@@ -1969,7 +1975,7 @@ SECTION .text
 ..@c267:
 
 SECTION .text
-SYSTEM$_$TDOSIO_$_greater$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F5:
+SYSTEM$_$TDOSIO_$_greater$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F9:
 ..@c271:
 		push	rbp
 ..@c273:
@@ -2030,7 +2036,7 @@ SYSTEM$_$TDOSIO_$__$$_$greater$TDOSIO$ANSISTRING$$BOOLEAN:
 		nop
 ..@j361:
 		mov	rcx,rbp
-		call	SYSTEM$_$TDOSIO_$_greater$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F5
+		call	SYSTEM$_$TDOSIO_$_greater$TDOSIO$ANSISTRING$$BOOLEAN_$$_fin$000001F9
 		mov	al,bl
 		mov	rbx,qword [rbp-56]
 		mov	rdi,qword [rbp-48]
@@ -2372,7 +2378,7 @@ SYSTEM$_$WINDOWS_CLASS_$__$$_FREE:
 ..@c318:
 
 SECTION .text
-SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001F6:
+SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001FA:
 ..@c320:
 		push	rbp
 ..@c322:
@@ -2428,7 +2434,7 @@ SYSTEM$_$WINDOWS_CLASS_$__$$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD:
 		nop
 ..@j441:
 		mov	rcx,rbp
-		call	SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001F6
+		call	SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$000001FA
 		mov	eax,ebx
 		mov	rbx,qword [rbp-24]
 		lea	rsp,[rbp]
@@ -2494,7 +2500,7 @@ SYSTEM$_$TVGAIO_$__$$_$greater$TVGAIO$ANSISTRING$$BOOLEAN:
 ..@c336:
 
 SECTION .text
-SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001F9:
+SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001FD:
 ..@c340:
 		push	rbp
 ..@c342:
@@ -2545,7 +2551,7 @@ SYSTEM$_$TSYSTEMIO_$__$$_$lower$TSYSTEMIO$ANSISTRING$$BOOLEAN:
 		nop
 ..@j460:
 		mov	rcx,rbp
-		call	SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001F9
+		call	SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001FD
 		mov	al,dl
 		mov	rdi,qword [rbp-32]
 		mov	rsi,qword [rbp-24]
@@ -2558,7 +2564,7 @@ SECTION .text
 ..@c346:
 
 SECTION .text
-SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001FA:
+SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001FE:
 ..@c350:
 		push	rbp
 ..@c352:
@@ -2604,7 +2610,7 @@ SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$ANSISTRING$$BOOLEAN:
 		nop
 ..@j472:
 		mov	rcx,rbp
-		call	SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001FA
+		call	SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$000001FE
 		mov	al,bl
 		mov	rbx,qword [rbp-40]
 		mov	rdi,qword [rbp-32]

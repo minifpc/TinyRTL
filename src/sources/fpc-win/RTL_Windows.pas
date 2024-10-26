@@ -92,6 +92,17 @@ type
     end;
 {$endif}
 // ---------------------------------------------------------------------------
+// some selected code page codes ...
+// ---------------------------------------------------------------------------
+const CP_UTF32be = 12001;  // Unicode 32-bit big endian
+const CP_UTF32   = 12000;  // Unicode 32-bit little endian
+const CP_UTF16   =  1200;  // Unicode 16-bit
+const CP_UTF8    = 65001;  // Unicode  8-bit
+const CP_UTF7    = 65000;
+const CP_IBM273  = 20273;  // DE
+const CP_UsAscii = 20127;  // 7-bit US Ascii
+const CP_Win1250 =  1250;  // Windows Ansi European
+
 function AllocConsole
 :   DWORD; stdcall;
     external 'kernel32.dll' name 'AllocConsole';
@@ -141,6 +152,16 @@ function SetConsoleCursorPosition(
     dwCursorPosition: COORD
 ):  DWORD; stdcall;
     external 'kernel32.dll' name 'SetConsoleCursorPosition';
+
+function SetConsoleOutputCP(
+    wCodePageID: DWORD
+):  BOOL; stdcall;
+    external 'kernel32.dll';
+
+function SetConsoleCP(
+    wCodePageID: UINT
+):  BOOL; stdcall;
+    external 'kernel32.dll';
 
 function WriteConsoleA(
     hConsoleOutput: DWORD;

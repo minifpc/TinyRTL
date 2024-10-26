@@ -88,6 +88,10 @@ begin
     inherited Create;
     
     FNewLine := #13#10;
+    
+    SetConsoleOutputCP(CP_UTF8);
+    SetConsoleCP(CP_UTF8);
+
 end;
 
 destructor TDosCmd.Destroy;

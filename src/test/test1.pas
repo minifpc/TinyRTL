@@ -31,11 +31,10 @@ begin
         sys.dos.WriteLn('--------');
         sys.dos.WriteLn(PChar(String(@S1)));
     finally
+        MessageBoxA(0,
+            PChar(String(@S1)),
+            PChar('Information'),
+            0);
         DoneSystem;
     end;
-
-    MessageBoxA(0,
-        PChar(String(@S1)),
-        PChar('Information'),
-        0);
 end.

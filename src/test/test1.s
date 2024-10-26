@@ -11,8 +11,8 @@ EXTERN	SYSTEM$_$TDOSCMD_$__$$_WRITELN$POINTER
 EXTERN	SYSTEM$_$TDOSIO_$__$$_READ$ANSISTRING$ANSISTRING
 EXTERN	FPC_EMPTYCHAR
 EXTERN	SYSTEM$_$TDOSIO_$__$$_WRITELN$PCHAR
-EXTERN	SYSTEM_$$_DONESYSTEM
 EXTERN	_$dll$user32$MessageBoxA
+EXTERN	SYSTEM_$$_DONESYSTEM
 EXTERN	fpc_initializeunits
 EXTERN	FPC_DO_EXIT
 EXTERN	fpc_ansistr_decr_ref
@@ -27,6 +27,15 @@ P$TEST1_$$_fin$00000001:
 		mov	rbp,rcx
 ..@c5:
 		lea	rsp,[rsp-32]
+		lea	rdx,[U_$P$TEST1_$$_S1]
+		test	rdx,rdx
+		jne	..@j17
+		lea	rdx,[FPC_EMPTYCHAR]
+..@j17:
+		xor	r9d,r9d
+		lea	r8,[_$TEST1$_Ld6]
+		xor	ecx,ecx
+		call	_$dll$user32$MessageBoxA
 		call	SYSTEM_$$_DONESYSTEM
 		nop
 		lea	rsp,[rsp+32]
@@ -81,15 +90,6 @@ PASCALMAIN:
 ..@j10:
 		mov	rcx,rbp
 		call	P$TEST1_$$_fin$00000001
-		lea	rdx,[U_$P$TEST1_$$_S1]
-		test	rdx,rdx
-		jne	..@j17
-		lea	rdx,[FPC_EMPTYCHAR]
-..@j17:
-		xor	r9d,r9d
-		lea	r8,[_$TEST1$_Ld6]
-		xor	ecx,ecx
-		call	_$dll$user32$MessageBoxA
 		call	FPC_DO_EXIT
 		nop
 		lea	rsp,[rbp]
