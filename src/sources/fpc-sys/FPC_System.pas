@@ -46,7 +46,7 @@ function  fpc_AnsiStr_Unique (var   S     : Pointer):              Pointer;     
 function  fpc_AnsiStr_Compare_Equal (const S1, S2: Pointer): BOOL compilerproc;
 
 function  fpc_char_to_ansistr (c :  char): AnsiString; compilerproc;
-function  fpc_pchar_to_ansistr(const p : PAnsiChar): AnsiString; compilerproc; overload;
+function  fpc_pchar_to_ansistr(const p : PAnsiChar): AnsiString; compilerproc;
 
 procedure fpc_EmptyChar( var DestS: Pointer); compilerproc;
 
@@ -183,27 +183,37 @@ end;
 
 function fpc_pchar_to_ansistr(const p: PAnsiChar): AnsiString;
 var
-    i, len: Integer;
-    s: PChar;
-    a: AnsiString;
+    len: SIZE_T;
+    s: PAnsiChar;
 begin
-    s   := '';
-    i   :=  0;
-    len :=  2;;
+    if p = nil then begin
+        result := '';
+        exit;
+    end;
     
-    Pointer(s) := VirtualAlloc(nil, len,
+    len := strlen(PChar(p));
+    
+    s := VirtualAlloc(nil, len + 1,
     MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
     
-    strcpy( s, Pointer( p ) );
+    if s = nil then begin
+        MessageBox(0,
+        PChar('Error: no more memory available.'),
+        PChar('Error'), 0);
+        ExitProcess(1);
+    end;
     
-    a := AnsiString( @s );
-    result := a;
+    strcpy(PChar(s), PChar(p));
+    
+    result := String(@s);
+    ///VirtualFree(s, 0, MEM_RELEASE);
 end;
 
 procedure fpc_ansistr_assign(var DestS: Pointer; S2: Pointer); [public, alias: 'FPC_ANSISTR_ASSIGN']; compilerproc;
 var
     SLen: SIZE_T;
 begin
+(*
     SLen  := strlen( ( S2 ) );
     GetMem( DestS, SLen );
 
@@ -216,7 +226,7 @@ begin
         MessageBox( 0, 'Error: fpc_AnsiStr_Assign memory allocation fail.', 'Error', 0 );
         ExitProcess( 1 );
     end;
-
+*)
     // TODO: add delete
     //VirtualFree( DestS, 0, MEM_RELEASE );
 end;

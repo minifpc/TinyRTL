@@ -13,14 +13,16 @@
 type
     TDosIO = record
     public
-        procedure WriteLn(const AString: String);
+        procedure WriteLn(const AString: String); overload;
+        procedure WriteLn(const AString: PChar ); overload;
+        
         procedure Write  (const AString: String);
         
-        function ReadLn (const AString: String): String; overload;
-        function Read   (const AString: String): String; overload;
+        procedure ReadLn (var S1: String; const AString: String); overload;
+        procedure Read   (var S1: String; const AString: String); overload;
         
-        function ReadLn: String; overload;
-        function Read:   String; overload;
+        procedure ReadLn (var S1: String); overload;
+        procedure Read   (var S1: String); overload;
         
         class operator < (A: TDosIO; AString: String): Boolean;
         class operator > (A: TDosIO; AString: String): Boolean; overload;
@@ -37,7 +39,7 @@ class operator TDosIO.<(A: TDosIO; AString: String): Boolean;
 begin
     if dos = nil then
     InitConsole;
-    dos.WriteLn(AString);
+    dos.WriteLn(PChar(AString));
 end;
 class operator TDosIO.>(A: TDosIO; AString: String): Boolean;
 var
@@ -45,7 +47,7 @@ var
 begin
     if dos = nil then
     InitConsole;
-    dos.Write(AString);
+    dos.Write(PChar(AString));
     dos.Read;
     result := True;
 end;
@@ -53,11 +55,17 @@ class operator TDosIO.>(A: TDosIO; AValue: DWORD): Integer;
 begin
     if dos = nil then
     InitConsole;
-    dos.Write('gugu');
+    dos.Write(PChar('gugu'));
     result := 1;
 end;
 
 procedure TDosIO.WriteLn(const AString: String);
+begin
+    if dos = nil then
+    InitConsole;
+    dos.WriteLn(PChar(AString));
+end;
+procedure TDosIO.WriteLn(const AString: PChar);
 begin
     if dos = nil then
     InitConsole;
@@ -68,41 +76,35 @@ procedure TDosIO.Write(const AString: String);
 begin
     if dos = nil then
     InitConsole;
-    dos.Write(AString);
+    dos.Write(PChar(AString));
 end;
 
-function TDosIO.ReadLn(const AString: String): String;
-var
-    S1: String;
+procedure TDosIO.ReadLn(var S1: String; const AString: String);
 begin
     if dos = nil then
     InitConsole;
     
-    dos.WriteLn(AString);
+    dos.WriteLn(PChar(AString));
     
     scanf('%s', @S1);
-    result := S1;
+    //result := String(S1);
 end;
-function TDosIO.ReadLn: String;
+procedure TDosIO.ReadLn(var S1: String);
 begin
-    result := dos.ReadLn(' ');
+    //result := dos.ReadLn(' ');
 end;
 
-function TDosIO.Read(const AString: String): String;
-var
-    S1: String;
+procedure TDosIO.Read(var S1: String; const AString: String);
 begin
     if dos = nil then
     InitConsole;
     
-    dos.Write(AString);
-    
-    S1 := dos.ReadLn(AString);
-    result := S1;
+    dos.Write(PChar(AString));
+    scanf('%s', @S1);
 end;
-function TDosIO.Read: String;
+procedure TDosIO.Read(var S1: String);
 begin
-    result := self.Read('');
+    //result := self.Read('');
 end;
 
 {$endif}

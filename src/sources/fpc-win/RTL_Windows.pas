@@ -160,9 +160,17 @@ function printf(
 function scanf(
     format: PChar;
     args: Pointer
-): DWORD; cdecl;
+):  DWORD; cdecl;
     external 'msvcrt'
     name 'scanf';
+
+function memset(
+    ptr: Pointer;
+    value: DWORD;
+    num: DWORD
+):  Pointer; cdecl;
+    external 'msvcrt'
+    name 'memset';
 
 // ---------------------------------------------------------------------------
 // security structures ...

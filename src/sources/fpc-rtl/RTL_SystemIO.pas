@@ -27,7 +27,7 @@ class operator TSystemIO.<(A: TSystemIO; AString: String): Boolean;
 begin
     if dos = nil then
     InitConsole;
-    dos.WriteLn(AString);
+    dos.WriteLn(PChar(AString));
 end;
 class operator TSystemIO.>(A: TSystemIO; AString: String): Boolean;
 begin

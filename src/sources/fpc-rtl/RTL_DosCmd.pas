@@ -26,8 +26,8 @@ type
         
         function MessageBox(AText, ATitle: String): DWORD;
         
-        procedure Write  (const msg: String);
-        procedure WriteLn(const msg: String);
+        procedure Write  (const msg: Pointer);
+        procedure WriteLn(const msg: Pointer);
 
         function ReadLn (const AString: String): String; overload;
         function Read   (const AString: String): String; overload;
@@ -114,14 +114,14 @@ begin
     result := 0;
 end;
 
-procedure TDosCmd.Write(const msg: String);
+procedure TDosCmd.Write(const msg: Pointer);
 begin
     printf('%s', PChar(msg));
 end;
 
-procedure TDosCmd.WriteLn(const msg: String);
+procedure TDosCmd.WriteLn(const msg: Pointer);
 begin
-    printf('%s'#13#10, PChar(msg));
+    printf('%s'#13#10, msg);
 end;
 
 function TDosCmd.ReadLn(const AString: String): String;
@@ -131,10 +131,12 @@ begin
     if dos = nil then
     InitConsole;
     
-    self.WriteLn(AString);
-    
+    dos.WriteLn(PChar(AString));
+    dos.WriteLn(PChar('00000'));
     scanf('%s', @S1);
-    result := S1;
+    
+    dos.Writeln(@S1);
+    result := String(@S1);
 end;
 function TDosCmd.ReadLn: String;
 begin
@@ -148,10 +150,10 @@ begin
     if dos = nil then
     InitConsole;
 
-    self.Write(AString);
-    
+    self.Write(PChar(AString));
+    dos.WriteLn(PChar('00000'));
     scanf('%s', @S1);
-    result := S1;
+    result := String(@S1);
 end;
 function TDosCmd.Read: String;
 begin

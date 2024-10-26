@@ -20,17 +20,22 @@ begin
         // ----------------------------------------------
         if sys.dos < 'Hello World !'then;
         sys.dos.WriteLn('next String');
-        dos.WriteLn('dos string');
+        dos.WriteLn(PChar('dos string'));
         
         // ----------------------------------------------
         // to read text from a Windows Console, you can
         // use these variants (ReadLn) ...
         // ----------------------------------------------
-        if sys.dos > 'Input:' then;
-        //sys.dos.ReadLn;
+        //if sys.dos > 'Input:' then;
+        sys.dos.Read(S1, 'Input: ');
+        sys.dos.WriteLn('--------');
+        sys.dos.WriteLn(PChar(String(@S1)));
     finally
         DoneSystem;
     end;
 
-    MessageBoxA(0,'Jump and Down','Information',0);
+    MessageBoxA(0,
+        PChar(String(@S1)),
+        PChar('Information'),
+        0);
 end.
