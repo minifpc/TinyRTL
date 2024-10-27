@@ -72,6 +72,11 @@ PASCALMAIN:
 ..@j10:
 		mov	rcx,rbp
 		call	P$TEST1_$$_fin$00000001
+		xor	r9d,r9d
+		lea	r8,[_$TEST1$_Ld6]
+		lea	rdx,[_$TEST1$_Ld7]
+		xor	ecx,ecx
+		call	_$dll$user32$MessageBoxA
 		call	FPC_DO_EXIT
 		nop
 		lea	rsp,[rbp]
@@ -194,6 +199,14 @@ SECTION .rodata
 SECTION .rodata
 _$TEST1$_Ld5:
 		DB	"Information",0
+
+SECTION .rodata
+_$TEST1$_Ld6:
+		DB	"done",0
+
+SECTION .rodata
+_$TEST1$_Ld7:
+		DB	"finally endy",0
 ; End asmlist al_typedconsts
 ; Begin asmlist al_dwarf_frame
 

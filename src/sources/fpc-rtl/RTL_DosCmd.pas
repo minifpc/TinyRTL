@@ -165,13 +165,14 @@ var
     Success  : DWORD;
 begin
     dos.Write(AString);
-    
+    scanf('%s', @S1);
+    exit;
     ident := '';
     while True do
     begin
-        ch := getch;
+        //ch := getch;
         if ch = #13 then break;
-        ident := ident + ch;
+        //ident := ident + ch;
     end;
     
     dos.writeln(ident);

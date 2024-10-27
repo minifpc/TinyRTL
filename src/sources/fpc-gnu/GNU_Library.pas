@@ -20,7 +20,7 @@ function strcat (d: PChar; s: PChar): PChar; cdecl; external 'ucrtbase.dll'   na
 function strcpy (d: PChar; s: PChar): PChar; cdecl; external 'ucrtbase.dll'   name 'strcpy';
 function strlen (s: PChar): DWORD ; cdecl; external DLL_STR_kernel32 name 'lstrlenA';
 
-function getch: Char; cdecl; external 'msvcrt.dll';
+//function getch: Char; cdecl; external 'msvcrt.dll';
 
 function fscanf(
     stream: PFILE;
