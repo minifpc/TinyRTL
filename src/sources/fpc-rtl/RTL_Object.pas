@@ -90,6 +90,10 @@ end;
 
 procedure TObject.Free;
 begin
+MessageBoxA(0,
+            PChar('internal Error.'),
+            PChar('Error'),
+            MB_OK or MB_ICONERROR);
     if self <> nil then
     FreeInstance;
 end;
@@ -117,11 +121,22 @@ end;
 
 class procedure TObject.FreeInstance;
 begin
+MessageBoxA(0,
+            PChar('internal Error.'),
+            PChar('Error'),
+            MB_OK or MB_ICONERROR);
     if FClassInstance <> nil then
     VirtualFree(FClassInstance, 0, MEM_RELEASE);
-    
+    MessageBoxA(0,
+            PChar('internal Error.'),
+            PChar('Error'),
+            MB_OK or MB_ICONERROR);
     if self <> nil then
     begin
+    MessageBoxA(0,
+            PChar('internal Error.'),
+            PChar('Error'),
+            MB_OK or MB_ICONERROR);
         VirtualFree(Pointer(self), 0, MEM_RELEASE);
     end;
 end;

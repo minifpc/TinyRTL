@@ -9,35 +9,29 @@
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
 {$mode delphi}
-{$M-}
 type
     TSystem = class(TObject)
     private
-        class var      FSystemIO: TSystemIO;
-        class var   FClassParent: TObject;
-        class var      FMemClass: TMemory;
-        class var      FCpuClass: TCPU;
-        class var      FVgaClass: TVgaIO;
-        class var      FDosClass: TDosIO;
-        class function GetMemory: TMemory; static;
+        class var      FSystemIO  : TSystemIO;
+        class var   FClassParent  : TObject;
+        class var      FMemClass  : TMemory;
+        class var      FCpuClass  : TCPU;
+        class var      FVgaClass  : TVgaIO;
+        class function GetMemory  : TMemory; static;
     public
         constructor Create;
         destructor Destroy;
         
-        class function ClassParent: TObject; virtual;
-        class function ClassName:    String; virtual;
-
-        class property Parent: TObject read FClassParent;
-        //
+        class function ClassName: String;
+        
         class property cpu: TCPU read FCpuClass;
         class property mem: TMemory read GetMemory;
         class property vga: TVgaIO read FVgaClass;
-        class property dos: TDosIO read FDosClass;
         //
         class property io : TSystemIO read FSystemIO;
     end;
 var
-    sys: TSystem;
+    sys: TSystem = nil;
 
 procedure InitSystem;
 procedure DoneSystem;
@@ -50,13 +44,16 @@ procedure DoneSystem;
 
 procedure InitSystem;
 begin
-    if mem = nil then mem := TMemory.Create;
-    if sys = nil then sys := TSystem.Create;
+    dos := TDosCmd.Create;
+    sys := TSystem.Create;
+    mem := TMemory.Create;
+    dos.writeln('start...');
 end;
 procedure DoneSystem;
 begin
-    if sys <> nil then sys.Free;
-    if mem <> nil then mem.Free;
+    //sys.Free;
+    //mem.Free;
+    //dos.Free;
 end;
 
 
@@ -87,14 +84,6 @@ end;
 class function TSystem.ClassName: String;
 begin
     result := 'TSystem';;
-end;
-class function TSystem.ClassParent: TObject;
-begin
-    result := Parent;
-end;
-class function TMemory.GetParent: TObject;
-begin
-    result := FClassParent;
 end;
 
 {$endif}

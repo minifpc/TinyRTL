@@ -40,6 +40,9 @@ type HMODULE   = HINSTANCE;     // a handle to a module (.dll)
 type HWND      = LongDWord;     // a handle to a window
 type ATOM      = LongDWord;     // local/global atom index for a string
 
+type PDWORD    = ^DWORD;
+type LPDWORD   = PDWORD;
+
 type HGLOBAL   = THandle;       // a globally memory allocated handle
 
 type LPCSTR    = PAnsiString;
@@ -52,6 +55,8 @@ type LPCTSTR   = LPCWSTR;
 {$else}
 type LPCTSTR   = LPCSTR;
 {$endif}
+
+type TSystemCodePage = Word;
 
 type LONG_PTR  = UInt64;
 type PLONC_PTR = ^LONG_PTR;

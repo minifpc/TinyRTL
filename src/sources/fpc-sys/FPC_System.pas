@@ -9,6 +9,11 @@
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
 {$M-}
+
+{$if declared(TSystemCodePage) = false}
+    type TSystemCodePage = Word;
+{$endif}
+
 function MessageBoxA(
     hWnd: HWND;
     lpText, lpCaption: PChar;
@@ -45,7 +50,7 @@ function  fpc_AnsiStr_Unique (var   S     : Pointer):              Pointer;     
 
 function  fpc_AnsiStr_Compare_Equal (const S1, S2: Pointer): BOOL compilerproc;
 
-function  fpc_char_to_ansistr (c :  char): AnsiString; compilerproc;
+function  fpc_char_to_ansistr (const c :  Char; cp : TSystemCodePage): AnsiString; compilerproc;
 function  fpc_pchar_to_ansistr(const p : PAnsiChar): AnsiString; compilerproc;
 
 procedure fpc_EmptyChar( var DestS: Pointer); compilerproc;
@@ -135,26 +140,9 @@ procedure fpc_AnsiStr_Incr_Ref (S : Pointer); [public, alias: 'FPC_ANSISTR_INCR_
 Begin
 end;
 
-function  fpc_char_to_ansistr(c : char): AnsiString; compilerproc;
-var
-    MyHeap: THandle;
-    DestS: PChar;
+function  fpc_char_to_ansistr(const c : Char; cp : TSystemCodePage): AnsiString; compilerproc;
 begin
-    MyHeap := THandle( HeapCreate( HEAP_NO_SERIALIZE, $ffff, 0 ) );
-    if MyHeap = 0 then
-    begin
-        MessageBoxA(0,
-        PChar('Error: creating private heap.'),
-        PChar('Error'),
-        0);
-        exit;
-    end;
-    DestS  := PChar( LocalAlloc( LHND, 2 ) );
-    DestS^ := c;
-    
-    (DestS + 1)^ := #0;
-    
-    LocalFree( Pointer( MyHeap ) );
+    result := String(c);
 end;
 
 function fpc_AnsiStr_Unique(var S: Pointer): Pointer; compilerproc;

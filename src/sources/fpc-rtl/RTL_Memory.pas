@@ -9,14 +9,12 @@
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
 {$mode delphi}
-{$M-}
 type
     TMemory = class(TObject)
     private
         class var     FClassMemory : Pointer;
         class var     FClassMemSize: DWORD;
         class var     FClassParent : TObject;
-        class function   GetParent : TObject; static;
     public
         constructor Create(AParent : TObject; AValue: DWORD); overload;
         constructor Create(AParent : TObject); overload;
@@ -28,47 +26,61 @@ type
         
         function  Alloc(ASize: DWORD): Pointer; overload;
         procedure Alloc; overload;
-        procedure Free;
+        procedure Free; virtual;
         
-        class function ClassParent: TObject; virtual;
-        class function ClassName:    String; virtual;
-
-        class property Parent: TObject read GetParent;
+        class function ClassName: String; virtual;
         //
         class property Data: Pointer read FClassMemory write FClassMemory;
         class property Size: DWORD read FClassMemSize;
     end;
 
 var
-    mem: TMemory;
+    mem: TMemory = nil;
+
+procedure InitMemory;
+procedure DoneMemory;
+
 {$endif}
 
 {$ifdef windows_source}
 {$mode delphi}
-{$M-}
 
 { TMemory }
 
+procedure InitMemory;
+begin
+    mem := TMemory.Create;
+end;
+procedure DoneMemory;
+begin
+    mem.Free;
+end;
+
 constructor TMemory.Create;
 begin
+    inherited Create;
+
     self.Create(DWORD(512));  // default
 end;
 constructor TMemory.Create(AValue: DWORD);
 begin
     inherited Create;
+
     FClassMemSize := 0;
     FClassMemory  := self.Alloc(AValue);
     FClassParent  := nil;
 end;
 constructor TMemory.Create(AParent: TObject; AValue: DWORD);
 begin
-    self.Create(AValue);
+    inherited Create;
+    
+    self.Create(DWORD(AValue));
     FClassParent := AParent;
 end;
 constructor TMemory.Create(AParent: TObject);
 begin
     inherited Create;
-    
+
     if AParent = nil then
     begin
         FClassMemSize := sizeof(TObject);
@@ -93,11 +105,6 @@ end;
 destructor TMemory.Destroy;
 begin
     inherited Destroy;
-end;
-
-class function TMemory.ClassParent: TObject;
-begin
-    result := Parent;
 end;
 
 class function TMemory.ClassName: String;
@@ -136,12 +143,9 @@ procedure TMemory.Free;
 begin
     if FClassMemory <> nil then
     VirtualFree(FClassMemory, 0, MEM_RELEASE);
-    
+
     if FClassParent <> nil then
     FClassParent.Free;
-    
-    if self <> nil then
-    self.Destroy
 end;
 
 {$endif}

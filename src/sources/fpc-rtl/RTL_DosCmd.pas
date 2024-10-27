@@ -26,14 +26,17 @@ type
         
         function MessageBox(AText, ATitle: String): DWORD;
         
-        procedure Write  (const msg: Pointer);
-        procedure WriteLn(const msg: Pointer);
+        procedure Write  (const msg: PChar  ); overload;
+        procedure Write  (const msg: String ); overload;
+        //
+        procedure WriteLn(const msg: PChar  ); overload;
+        procedure WriteLn(const msg: String ); overload;
 
-        function ReadLn (const AString: String): String; overload;
-        function Read   (const AString: String): String; overload;
+        procedure ReadLn (var S1: String; const AString: String); overload;
+        procedure Read   (var S1: String; const AString: String); overload;
         
-        function ReadLn: String; overload;
-        function Read:   String; overload;
+        procedure ReadLn (var S1: String); overload;
+        procedure Read   (var S1: String); overload;
         
         function  get_StdIn : DWORD;
         function  get_StdOut: DWORD;
@@ -50,11 +53,8 @@ type
         property NewLine: String read FNewLine;
     end;
 var
-    dos: TDosCmd;
+    dos: TDosCmd = nil;
     
-procedure InitConsole;  // constructor: TUI
-procedure DoneConsole;  // destroy: TUI
-
 {$endif}
 
 {$ifdef windows_source}
@@ -73,25 +73,30 @@ end;
 
 { TDosCmd }
 
-procedure InitConsole;
-begin
-    dos := TDosCmd.Create;
-end;
-procedure DoneConsole;
-begin
-    //if DOS <> nil then
-    //DOS.Free;
-end;
-
 constructor TDosCmd.Create;
 begin
     inherited Create;
+    
+    fstdin  := self.get_stdin ;
+    fstdout := self.get_stdout;
+    fstderr := self.get_stderr;
+    
+    if (fstdin  = INVALID_HANDLE_VALUE)
+    or (fstdout = INVALID_HANDLE_VALUE)
+    or (fstderr = INVALID_HANDLE_VALUE) then
+    begin
+        MessageBoxA(0,
+            PChar('Error: io handles.'),
+            PChar('Error'), 0);
+        ExitProcess(1);
+    end;
     
     FNewLine := #13#10;
     
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
-
+    
+    self.writeln('xxxxx');
 end;
 
 destructor TDosCmd.Destroy;
@@ -118,56 +123,106 @@ begin
     result := 0;
 end;
 
-procedure TDosCmd.Write(const msg: Pointer);
+procedure TDosCmd.Write(const msg: PChar);
 begin
-    printf('%s', PChar(msg));
+    printf('%s', msg);
 end;
 
-procedure TDosCmd.WriteLn(const msg: Pointer);
+procedure TDosCmd.WriteLn(const msg: PChar);
 begin
     printf('%s'#13#10, msg);
 end;
 
-function TDosCmd.ReadLn(const AString: String): String;
-var
-    S1: String;
+procedure TDosCmd.Write(const msg: String);
 begin
-    if dos = nil then
-    InitConsole;
+    dos.Write(PChar(msg));
+end;
+procedure TDosCmd.WriteLn(const msg: String);
+begin
+    dos.WriteLn(PChar(msg));
+end;
+
+procedure TDosCmd.ReadLn(var S1: String; const AString: String);
+begin
+    dos.WriteLn('PChar(AString)');
     
-    dos.WriteLn(PChar(AString));
-    dos.WriteLn(PChar('00000'));
     scanf('%s', @S1);
-    
-    dos.Writeln(@S1);
-    result := String(@S1);
+    //result := String(S1);
 end;
-function TDosCmd.ReadLn: String;
+procedure TDosCmd.ReadLn(var S1: String);
 begin
-    result := self.ReadLn(' ');
+    //result := dos.ReadLn(' ');
 end;
 
-function TDosCmd.Read(const AString: String): String;
+procedure TDosCmd.Read(var S1: String; const AString: String);
+const
+    BufferSize = 255;
 var
-    S1: String;
+    Buffer   : array[0..BufferSize] of Char;
+    charsRead: DWORD;
+    ch: Char;
+    ident, tmpstr: String;
+    Success  : DWORD;
 begin
-    if dos = nil then
-    InitConsole;
-
-    self.Write(PChar(AString));
-    dos.WriteLn(PChar('00000'));
-    scanf('%s', @S1);
-    result := String(@S1);
+    dos.Write(AString);
+    
+    ident := '';
+    while True do
+    begin
+        ch := getch;
+        if ch = #13 then break;
+        ident := ident + ch;
+    end;
+    
+    dos.writeln(ident);
+    
+    exit;
+    Success := DWORD(ReadConsoleA(
+        HANDLE(self.stdin),
+        @Buffer,
+        BufferSize - 1,
+        @charsRead,
+        nil));
+    if Boolean(Success) = False then
+    begin
+        MessageBoxA(0,
+            PChar('Error: could not read data.'),
+            PChar('Error'), 0);
+        Exit;
+    end;
+printf('chars read: %d'#13#10,charsRead);
+    // --------------------------------
+    // string termination, and cut the
+    // end of line CRLF chars ...
+    // --------------------------------
+    Buffer[charsRead - 2] := #0;
+    MessageBoxA(0,
+        PChar(Buffer),
+        PChar('info'), 0);
+    
+    //scanf('%s', @S1);
+    //dos.Writeln(@S1);
 end;
-function TDosCmd.Read: String;
+procedure TDosCmd.Read(var S1: String);
 begin
-    result := self.Read(' ');
+    dos.writeln('uhuhuhuhu');
+    //result := self.Read('');
 end;
 
+procedure check_result(AHandle: DWORD);
+begin
+    if AHandle = INVALID_HANDLE_VALUE then
+    begin
+        MessageBoxA(0,
+            PChar('Error: invalide handle.'),
+            PChar('Error'), 0);
+        ExitProcess(1);
+    end;
+end;
 
-function  TDosCmd.get_StdIn : DWORD; begin result := GetStdHandle(STD_INPUT_HANDLE ); end;
-function  TDosCmd.get_StdOut: DWORD; begin result := GetStdHandle(STD_OUTPUT_HANDLE); end;
-function  TDosCmd.get_StdErr: DWORD; begin result := GetStdHandle(STD_ERROR_HANDLE ); end;
+function  TDosCmd.get_StdIn : DWORD; begin result := GetStdHandle(STD_INPUT_HANDLE ); check_result(self.stdin ); end;
+function  TDosCmd.get_StdOut: DWORD; begin result := GetStdHandle(STD_OUTPUT_HANDLE); check_result(self.stdout); end;
+function  TDosCmd.get_StdErr: DWORD; begin result := GetStdHandle(STD_ERROR_HANDLE ); check_result(self.stderr); end;
 
 procedure TDosCmd.set_StdIn (AValueDST, AValueSRC: DWORD); begin SetStdHandle(AValueSRC, GetStdHandle(AValueDST)); end;
 procedure TDosCmd.set_StdOut(AValueDST, AValueSRC: DWORD); begin SetStdHandle(AValueSRC, GetStdHandle(AValueDST)); end;

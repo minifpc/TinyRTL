@@ -24,6 +24,11 @@ type LPCVOID   = ^LPVOID;
     {$endif}
 {$endif}
 
+{$if declared(LPDWORD) = false}
+type PDWORD    = ^DWORD;
+type LPDWORD   = PDWORD;
+{$endif}
+
 {$if declared(POINT) = false}
 type
     PPoint = ^POINT;
@@ -44,6 +49,10 @@ type
         pt       : POINT;
         lPrivate : DWORD;
     end;
+{$endif}
+
+{$if declared(TSystemCodePage) = false}
+    type TSystemCodePage = Word;
 {$endif}
 
 // ---------------------------------------------------------------------------
@@ -89,6 +98,15 @@ type
         wAttributes: WORD;
         srWindow: SMALL_RECT;
         dwMaximumWindowSize: COORD;
+    end;
+{$endif}
+{$if declared(CONSOLE_READCONSOLE_CONTROL) = false}
+    PCONSOLE_READCONSOLE_CONTROL = ^CONSOLE_READCONSOLE_CONTROL;
+    CONSOLE_READCONSOLE_CONTROL = record
+        nLength:            DWORD;  // Größe der Struktur in Bytes
+        nInitialChars:      DWORD;  // Anzahl der initialen Zeichen
+        dwCtrlWakeupMask:   DWORD;  // Maske für Steuerungstasten
+        dwControlKeyState:  DWORD;  // Steuerungsstatus
     end;
 {$endif}
 // ---------------------------------------------------------------------------
@@ -163,6 +181,15 @@ function SetConsoleCP(
 ):  BOOL; stdcall;
     external 'kernel32.dll';
 
+function ReadConsoleA(
+    hConsoleInput: HANDLE;        // Handle für die Konsole (in der Regel STD_INPUT_HANDLE)
+    lpBuffer: Pointer;            // Zeiger auf den Puffer, in den die Eingabe geschrieben wird
+    nNumberOfCharsToRead: DWORD;  // Anzahl der Zeichen, die gelesen werden sollen
+    lpNumberOfCharsRead: LPDWORD; // Zeiger auf eine DWORD-Variable, die die tatsächliche Anzahl der gelesenen Zeichen enthält
+    pInputControl: Pointer        // Sollte in den meisten Fällen NIL sein
+):  BOOL; stdcall;
+    external 'kernel32.dll';
+
 function WriteConsoleA(
     hConsoleOutput: DWORD;
     lpBuffer: Pointer;
@@ -171,27 +198,6 @@ function WriteConsoleA(
     lpReserved: Pointer
 ):  DWORD; stdcall;
     external 'kernel32.dll' name 'WriteConsoleA';
-
-function printf(
-    format: PChar
-):  Integer; cdecl; varargs;
-    external 'msvcrt.dll'
-    name 'printf';
-
-function scanf(
-    format: PChar;
-    args: Pointer
-):  DWORD; cdecl;
-    external 'msvcrt'
-    name 'scanf';
-
-function memset(
-    ptr: Pointer;
-    value: DWORD;
-    num: DWORD
-):  Pointer; cdecl;
-    external 'msvcrt'
-    name 'memset';
 
 // ---------------------------------------------------------------------------
 // security structures ...
@@ -283,6 +289,15 @@ const FILE_FLAG_SESSION_AWARE      = $00800000;
 const FILE_FLAG_SEQUENTIAL_SCAN    = $08000000;
 const FILE_FLAG_WRITE_THROUGH      = $80000000;
 // ---------------------------------------------------------------------------
+{$if declared(PFILE) = false}
+type
+    PFILE = Pointer;
+{$endif}
+var
+    con_stdin : PFILE; external 'msvcrt.dll' name 'stdin' ;
+    con_stdout: PFILE; external 'msvcrt.dll' name 'stdout';
+    con_stderr: PFILE; external 'msvcrt.dll' name 'stderr';
+
 function CreateFile(
     lpFileName            : PChar;
     dwDesiredAccess       : DWORD;
@@ -340,8 +355,16 @@ function WriteFile(
     stdcall; external 'kernel32.dll' name 'WriteFile';*)
     
 function CloseHandle(
-    hObject: THANDLE): BOOL;
-    stdcall; external 'kernel32.dll' name 'CloseHandle';
+    hObject: THANDLE
+):  BOOL; stdcall;
+    external 'kernel32.dll' name 'CloseHandle';
+
+function fgets(
+    buffer: PChar;
+    count: DWORD;
+    stream: Pointer
+):  PChar; cdecl;
+    external 'msvcrt.dll';
 
 // ---------------------------------------------------------------------------
 // win32api - windows sockets ...
@@ -487,7 +510,7 @@ function GetOEMCP: DWORD; cdecl; external DLL_STR_kernel32 name 'GetOEMCP';
 // \return DWORD - the current system code page.
 // \see    GetACP
 // \see    GetOEMCP
-function TSystemCodePage: DWORD;
+//function TSystemCodePage: WORD;
 
 // ---------------------------------------------------------------------------
 // win32api module kernel32.dll:
@@ -626,10 +649,10 @@ begin
     p := VirtualAlloc( nil, size, MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
 end;
 
-function TSystemCodePage: DWORD;
+(*function TSystemCodePage: DWORD;
 begin
     result := GetACP;
-end;
+end;*)
 
 function LockFile(
     hfile : HANDLE): Boolean; overload;

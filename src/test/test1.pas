@@ -15,24 +15,22 @@ begin
     try
         InitSystem;
         // ----------------------------------------------
-        // you can use all these three variants to write
+        // you can use all these variants to write
         // text to a Windows Console (WriteLn) ...
         // ----------------------------------------------
-        if sys.dos < 'Hello World !'then;
-        sys.dos.WriteLn('next String');
+        dos.WriteLn('next String');
         dos.WriteLn(PChar('dos string'));
         
         // ----------------------------------------------
         // to read text from a Windows Console, you can
         // use these variants (ReadLn) ...
         // ----------------------------------------------
-        //if sys.dos > 'Input:' then;
-        sys.dos.Read(S1, 'Input: ');
-        sys.dos.WriteLn('--------');
-        sys.dos.WriteLn(PChar(String(@S1)));
+        dos.Read(S1, 'Input: ');
+        dos.WriteLn('--------');
+        dos.WriteLn(@S1);
     finally
         MessageBoxA(0,
-            PChar(String(@S1)),
+            PChar(@S1),
             PChar('Information'),
             0);
         DoneSystem;

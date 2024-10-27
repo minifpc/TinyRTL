@@ -47,7 +47,8 @@ set fpcdst=^
 
 set fpcsys2=^
     -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -Anasmwin64 -a ^
-    -dNoRTTI -XMPASCALMAIN
+    -XMPASCALMAIN
+::    -dNoRTTI -XMPASCALMAIN
 
 :: -----------------------------------------------------------------
 :: location of nasm.exe (the netwide assembler)

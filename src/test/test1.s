@@ -3,16 +3,11 @@ default rel
 CPU x64
 
 EXTERN	SYSTEM_$$_INITSYSTEM
-EXTERN	U_$SYSTEM_$$__static_tsystem_FDOSCLASS
-EXTERN	SYSTEM$_$TDOSIO_$__$$_$lower$TDOSIO$ANSISTRING$$BOOLEAN
-EXTERN	SYSTEM$_$TDOSIO_$__$$_WRITELN$ANSISTRING
-EXTERN	U_$SYSTEM_$$_DOS
-EXTERN	SYSTEM$_$TDOSCMD_$__$$_WRITELN$POINTER
-EXTERN	SYSTEM$_$TDOSIO_$__$$_READ$ANSISTRING$ANSISTRING
-EXTERN	FPC_EMPTYCHAR
-EXTERN	SYSTEM$_$TDOSIO_$__$$_WRITELN$PCHAR
+EXTERN	TC_$SYSTEM_$$_DOS
+EXTERN	SYSTEM$_$TDOSCMD_$__$$_WRITELN$ANSISTRING
+EXTERN	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
+EXTERN	SYSTEM$_$TDOSCMD_$__$$_READ$ANSISTRING$ANSISTRING
 EXTERN	_$dll$user32$MessageBoxA
-EXTERN	SYSTEM_$$_DONESYSTEM
 EXTERN	fpc_initializeunits
 EXTERN	FPC_DO_EXIT
 EXTERN	fpc_ansistr_decr_ref
@@ -28,15 +23,10 @@ P$TEST1_$$_fin$00000001:
 ..@c5:
 		lea	rsp,[rsp-32]
 		lea	rdx,[U_$P$TEST1_$$_S1]
-		test	rdx,rdx
-		jne	..@j17
-		lea	rdx,[FPC_EMPTYCHAR]
-..@j17:
 		xor	r9d,r9d
-		lea	r8,[_$TEST1$_Ld6]
+		lea	r8,[_$TEST1$_Ld5]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
-		call	SYSTEM_$$_DONESYSTEM
 		nop
 		lea	rsp,[rsp+32]
 		pop	rbp
@@ -60,31 +50,23 @@ PASCALMAIN:
 		nop
 ..@j9:
 		call	SYSTEM_$$_INITSYSTEM
-		lea	rax,[U_$SYSTEM_$$__static_tsystem_FDOSCLASS]
+		mov	rax,qword [TC_$SYSTEM_$$_DOS]
 		lea	rdx,[..@d1]
 		mov	rcx,rax
-		call	SYSTEM$_$TDOSIO_$__$$_$lower$TDOSIO$ANSISTRING$$BOOLEAN
-		test	al,al
-		lea	rcx,[U_$SYSTEM_$$__static_tsystem_FDOSCLASS]
-		lea	rdx,[..@d2]
-		call	SYSTEM$_$TDOSIO_$__$$_WRITELN$ANSISTRING
-		mov	rcx,qword [U_$SYSTEM_$$_DOS]
-		lea	rdx,[_$TEST1$_Ld3]
-		call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$POINTER
+		call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$ANSISTRING
+		mov	rcx,qword [TC_$SYSTEM_$$_DOS]
+		lea	rdx,[_$TEST1$_Ld2]
+		call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 		lea	rdx,[U_$P$TEST1_$$_S1]
-		lea	rcx,[U_$SYSTEM_$$__static_tsystem_FDOSCLASS]
-		lea	r8,[..@d4]
-		call	SYSTEM$_$TDOSIO_$__$$_READ$ANSISTRING$ANSISTRING
-		lea	rcx,[U_$SYSTEM_$$__static_tsystem_FDOSCLASS]
-		lea	rdx,[..@d5]
-		call	SYSTEM$_$TDOSIO_$__$$_WRITELN$ANSISTRING
+		mov	rcx,qword [TC_$SYSTEM_$$_DOS]
+		lea	r8,[..@d3]
+		call	SYSTEM$_$TDOSCMD_$__$$_READ$ANSISTRING$ANSISTRING
+		mov	rcx,qword [TC_$SYSTEM_$$_DOS]
+		lea	rdx,[..@d4]
+		call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$ANSISTRING
 		lea	rdx,[U_$P$TEST1_$$_S1]
-		test	rdx,rdx
-		jne	..@j16
-		lea	rdx,[FPC_EMPTYCHAR]
-..@j16:
-		lea	rcx,[U_$SYSTEM_$$__static_tsystem_FDOSCLASS]
-		call	SYSTEM$_$TDOSIO_$__$$_WRITELN$PCHAR
+		mov	rcx,qword [TC_$SYSTEM_$$_DOS]
+		call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 ..@j11:
 		nop
 ..@j10:
@@ -185,40 +167,32 @@ SECTION .rodata
 ..@d1$strlab:
 	DW	0,1
 	DD	0
-	DQ	-1,13
-..@d1:
-		DB	"Hello World !",0
-
-SECTION .rodata
-..@d2$strlab:
-	DW	0,1
-	DD	0
 	DQ	-1,11
-..@d2:
+..@d1:
 		DB	"next String",0
 
 SECTION .rodata
-_$TEST1$_Ld3:
+_$TEST1$_Ld2:
 		DB	"dos string",0
+
+SECTION .rodata
+..@d3$strlab:
+	DW	0,1
+	DD	0
+	DQ	-1,7
+..@d3:
+		DB	"Input: ",0
 
 SECTION .rodata
 ..@d4$strlab:
 	DW	0,1
 	DD	0
-	DQ	-1,7
-..@d4:
-		DB	"Input: ",0
-
-SECTION .rodata
-..@d5$strlab:
-	DW	0,1
-	DD	0
 	DQ	-1,8
-..@d5:
+..@d4:
 		DB	"--------",0
 
 SECTION .rodata
-_$TEST1$_Ld6:
+_$TEST1$_Ld5:
 		DB	"Information",0
 ; End asmlist al_typedconsts
 ; Begin asmlist al_dwarf_frame
