@@ -35,5 +35,6 @@ begin
             0);
         DoneSystem;
     end;
-    MessageBoxA(0,'finally endy','done',0);
+    S1 := PChar('    HELLO MINI TEAM !!!' + #13#10#13#10 + 'Have a nice Day...');
+    MessageBoxA(0, PChar(S1),'done',0);
 end.

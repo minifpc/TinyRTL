@@ -8,6 +8,7 @@
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
+{$mode delphi}
 {$M-}
 
 {$if declared(TSystemCodePage) = false}
@@ -44,14 +45,16 @@ procedure fpc_DecRef(Data,TypeInfo : Pointer); compilerproc;
 procedure fpc_ansistr_decr_ref (Var S : Pointer); compilerproc;
 procedure fpc_AnsiStr_Incr_Ref (    S : Pointer); compilerproc; inline;
 
-procedure fpc_AnsiStr_Assign (var   DestS : Pointer;           S2: Pointer);            compilerproc;
-procedure fpc_AnsiStr_Concat (var   dst   : Pointer; const S1, S2: Pointer; cp: DWORD); compilerproc;
-function  fpc_AnsiStr_Unique (var   S     : Pointer):              Pointer;             compilerproc;
+procedure fpc_ansistr_assign       (var dst: Pointer;       S2: Pointer);   compilerproc;
+procedure fpc_ansistr_concat       (var dst: String ; const S1: String; const S2: String; cp: Word); compilerproc;
+procedure fpc_ansistr_concat_multi (var dst: Pointer; const sa: array   of  String; cp: TSystemCodePage); compilerproc;
+
+function  fpc_AnsiStr_Unique (var   S     : Pointer):              Pointer;     compilerproc;
 
 function  fpc_AnsiStr_Compare_Equal (const S1, S2: Pointer): BOOL compilerproc;
 
-function  fpc_char_to_ansistr (const c :  Char; cp : TSystemCodePage): AnsiString; compilerproc;
-function  fpc_pchar_to_ansistr(const p : PAnsiChar): AnsiString; compilerproc;
+function  fpc_char_to_ansistr (const c :  Char; cp : TSystemCodePage): String; compilerproc;
+function  fpc_pchar_to_ansistr(const p : PChar; cp : TSystemCodePage): String; compilerproc;
 
 procedure fpc_EmptyChar( var DestS: Pointer); compilerproc;
 
@@ -126,23 +129,34 @@ end;
 
 procedure fpc_Addref(Data,TypeInfo : Pointer); [public, alias: 'FPC_ADDREF']; compilerproc;
 begin
+
 end;
 
 procedure fpc_decref(Data,TypeInfo : Pointer); [public, alias: 'FPC_DECREF']; compilerproc;
 begin
+
 end;
 
 procedure fpc_ansistr_decr_ref(Var S: Pointer); [public, alias: 'FPC_ANSISTR_DECR_REF'];  compilerproc;
 Begin
+
 end;
 
-procedure fpc_AnsiStr_Incr_Ref (S : Pointer); [public, alias: 'FPC_ANSISTR_INCR_REF'];  compilerproc; inline;
-Begin
-end;
-
-function  fpc_char_to_ansistr(const c : Char; cp : TSystemCodePage): AnsiString; compilerproc;
+procedure fpc_AnsiStr_Incr_Ref (S : Pointer); [public, alias: 'FPC_ANSISTR_INCR_REF'];  compilerproc; //inline;
 begin
-    result := String(c);
+
+end;
+
+function  fpc_char_to_ansistr(const c : Char; cp : TSystemCodePage): String; compilerproc;
+var
+    dst: String;
+begin
+    dst := String(VirtualAlloc(nil,2,
+    MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE));
+    
+    memset(Pointer(dst), DWORD(c), 1);
+    fpc_char_to_ansistr := dst;
+    result := dst;
 end;
 
 function fpc_AnsiStr_Unique(var S: Pointer): Pointer; compilerproc;
@@ -153,94 +167,69 @@ begin
     result := S;
 end;
 
-function PCharToAnsiString( charPointer: PChar): AnsiString;
+function fpc_pchar_to_ansistr(const p: PChar; cp : Word): String;
 var
-    len: Integer;
-    i  : Integer;
+    len : DWORD;
+    S   : String;
 begin
-    len := 0;
-    while charPointer[len] <> #0 do
-    len := len + 1;
+    len := strlen(p) + 1;
+    S   := String(malloc(len));
     
-    Pointer( result ) := VirtualAlloc(nil, len,
-    MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
-    
-    for i := 1 to len do
-    result[i] := charPointer[i - 1];
+    strcpy(PChar(S), PChar(p));
+    result := S;
 end;
 
-function fpc_pchar_to_ansistr(const p: PAnsiChar): AnsiString;
+procedure fpc_ansistr_assign(
+    var dst: Pointer;
+         S2: Pointer
+);  [public, alias: 'FPC_ANSISTR_ASSIGN']; compilerproc;
 var
-    len: SIZE_T;
-    s: PAnsiChar;
+    len: DWORD;
 begin
-    if p = nil then begin
-        result := '';
-        exit;
-    end;
+    len := strlen(PChar(String(@S2)));
+    dst := malloc(len + 1);
     
-    len := strlen(PChar(p));
-    
-    s := VirtualAlloc(nil, len + 1,
-    MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
-    
-    if s = nil then begin
-        MessageBox(0,
-        PChar('Error: no more memory available.'),
-        PChar('Error'), 0);
-        ExitProcess(1);
-    end;
-    
-    strcpy(PChar(s), PChar(p));
-    
-    result := String(@s);
-    ///VirtualFree(s, 0, MEM_RELEASE);
+    strcpy(PChar(String(@dst)), PChar(String(@S2)));
 end;
 
-procedure fpc_ansistr_assign(var DestS: Pointer; S2: Pointer); [public, alias: 'FPC_ANSISTR_ASSIGN']; compilerproc;
+procedure fpc_ansistr_concat(
+    var  dst: String;
+    const S1: String;
+    const S2: String;
+          cp: Word
+);  compilerproc;
 var
-    SLen: SIZE_T;
+    S1_Len : SIZE_T;
+    S2_Len : SIZE_T;
+    S3_len : SIZE_T;
+    CS1, CS2: String;
+    same   : Boolean;
+    i: DWORD;
+    
+    pch: PChar;
 begin
-(*
-    SLen  := strlen( ( S2 ) );
-    GetMem( DestS, SLen );
+    S1_len := strlen(PChar(S1));
+    S2_len := strlen(PChar(S2));
 
-    if (not (DestS = nil)) then
-    begin
-        FillChar( DestS^, SLen, #0 );
-        move( S2^, DestS^, SLen );
-    end else
-    begin
-        MessageBox( 0, 'Error: fpc_AnsiStr_Assign memory allocation fail.', 'Error', 0 );
-        ExitProcess( 1 );
-    end;
-*)
-    // TODO: add delete
-    //VirtualFree( DestS, 0, MEM_RELEASE );
+    S3_len := S1_len + S2_len + 1;
+
+    dst := String(malloc(s3_len));
+
+    strcpy(PChar(pch), PChar(S1));
+    strcat(PChar(pch), PChar(S2));
+    
+    strcpy(PChar(dst),pch);
 end;
 
-procedure fpc_ansistr_concat(var dst: Pointer; const S1,S2: Pointer; cp: DWORD); compilerproc;
-var
-    S1Len, S2Len, S3Len: SIZE_T;
-    DestS: Pointer;
+procedure fpc_ansistr_Concat_multi(
+    var   dst: Pointer;
+    const  sa: array of String;
+           cp: TSystemCodePage
+); compilerproc;
 begin
-    S1Len := strlen( S1 );
-    S2Len := strlen( S2 );
-    
-    dst := VirtualAlloc(nil, S1Len + 1,
-    MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
-    
-    if not (dst = nil) then
-    begin
-        FillChar( dst, S1Len, #0 );
-        strcpy( dst, S1 );
-        strcat( dst, S2 );
-    end else
-    begin
-        MessageBox( 0, 'Error: fpc_AnsiStr_Concat memory allocation fail.', 'Error', 0 );
-        ExitProcess( 1 );
-    end;
+
 end;
+
 function  fpc_AnsiStr_Compare_Equal (const S1, S2: Pointer): BOOL; [public, alias: 'FPC_ANSISTR_COMPARE_EQUAL'] compilerproc;
 var
     res: DWORD;

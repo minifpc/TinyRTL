@@ -161,18 +161,27 @@ var
     Buffer   : array[0..BufferSize] of Char;
     charsRead: DWORD;
     ch: Char;
+    p : Pointer;
     ident, tmpstr: String;
     Success  : DWORD;
 begin
     dos.Write(AString);
     scanf('%s', @S1);
-    exit;
+    
+    ch := 'A';
+    p  := @ch;
+    
     ident := '';
+    tmpstr := ch;
+    ident := ident;
+    
+    exit;
+    exit;
     while True do
     begin
         //ch := getch;
         if ch = #13 then break;
-        //ident := ident + ch;
+        //ident := ident + Pointer(@ch)^;
     end;
     
     dos.writeln(ident);

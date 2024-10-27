@@ -8,6 +8,8 @@ EXTERN	SYSTEM$_$TDOSCMD_$__$$_WRITELN$ANSISTRING
 EXTERN	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 EXTERN	SYSTEM$_$TDOSCMD_$__$$_READ$ANSISTRING$ANSISTRING
 EXTERN	_$dll$user32$MessageBoxA
+EXTERN	fpc_pchar_to_ansistr
+EXTERN	FPC_EMPTYCHAR
 EXTERN	fpc_initializeunits
 EXTERN	FPC_DO_EXIT
 EXTERN	fpc_ansistr_decr_ref
@@ -72,9 +74,17 @@ PASCALMAIN:
 ..@j10:
 		mov	rcx,rbp
 		call	P$TEST1_$$_fin$00000001
+		lea	rcx,[U_$P$TEST1_$$_S1]
+		xor	r8d,r8d
+		lea	rdx,[..@d6]
+		call	fpc_pchar_to_ansistr
+		mov	rdx,qword [U_$P$TEST1_$$_S1]
+		test	rdx,rdx
+		jne	..@j14
+		lea	rdx,[FPC_EMPTYCHAR]
+..@j14:
 		xor	r9d,r9d
-		lea	r8,[_$TEST1$_Ld6]
-		lea	rdx,[_$TEST1$_Ld7]
+		lea	r8,[_$TEST1$_Ld7]
 		xor	ecx,ecx
 		call	_$dll$user32$MessageBoxA
 		call	FPC_DO_EXIT
@@ -201,12 +211,16 @@ _$TEST1$_Ld5:
 		DB	"Information",0
 
 SECTION .rodata
-_$TEST1$_Ld6:
-		DB	"done",0
+..@d6$strlab:
+	DW	0,1
+	DD	0
+	DQ	-1,45
+..@d6:
+		DB	"    HELLO MINI TEAM !!!",13,10,13,10,"Have a nice Day...",0
 
 SECTION .rodata
 _$TEST1$_Ld7:
-		DB	"finally endy",0
+		DB	"done",0
 ; End asmlist al_typedconsts
 ; Begin asmlist al_dwarf_frame
 
