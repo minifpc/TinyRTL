@@ -581,9 +581,11 @@ function  LocalFree(
 // ---------------------------------------------------------------------------
 // win32api module kernel32.dll: virtual memory
 // ---------------------------------------------------------------------------
+{$if declared(FillChar) = false}
 procedure FillChar       ( var Dest; Count: Integer; Value: Char );
 procedure FreeMem        ( var p: Pointer );
 procedure GetMem         ( var p: Pointer; size: DWORD );
+{$endif}
 
 function  VirtualAlloc(
     lpAddress       : PVOID;
@@ -640,13 +642,23 @@ end;
 
 procedure FreeMem( var p: Pointer );
 begin
+    if p <> nil then
     VirtualFree( p, 0, MEM_RELEASE );
 end;
 procedure GetMem(
     var p: Pointer;
     size : DWORD );
 begin
-    p := VirtualAlloc( nil, size, MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
+    p := VirtualAlloc( nil, size,
+    MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
+    
+    if p = nil then
+    begin
+        MessageBoxA(0,
+        PChar('Error: could not allocate memory.'),
+        PChar('Error'), 0);
+        ExitProcess(1);
+    end;
 end;
 
 (*function TSystemCodePage: DWORD;

@@ -15,41 +15,45 @@ type
     PFILE = Pointer;
 {$endif}
 
-function malloc (s: DWORD                  ): PVOID ; cdecl; external 'ucrtbase.dll'   name 'malloc';
-function strcat (d: PChar; s: PChar): PChar; cdecl; external 'ucrtbase.dll'   name 'strcat';
-function strcpy (d: PChar; s: PChar): PChar; cdecl; external 'ucrtbase.dll'   name 'strcpy';
-function strlen (s: PChar): DWORD ; cdecl; external DLL_STR_kernel32 name 'lstrlenA';
+const msvcrt   = 'msvcrt.dll';
+const ucrtbase = 'ucrtbase.dll';
+const kernel32 = 'kernel32.dll';
 
-//function getch: Char; cdecl; external 'msvcrt.dll';
+function malloc (s: DWORD          ): PVOID; cdecl; external ucrtbase name 'malloc';
+function strcat (d: PChar; s: PChar): PChar; cdecl; external ucrtbase name 'strcat';
+function strcpy (d: PChar; s: PChar): PChar; cdecl; external ucrtbase name 'strcpy';
+function strlen (s: PChar          ): DWORD; cdecl; external kernel32 name 'lstrlenA';
+
+function getch: Char; cdecl; external msvcrt;
 
 function fscanf(
     stream: PFILE;
     format: PChar
 ):  Integer; varargs; cdecl;
-    external 'msvcrt.dll';
+    external msvcrt;
     
 function fopen(
     filename: PChar;
     mode: PChar
 ):  PFILE; cdecl;
-    external 'msvcrt.dll';
+    external msvcrt;
     
 function fclose(
     stream: PFILE
 ):  Integer; cdecl;
-    external 'msvcrt.dll';
+    external msvcrt;
 
 function printf(
     format: PChar
 ):  Integer; cdecl; varargs;
-    external 'msvcrt.dll'
+    external msvcrt
     name 'printf';
 
 function scanf(
     format: PChar;
     args: Pointer
 ):  DWORD; cdecl;
-    external 'msvcrt'
+    external msvcrt
     name 'scanf';
 
 function memset(
@@ -57,7 +61,7 @@ function memset(
     value: DWORD;
     num: DWORD
 ):  Pointer; cdecl;
-    external 'msvcrt'
+    external msvcrt
     name 'memset';
 
 {$endif}

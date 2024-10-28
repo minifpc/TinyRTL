@@ -39,6 +39,12 @@ function strcmp(
     str2: PChar
 ):  DWORD; cdecl; external 'msvcrt.dll' name 'strcmp';
 
+{$if declared(FillChar) = false}
+procedure FillChar  ( var Dest; Count: Integer; Value: Char );
+procedure FreeMem   ( var p: Pointer );
+procedure GetMem    ( var p: Pointer; size: DWORD );
+{$endif}
+
 procedure fpc_Addref(Data,TypeInfo : Pointer); compilerproc;
 procedure fpc_DecRef(Data,TypeInfo : Pointer); compilerproc;
 
@@ -114,7 +120,7 @@ procedure fpc_EmptyChar( var DestS: Pointer); [public, alias: 'FPC_EMPTYCHAR']; 
 var
     SA: PChar;
 begin
-    DestS := VirtualAlloc( nil, sizeof( Char ), MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE );
+    GetMem(DestS, sizeof(Char));
     if (not (DestS = nil)) then
     begin
         FillChar(  DestS^, sizeof( Char ), #0 );
@@ -151,11 +157,9 @@ function  fpc_char_to_ansistr(const c : Char; cp : TSystemCodePage): String; com
 var
     dst: String;
 begin
-    dst := String(VirtualAlloc(nil,2,
-    MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE));
-    
-    memset(Pointer(dst), DWORD(c), 1);
-    fpc_char_to_ansistr := dst;
+    GetMem(Pointer(dst), sizeof(Char));
+    memset(Pointer(dst), DWORD(c), sizeof(Char));
+
     result := dst;
 end;
 
@@ -272,7 +276,7 @@ begin end;
 
 procedure fpc_help_fail(_self:pointer;var _vmt:pointer;vmt_pos:cardinal);compilerproc;
 begin
-    MessageBoxA(0,'ddddddd','dddddddd',0);
+    
 end;
 
 procedure fpc_reraise; compilerproc; //[public, alias:'fpc_reraise']; compilerproc;
@@ -284,8 +288,20 @@ procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 begin end;
 
 procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
+    procedure CallProcedure(proc: TProcedure);
+    begin
+        if Assigned(proc) then
+            TProcedure(proc)();
+    end;
+var
+    Index: DWORD;
 begin
-    //MessageBoxA(0, PChar('uzy'), PChar('2121212'), 0);
+    printf('Count Items: %d'#13#10, InitFinalTable.TableCount);
+    if InitFinalTable.TableCount > 0 then
+    begin
+        for Index := 1 to InitFinalTable.TableCount - 1 do
+        CallProcedure(InitFinalTable.Procs[Index].InitProc);
+    end;
 end;
 procedure fpc_libinitializeunits; [public, alias:'FPC_LIBINITIALIZEUNITS']; compilerproc; begin end;
 

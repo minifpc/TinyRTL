@@ -47,8 +47,7 @@ set fpcdst=^
 
 set fpcsys2=^
     -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -Anasmwin64 -a ^
-    -XMPASCALMAIN
-::    -dNoRTTI -XMPASCALMAIN
+    -XMPASCALMAIN -dNoRTTI -Xs -g-
 
 :: -----------------------------------------------------------------
 :: location of nasm.exe (the netwide assembler)
@@ -76,7 +75,7 @@ set sysrtl=%punits%\fpc-rtl
 set /a counter=0
 
 cd %prjdir%\test
-%fpcx64% -WC -dwinexe test1.pas
+%fpcx64% -dwinexe test1.pas
 strip test1.exe
 goto allok
 

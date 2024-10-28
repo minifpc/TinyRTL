@@ -43,6 +43,8 @@ const rtl_dll = 'fpc_rtl.dll';
 {$I RTL_Object.pas}
 {$I RTL_List.pas}
 
+{$I FPC_SymbolTable.pas}
+
 {$I RTL_DosCmd.pas}
 {$I RTL_DosIO.pas}
 
@@ -83,6 +85,8 @@ implementation
 {$I RTL_Object.pas}
 {$I RTL_List.pas}
 
+{$I FPC_SymbolTable.pas}
+
 {$I RTL_DosCmd.pas}
 {$I RTL_DosIO.pas}
 
@@ -102,5 +106,8 @@ implementation
 { $ I  Q t_Object.pas}
 { $ I  Q t_String.pas}
 { $ I  Q t_Dialogs.pas}
+
+initialization
+printf('---< hocus pocus >-----'#13#10);
 
 end.

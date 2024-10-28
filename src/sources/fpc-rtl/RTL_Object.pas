@@ -90,28 +90,13 @@ end;
 
 procedure TObject.Free;
 begin
-MessageBoxA(0,
-            PChar('internal Error.'),
-            PChar('Error'),
-            MB_OK or MB_ICONERROR);
     if self <> nil then
     FreeInstance;
 end;
 
 class function TObject.NewInstance : TObject;
 begin
-    FClassInstance := TObject(
-        VirtualAlloc(nil, SizeOf(TObject),
-        MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE));
-
-    if FClassInstance = nil then
-    begin
-        MessageBoxA(0,
-            PChar('internal Error.'),
-            PChar('Error'),
-            MB_OK or MB_ICONERROR);
-        ExitProcess(1);
-    end;
+    GetMem(Pointer(FClassInstance), SizeOf(TObject));
 end;
 
 class procedure TObject.InitInstance(Instance: Pointer);
@@ -121,23 +106,10 @@ end;
 
 class procedure TObject.FreeInstance;
 begin
-MessageBoxA(0,
-            PChar('internal Error.'),
-            PChar('Error'),
-            MB_OK or MB_ICONERROR);
-    if FClassInstance <> nil then
-    VirtualFree(FClassInstance, 0, MEM_RELEASE);
-    MessageBoxA(0,
-            PChar('internal Error.'),
-            PChar('Error'),
-            MB_OK or MB_ICONERROR);
+    FreeMem(Pointer(FClassInstance));
     if self <> nil then
     begin
-    MessageBoxA(0,
-            PChar('internal Error.'),
-            PChar('Error'),
-            MB_OK or MB_ICONERROR);
-        VirtualFree(Pointer(self), 0, MEM_RELEASE);
+        FreeMem(Pointer(self));
     end;
 end;
 

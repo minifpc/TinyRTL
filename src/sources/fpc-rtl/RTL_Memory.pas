@@ -9,6 +9,7 @@
 // ---------------------------------------------------------------------------
 {$ifdef windows_header}
 {$mode delphi}
+{$M-}
 type
     TMemory = class(TObject)
     private
@@ -44,6 +45,7 @@ procedure DoneMemory;
 
 {$ifdef windows_source}
 {$mode delphi}
+{$M-}
 
 { TMemory }
 
@@ -80,21 +82,11 @@ end;
 constructor TMemory.Create(AParent: TObject);
 begin
     inherited Create;
-
+    MessageBoxA(0,'memory 5555','info',0);
     if AParent = nil then
     begin
         FClassMemSize := sizeof(TObject);
-        FClassMemory  := VirtualAlloc(nil,
-        FClassMemSize,
-        MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE);
-        
-        if FClassMemory = nil then
-        begin
-            MessageBoxA(0,
-            PChar('Error: could not allocate memory.'),
-            PChar('Error'), 0);
-            exit;
-        end;
+        GetMem(FClassMemory, FClassMemSize);
     end else
     begin
         FClassParent := AParent;
@@ -119,17 +111,7 @@ begin
     if FClassMemSize = ASize then exit else
     if FClassMemSize = 0 then
     begin
-        FClassMemory := VirtualAlloc(nil, ASize,
-        MEM_COMMIT or MEM_RESERVE, PAGE_READWRITE);
-        
-        if FClassMemory = nil then
-        begin
-            MessageBoxA(0,
-            PChar('Error: could not allocate memory.'),
-            PChar('Error'), 0);
-            exit;
-        end;
-        
+        GetMem(FClassMemory, ASize);
         FClassMemSize := ASize;
     end;
     result := FClassMemory;
@@ -141,8 +123,7 @@ end;
 
 procedure TMemory.Free;
 begin
-    if FClassMemory <> nil then
-    VirtualFree(FClassMemory, 0, MEM_RELEASE);
+    FreeMem(FClassMemory);
 
     if FClassParent <> nil then
     FClassParent.Free;
