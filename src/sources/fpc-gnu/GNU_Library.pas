@@ -18,6 +18,7 @@ type
 const msvcrt   = 'msvcrt.dll';
 const ucrtbase = 'ucrtbase.dll';
 const kernel32 = 'kernel32.dll';
+const user32   = 'user32.dll';
 
 function malloc (s: DWORD          ): PVOID; cdecl; external ucrtbase name 'malloc';
 function strcat (d: PChar; s: PChar): PChar; cdecl; external ucrtbase name 'strcat';

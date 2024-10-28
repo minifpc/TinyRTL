@@ -44,13 +44,20 @@ procedure DoneSystem;
 
 procedure InitSystem;
 begin
-    dos := TDosCmd.Create;
+    if GetConsoleWindow <> 0 then
+    begin
+        InitConsole;
+    end;
     sys := TSystem.Create;
     mem := TMemory.Create;
     dos.writeln('start...');
 end;
 procedure DoneSystem;
 begin
+    if GetConsoleWindow <> 0 then
+    begin
+        DoneConsole;
+    end;
     //sys.Free;
     //mem.Free;
     //dos.Free;

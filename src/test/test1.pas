@@ -6,14 +6,12 @@
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
 {$mode delphi}
-{$M-}
 program test1;
 
 var
     S1: String;
 begin
     try
-        InitSystem;
         // ----------------------------------------------
         // you can use all these variants to write
         // text to a Windows Console (WriteLn) ...
@@ -33,7 +31,6 @@ begin
             PChar(@S1),
             PChar('Information'),
             0);
-        DoneSystem;
     end;
     
     S1 := PChar(''

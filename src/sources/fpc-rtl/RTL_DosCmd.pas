@@ -54,7 +54,10 @@ type
     end;
 var
     dos: TDosCmd = nil;
-    
+
+procedure InitConsole;
+procedure DoneConsole;
+
 {$endif}
 
 {$ifdef windows_source}
@@ -72,6 +75,16 @@ end;
 
 
 { TDosCmd }
+
+procedure InitConsole;
+begin
+    dos := TDosCmd.Create;
+end;
+procedure DoneConsole;
+begin
+    if dos <> nil then
+    dos.Free;
+end;
 
 constructor TDosCmd.Create;
 begin

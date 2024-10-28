@@ -14,7 +14,7 @@ unit system;
 interface
 {$define windows_header}
 {$M-}
-const rtl_dll = 'fpc_rtl.dll';
+const rtl_dll  = 'fpc_rtl.dll';
 // ---------------------------------------------------------------------------
 // FPC core ...
 // ---------------------------------------------------------------------------
@@ -108,6 +108,17 @@ implementation
 { $ I  Q t_Dialogs.pas}
 
 initialization
-printf('---< hocus pocus >-----'#13#10);
+begin
+    InitSystem;
+    if isConsoleApp then
+    printf('---< hocus pocus >-----'#13#10);
+end;
+
+finalization
+begin
+    DoneSystem;
+    if isConsoleApp then
+    printf('---< the end >-----'#13#10);
+end;
 
 end.

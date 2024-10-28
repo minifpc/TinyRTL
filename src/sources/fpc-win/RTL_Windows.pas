@@ -123,29 +123,33 @@ const CP_Win1250 =  1250;  // Windows Ansi European
 
 function AllocConsole
 :   DWORD; stdcall;
-    external 'kernel32.dll' name 'AllocConsole';
+    external kernel32 name 'AllocConsole';
 
 function AttachConsole(
     dwProcessId: DWORD
 ):  DWORD; stdcall;
-    external 'kernel32.dll' name 'AttachConsole';
-    
+    external kernel32 name 'AttachConsole';
+
+function GetConsoleWindow
+:   HWND;
+    stdcall; external kernel32;
+
 function GetConsoleScreenBufferInfo(
     hConsoleOutput: DWORD;
     var lpConsoleScreenBufferInfo: CONSOLE_SCREEN_BUFFER_INFO
 ):  DWORD; stdcall;
-    external 'kernel32.dll' name 'GetConsoleScreenBufferInfo';
+    external kernel32 name 'GetConsoleScreenBufferInfo';
 
 function GetStdHandle(
     nStdHandle: DWORD
 ):  DWORD; stdcall;
-    external 'kernel32.dll' name 'GetStdHandle';
+    external kernel32 name 'GetStdHandle';
 
 function SetStdHandle(
     nStdHandle: DWORD;
     hHandle: DWORD
 ):  Boolean; stdcall;
-    external 'kernel32.dll' name 'SetStdHandle';
+    external kernel32 name 'SetStdHandle';
 
 function FillConsoleOutputCharacter(
     hConsoleOutput: DWORD;
@@ -154,7 +158,7 @@ function FillConsoleOutputCharacter(
     dwWriteCoord: COORD;
     var lpNumberOfCharsWritten: DWORD
 ):  DWORD; stdcall;
-    external 'kernel32.dll' name 'FillConsoleOutputCharacterA';
+    external kernel32 name 'FillConsoleOutputCharacterA';
 
 function FillConsoleOutputAttribute(
     hConsoleOutput: DWORD;
@@ -163,23 +167,23 @@ function FillConsoleOutputAttribute(
     dwWriteCoord: COORD;
     var lpNumberOfAttrsWritten: DWORD
 ):  DWORD; stdcall;
-    external 'kernel32.dll' name 'FillConsoleOutputAttribute';
+    external kernel32 name 'FillConsoleOutputAttribute';
 
 function SetConsoleCursorPosition(
     hConsoleOutput: DWORD;
     dwCursorPosition: COORD
 ):  DWORD; stdcall;
-    external 'kernel32.dll' name 'SetConsoleCursorPosition';
+    external kernel32 name 'SetConsoleCursorPosition';
 
 function SetConsoleOutputCP(
     wCodePageID: DWORD
 ):  BOOL; stdcall;
-    external 'kernel32.dll';
+    external kernel32;
 
 function SetConsoleCP(
     wCodePageID: UINT
 ):  BOOL; stdcall;
-    external 'kernel32.dll';
+    external kernel32;
 
 function ReadConsoleA(
     hConsoleInput: HANDLE;        // Handle für die Konsole (in der Regel STD_INPUT_HANDLE)
@@ -188,7 +192,7 @@ function ReadConsoleA(
     lpNumberOfCharsRead: LPDWORD; // Zeiger auf eine DWORD-Variable, die die tatsächliche Anzahl der gelesenen Zeichen enthält
     pInputControl: Pointer        // Sollte in den meisten Fällen NIL sein
 ):  BOOL; stdcall;
-    external 'kernel32.dll';
+    external kernel32;
 
 function WriteConsoleA(
     hConsoleOutput: DWORD;
@@ -197,7 +201,7 @@ function WriteConsoleA(
     var lpNumberOfCharsWritten: DWORD;
     lpReserved: Pointer
 ):  DWORD; stdcall;
-    external 'kernel32.dll' name 'WriteConsoleA';
+    external kernel32 name 'WriteConsoleA';
 
 // ---------------------------------------------------------------------------
 // security structures ...
@@ -305,42 +309,49 @@ function CreateFile(
     lpSecurityAttributes  : LPSECURITY_ATTRIBUTES;
     dwCreationDisposition : DWORD;
     dwFlagsAndAttributes  : DWORD;
-    hTemplateFile         : HANDLE): Handle;
-    stdcall; external 'kernel32.dll' name 'CreateFileA';
+    hTemplateFile         : HANDLE
+):  Handle; stdcall;
+    external kernel32 name 'CreateFileA';
 
 function DeleteFileA(
-    lpFileName: PChar): Boolean;
-    stdcall; external 'kernel32.dll' name 'DeleteFileA';
+    lpFileName: PChar
+):  Boolean; stdcall;
+    external kernel32 name 'DeleteFileA';
     
 function PathFileExistsA(
-    pszPath: PChar ): BOOL;
-    stdcall; external 'shlwapi.dll' name 'PathFileExistsA';
+    pszPath: PChar
+):  BOOL; stdcall;
+    external 'shlwapi.dll' name 'PathFileExistsA';
 
 function LockFile(
     hfile                   : HANDLE;
     dwFileOffsetLow         : DWORD;
     dwFileOffsetHigh        : DWORD;
     dwBytesToLockOffsetLow  : DWORD;
-    dwBytesToLockOffsetHigh : DWORD): Boolean; overload;
-    stdcall; external 'kernel32.dll' name 'LockFile';
+    dwBytesToLockOffsetHigh : DWORD
+):  Boolean; overload; stdcall;
+    external kernel32 name 'LockFile';
     
 function LockFile(
-    hfile : HANDLE): Boolean; overload;
+    hfile : HANDLE
+):  Boolean; overload;
     
 function SetFilePointer(
     hFile                : THandle;
     lDistanceToMove      : LONG   ;
     lpDistanceToMoveHigh : PLONG  ;
-    dwMoveMethod         : DWORD) : DWORD;
-    stdcall; external 'kernel32.dll' name 'SetFilePointer';
+    dwMoveMethod         : DWORD
+):  DWORD; stdcall;
+    external kernel32 name 'SetFilePointer';
 
 function WriteFile(
     hFile                     : THandle;
     const Buffer;
     nNumberOfBytesToWrite     : DWORD;
     var lpNumberOfBytesWritten: DWORD;
-    lpOverlapped: POverlapped): BOOL;
-    stdcall; external 'kernel32.dll' name 'WriteFile';
+    lpOverlapped: POverlapped
+):  BOOL; stdcall;
+    external kernel32 name 'WriteFile';
     
 function WriteFile( hFile: THandle; buffer: PChar  ): BOOL; overload;
 function WriteFile( hFile: THandle; buffer: HMODULE): BOOL; overload;
@@ -357,7 +368,7 @@ function WriteFile(
 function CloseHandle(
     hObject: THANDLE
 ):  BOOL; stdcall;
-    external 'kernel32.dll' name 'CloseHandle';
+    external kernel32 name 'CloseHandle';
 
 function fgets(
     buffer: PChar;
@@ -428,8 +439,9 @@ function MessageBox(
     _hwnd     : HWND;
     lpText    : PChar;
     lpCaption : PChar;
-    uType     : UINT): DWORD;
-    stdcall external DLL_STR_user32 name 'MessageBoxA';
+    uType     : UINT
+):  DWORD; stdcall;
+    external user32 name 'MessageBoxA';
 
 procedure ShowMessage( lpText: PChar );
 procedure ShowWarn   ( lpText: PChar );
@@ -516,42 +528,50 @@ function GetOEMCP: DWORD; cdecl; external DLL_STR_kernel32 name 'GetOEMCP';
 // win32api module kernel32.dll:
 // ---------------------------------------------------------------------------
 procedure ExitProcess(
-    ExitCode: LongInt);
-    stdcall; external 'kernel32.dll' name 'ExitProcess';
+    ExitCode: LongInt
+);  stdcall;
+    external kernel32 name 'ExitProcess';
 
 // ---------------------------------------------------------------------------
 // win32api module kernel32.dll: dynamic library loader
 // ---------------------------------------------------------------------------
 function LoadLibrary(
-    lpLibFileName: LPCSTR): HMODULE;
-    stdcall; external 'kernel32.dll' name 'LoadLibraryA';
+    lpLibFileName: LPCSTR
+):  HMODULE; stdcall;
+    external kernel32 name 'LoadLibraryA';
     
 function FreeLibrary(
-    hLibModule: HMODULE): BOOL;
-    stdcall; external 'kernel32.dll' name 'FreeLibrary';
+    hLibModule: HMODULE
+):  BOOL; stdcall;
+    external kernel32 name 'FreeLibrary';
 
 function DispatchMessage(
-    const msg: TMessage): LRESULT;
-    stdcall; external 'user32.dll'   name 'DispatchMessageA';
+    const msg: TMessage
+):  LRESULT; stdcall;
+    external user32 name 'DispatchMessageA';
     
 function GetMessage(
     msg      : TMessage; _hwnd:
     HWND     ; filterMin: UINT;
-    filterMax: UINT): BOOL;
-    stdcall; external 'user32.dll'   name 'GetMessageA';
+    filterMax: UINT
+):  BOOL; stdcall;
+    external user32 name 'GetMessageA';
 
 function GetModuleHandle(
-    lpModuleName: PChar ): HMODULE;
-    stdcall; external 'kernel32.dll' name 'GetModuleHandleA';
+    lpModuleName: PChar
+):  HMODULE; stdcall;
+    external kernel32 name 'GetModuleHandleA';
     
 function GetProcAddress(
     modulname : HMODULE;
-    lpProcName: LPCSTR): FARPROC;
-    stdcall; external 'kernel32.dll' name 'GetProcAddress';
+    lpProcName: LPCSTR
+):  FARPROC; stdcall;
+    external kernel32 name 'GetProcAddress';
 
 function TranslateMessage(
-    const message: TMessage): BOOL;
-    stdcall; external 'user32.dll'   name 'TranslateMessage';
+    const message: TMessage
+):  BOOL; stdcall;
+    external user32 name 'TranslateMessage';
 
 const LDR_LOCK_LOADER_LOCK_DISPOSITION_INVALID           = 0;
 const LDR_LOCK_LOADER_LOCK_DISPOSITION_LOCK_ACQUIRED     = 1;
@@ -566,17 +586,20 @@ const LDR_LOCK_LOADER_LOCK_FLAG_TRY_ONLY         = $00000002;
 function  HeapCreate(
     flOptions: DWORD;
     dwInitialSize,
-    dwMaximumSize: SIZE_T ): HANDLE;
-    cdecl; external DLL_STR_kernel32 name 'HeapCreate';
+    dwMaximumSize: SIZE_T
+):  HANDLE; cdecl;
+    external kernel32 name 'HeapCreate';
     
 function  LocalAlloc(
     uFlags: UINT;
-    uBytes: SIZE_T): UINT;
-    cdecl; external DLL_STR_kernel32 name 'LocalAlloc';
+    uBytes: SIZE_T
+):  UINT; cdecl;
+    external kernel32 name 'LocalAlloc';
     
 function  LocalFree(
-    hMem: HLOCAL): HLOCAL;
-    cdecl; external DLL_STR_kernel32 name 'LocalFree';
+    hMem: HLOCAL
+):  HLOCAL; cdecl;
+    external kernel32 name 'LocalFree';
 
 // ---------------------------------------------------------------------------
 // win32api module kernel32.dll: virtual memory
@@ -591,14 +614,16 @@ function  VirtualAlloc(
     lpAddress       : PVOID;
     dwSize          : SIZE_T;
     flAllocationType: DWORD;
-    flProtect       : DWORD): Pointer;
-    stdcall; external DLL_STR_kernel32 name 'VirtualAlloc';
+    flProtect       : DWORD
+):  Pointer; stdcall;
+    external kernel32 name 'VirtualAlloc';
     
 function  VirtualFree(
     lpAddress : PVOID;
     dwSize    : SIZE_T;
-    dwFreeType: DWORD): BOOL;
-    stdcall; external DLL_STR_kernel32 name 'VirtualAlloc';
+    dwFreeType: DWORD
+):  BOOL; stdcall;
+    external kernel32 name 'VirtualAlloc';
 
 // ---------------------------------------------------------------------------
 // win32api RTL error & codes ...
@@ -607,11 +632,14 @@ type  NTSTATUS       = LONG;
 const STATUS_SUCCESS = $00000000;
 
 function RtlNtStatusToDosError(
-    status: NTSTATUS): ULONG;
-    cdecl; external 'ntdll.dll'    name 'RtlNtStatusToDosError';
+    status: NTSTATUS
+):  ULONG; cdecl;
+    external 'ntdll.dll'    name 'RtlNtStatusToDosError';
 
-procedure SetLastError(dwErrCode: DWORD);
-    cdecl; external 'kernel32.dll' name 'SetLastError';
+procedure SetLastError(
+    dwErrCode: DWORD
+);  cdecl;
+    external kernel32 name 'SetLastError';
 
 const STATUS_INVALID_PARAMETER_1 = $c00000EF;
 

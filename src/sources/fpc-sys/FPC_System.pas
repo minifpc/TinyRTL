@@ -77,6 +77,7 @@ procedure fpc_doneexception; compilerproc;
 procedure fpc_reraise; compilerproc;
 
 procedure fpc_initializeunits; compilerproc;
+procedure fpc_finalizeunits; compilerproc;
 procedure fpc_libinitializeunits; compilerproc;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
@@ -87,6 +88,7 @@ procedure EmptyMethod; external name 'FPC_EMPTYMETHOD';
 
 procedure move(const source; var dest; count: DWORD); stdcall;
 
+function IsConsoleApp: Boolean;
 procedure main; stdcall;
 procedure PascalMain; external name 'PASCALMAIN';
 {$endif}
@@ -257,11 +259,6 @@ end;
 procedure fpc_readln_end(var f: Text); [public,alias:'FPC_READLN_END']; iocheck; compilerproc;
 begin end;
 
-procedure fpc_do_exit; [public,alias: 'FPC_DO_EXIT']; compilerproc;
-begin
-    ExitProcess(0);
-end;
-
 procedure fpc_iocheck; compilerproc;
 begin end;
 
@@ -287,27 +284,69 @@ end;
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 begin end;
 
+procedure fpc_do_exit; [public,alias: 'FPC_DO_EXIT']; compilerproc;
+begin
+    fpc_finalizeunits;
+    ExitProcess(0);
+end;
+
 procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
     procedure CallProcedure(proc: TProcedure);
     begin
         if Assigned(proc) then
-            TProcedure(proc)();
+        TProcedure(proc)();
     end;
 var
     Index: DWORD;
 begin
-    printf('Count Items: %d'#13#10, InitFinalTable.TableCount);
+    if IsConsoleApp then
+    begin
+        printf('initialize...'#13#10);
+    end;
     if InitFinalTable.TableCount > 0 then
     begin
         for Index := 1 to InitFinalTable.TableCount - 1 do
-        CallProcedure(InitFinalTable.Procs[Index].InitProc);
+        begin
+            if Assigned(InitFinalTable.Procs[Index].InitProc) then
+            CallProcedure(InitFinalTable.Procs[Index].InitProc);
+        end;
     end;
 end;
 procedure fpc_libinitializeunits; [public, alias:'FPC_LIBINITIALIZEUNITS']; compilerproc; begin end;
+
+procedure fpc_finalizeunits; compilerproc; [public,alias: 'FPC_FINALIZEUNITS']; compilerproc;
+    procedure CallProcedure(proc: TProcedure);
+    begin
+        if Assigned(proc) then
+        TProcedure(proc)();
+    end;
+var
+    Index: DWORD;
+begin
+    if IsConsoleApp then
+    begin
+        printf('finalize...'#13#10);
+    end;
+    if InitFinalTable.TableCount > 0 then
+    begin
+        for Index := 1 to InitFinalTable.TableCount - 1 do
+        begin
+            if Assigned(InitFinalTable.Procs[Index].FinalProc) then
+            CallProcedure(InitFinalTable.Procs[Index].FinalProc);
+        end;
+    end;
+end;
 
 procedure move(const source; var dest; count: DWORD); [public, alias:'FPC_move']; stdcall;
 begin
     memmove(@dest, @source, count);
 end;
 
+function IsConsoleApp: Boolean;
+var
+    Handle: HWND;
+begin
+    Handle := GetConsoleWindow();
+    Result := (Handle <> 0);
+end;
 {$endif}

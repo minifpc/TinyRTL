@@ -39,3 +39,5 @@ src/sources/fpc-sys/system.s
 src/test/test1.s
 src/test/test.s
 src/sources/fpc-sys/system.s
+src/test/test1.s
+src/sources/fpc-sys/system.s
