@@ -1,4 +1,0 @@
-LIBRARY impFPC_RTL
-EXPORTS
-  FPU_move
-  move

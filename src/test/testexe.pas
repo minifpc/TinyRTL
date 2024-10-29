@@ -6,23 +6,18 @@
 // only for education, and non-profit usage !
 // -----------------------------------------------------------------
 {$mode delphi}
-program test1;
+program testexe;
+
+procedure test1dll; stdcall; external 'testdll.dll';
 
 var
     S1: String;
 begin
     try
-        // ----------------------------------------------
-        // you can use all these variants to write
-        // text to a Windows Console (WriteLn) ...
-        // ----------------------------------------------
         dos.WriteLn('next String');
         dos.WriteLn(PChar('dos string'));
+        test1dll;
         
-        // ----------------------------------------------
-        // to read text from a Windows Console, you can
-        // use these variants (ReadLn) ...
-        // ----------------------------------------------
         dos.Read(S1, 'Input: ');
         dos.WriteLn('--------');
         dos.WriteLn(@S1);

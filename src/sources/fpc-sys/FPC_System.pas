@@ -82,22 +82,195 @@ procedure fpc_libinitializeunits; compilerproc;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 procedure fpc_copy_proc(Src, Dest, TypeInfo : Pointer); compilerproc; inline;
-procedure fpc_do_exit; external name 'FPC_DO_EXIT'; compilerproc;
 
 procedure EmptyMethod; external name 'FPC_EMPTYMETHOD';
 
 procedure move(const source; var dest; count: DWORD); stdcall;
 
+type
+    TEntryInformation = record
+        InitFinalTable      : Pointer;
+        ThreadvarTablesTable: Pointer;
+        ResourceStringTables: Pointer;
+        ResStrInitTables    : Pointer;
+        ResLocation         : Pointer;
+        PascalMain          : procedure;
+        valgrind_used       : boolean;
+    end;
+
+function FPC_specific_handler(
+    rec     : Pointer;
+    frame   : Pointer;
+    context : Pointer;
+    dispatch: Pointer
+):  integer;
+
+var
+    InitializationUnitsOK: Boolean = false;  // DLL / EXE !!!
+
 function IsConsoleApp: Boolean;
-procedure main; stdcall;
-procedure PascalMain; external name 'PASCALMAIN';
+procedure PascalMain ; external name 'PASCALMAIN';
+procedure fpc_do_exit; compilerproc;
+
+const
+    SysInitEntryInformation: TEntryInformation = (
+        InitFinalTable:       nil; // @InitFinalTable;
+        ThreadvarTablesTable: nil; // @ThreadvarTablesTable;
+        ResourceStringTables: nil; // @ResourceStringTables;
+        ResStrInitTables:     nil; // @ResStrInitTables;
+        ResLocation:          nil;
+        PascalMain:           @PASCALMAIN;
+        valgrind_used:        false;
+    );
 {$endif}
 
 {$ifdef windows_source}
 {$M-}
-procedure main; stdcall; [public, alias: '_mainCRTStartup'];
+
+function DLL_Entry(
+    constref info: TEntryInformation
+):  longbool;
+    [public, alias: '_FPC_DLL_Entry'];
 begin
-    PascalMain;
+    // @@todo: detect call type (DLL_PROCESS_ATTACH etc)
+    PASCALMAIN;
+end;
+
+// TUI / CRT
+procedure _mainCRTStartup; stdcall; public name '_mainCRTStartup';
+begin
+    PASCALMAIN;
+    fpc_do_exit;
+end;
+
+// GUI
+procedure _WinMainCRTStartup; stdcall; public name '_WinMainCRTStartup';
+begin
+    PASCALMAIN;
+    fpc_do_exit;
+end;
+
+// DLL console
+procedure _DLLMainCRTStartup(
+    _hinstance: longint;
+    _dllreason: dword;
+    _dllparam : pointer
+);  stdcall;
+    public name '_DLLMainCRTStartup';
+begin
+    DLL_Entry(SysInitEntryInformation);
+end;
+
+// DLL non-console
+procedure _DLLWinMainCRTStartup(
+    _hinstance: longint;
+    _dllreason: dword;
+    _dllparam : pointer
+);  stdcall;
+    public name '_DLLWinMainCRTStartup';
+begin
+    DLL_Entry(SysInitEntryInformation);
+end;
+
+function IsConsoleApp: Boolean;
+var
+    Handle: HWND;
+begin
+    Handle := GetConsoleWindow();
+    Result := (Handle <> 0);
+end;
+
+procedure fpc_do_exit; [public,alias: 'FPC_DO_EXIT']; compilerproc;
+begin
+    fpc_finalizeunits;
+    ExitProcess(0);
+end;
+
+function FPC_specific_handler(
+    rec     : Pointer;
+    frame   : Pointer;
+    context : Pointer;
+    dispatch: Pointer
+):  integer;
+    [public, alias: '__FPC_specific_handler'];
+begin
+    MessageBoxA(0,'huhu','info',0);
+end;
+
+procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
+    procedure CallProcedure(proc: TProcedure);
+    begin
+        if Assigned(proc) then
+        TProcedure(proc)();
+    end;
+var
+    Index: DWORD;
+begin
+    if IsConsoleApp then
+    begin
+        printf(#0);  // flush buffer => #13
+    end;
+    if not InitializationUnitsOK then
+    begin
+        if InitFinalTable.TableCount > 0 then
+        begin
+            for Index := 1 to InitFinalTable.TableCount - 1 do
+            begin
+                if Assigned(InitFinalTable.Procs[Index].InitProc) then
+                CallProcedure(InitFinalTable.Procs[Index].InitProc);
+            end;
+            InitializationUnitsOK := true;
+        end;
+    end;
+end;
+procedure fpc_libinitializeunits; [public, alias:'FPC_LIBINITIALIZEUNITS']; compilerproc;
+    procedure CallProcedure(proc: TProcedure);
+    begin
+        if Assigned(proc) then
+        TProcedure(proc)();
+    end;
+var
+    Index: DWORD;
+begin
+    if IsConsoleApp then
+    begin
+        printf(#0);  // flush buffer => #13
+    end;
+    if not InitializationUnitsOK then
+    begin
+        if InitFinalTable.TableCount > 0 then
+        begin
+            for Index := 1 to InitFinalTable.TableCount - 1 do
+            begin
+                if Assigned(InitFinalTable.Procs[Index].InitProc) then
+                CallProcedure(InitFinalTable.Procs[Index].InitProc);
+            end;
+            InitializationUnitsOK := true;
+        end;
+    end;
+end;
+
+procedure fpc_finalizeunits; compilerproc; [public,alias: 'FPC_FINALIZEUNITS']; compilerproc;
+    procedure CallProcedure(proc: TProcedure);
+    begin
+        if Assigned(proc) then
+        TProcedure(proc)();
+    end;
+var
+    Index: DWORD;
+begin
+    if IsConsoleApp then
+    begin
+        printf('finalize...'#13#10);
+    end;
+    if InitFinalTable.TableCount > 0 then
+    begin
+        for Index := 1 to InitFinalTable.TableCount - 1 do
+        begin
+            if Assigned(InitFinalTable.Procs[Index].FinalProc) then
+            CallProcedure(InitFinalTable.Procs[Index].FinalProc);
+        end;
+    end;
 end;
 
 function sizeByte : Byte; inline; begin result :=  1; end;
@@ -284,69 +457,10 @@ end;
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 begin end;
 
-procedure fpc_do_exit; [public,alias: 'FPC_DO_EXIT']; compilerproc;
-begin
-    fpc_finalizeunits;
-    ExitProcess(0);
-end;
-
-procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
-    procedure CallProcedure(proc: TProcedure);
-    begin
-        if Assigned(proc) then
-        TProcedure(proc)();
-    end;
-var
-    Index: DWORD;
-begin
-    if IsConsoleApp then
-    begin
-        printf('initialize...'#13#10);
-    end;
-    if InitFinalTable.TableCount > 0 then
-    begin
-        for Index := 1 to InitFinalTable.TableCount - 1 do
-        begin
-            if Assigned(InitFinalTable.Procs[Index].InitProc) then
-            CallProcedure(InitFinalTable.Procs[Index].InitProc);
-        end;
-    end;
-end;
-procedure fpc_libinitializeunits; [public, alias:'FPC_LIBINITIALIZEUNITS']; compilerproc; begin end;
-
-procedure fpc_finalizeunits; compilerproc; [public,alias: 'FPC_FINALIZEUNITS']; compilerproc;
-    procedure CallProcedure(proc: TProcedure);
-    begin
-        if Assigned(proc) then
-        TProcedure(proc)();
-    end;
-var
-    Index: DWORD;
-begin
-    if IsConsoleApp then
-    begin
-        printf('finalize...'#13#10);
-    end;
-    if InitFinalTable.TableCount > 0 then
-    begin
-        for Index := 1 to InitFinalTable.TableCount - 1 do
-        begin
-            if Assigned(InitFinalTable.Procs[Index].FinalProc) then
-            CallProcedure(InitFinalTable.Procs[Index].FinalProc);
-        end;
-    end;
-end;
-
 procedure move(const source; var dest; count: DWORD); [public, alias:'FPC_move']; stdcall;
 begin
     memmove(@dest, @source, count);
 end;
 
-function IsConsoleApp: Boolean;
-var
-    Handle: HWND;
-begin
-    Handle := GetConsoleWindow();
-    Result := (Handle <> 0);
-end;
+
 {$endif}
