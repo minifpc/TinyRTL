@@ -28,6 +28,8 @@ type LONG       = LongInt;
 type Integer  = QWord;
 type Cardinal = QWord;
 
+type PtrUInt  = QWord;
+
 type SizeInt = LongInt;
 
 type DWORD  = LongDWORD;
@@ -42,6 +44,7 @@ type PPointer     = ^Pointer;
 type PChar        = ^Char;
 type PShortString = ^ShortString;
 
+type TString      = PChar;
 type AnsiChar     = Pointer;
 
 type PAnsiChar    = ^AnsiChar;

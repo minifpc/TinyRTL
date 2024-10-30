@@ -11,7 +11,7 @@ program testexe;
 procedure test1dll; stdcall; external 'testdll.dll';
 
 var
-    S1: String;
+    S1: TString;
 begin
     try
         dos.WriteLn('next String');
@@ -20,11 +20,11 @@ begin
         
         dos.Read(S1, 'Input: ');
         dos.WriteLn('--------');
-        dos.WriteLn(@S1);
+        dos.WriteLn(S1);
     finally
         MessageBoxA(0,
-            PChar(@S1),
-            PChar('Information'),
+            S1,
+            TString('Information'),
             0);
     end;
     

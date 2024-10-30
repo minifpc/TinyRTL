@@ -127,13 +127,26 @@ const
 {$ifdef windows_source}
 {$M-}
 
+var
+    SysInstance : LongInt;
+    
+    DLLReason: DWord;
+    DLLParam : Pointer;
+    
 function DLL_Entry(
     constref info: TEntryInformation
-):  longbool;
+):  Boolean;
     [public, alias: '_FPC_DLL_Entry'];
 begin
-    // @@todo: detect call type (DLL_PROCESS_ATTACH etc)
-    PASCALMAIN;
+    result := true;
+    case DLLReason of
+        DLL_PROCESS_DETACH: begin
+            //internal_do_exit;
+        end;
+        DLL_PROCESS_ATTACH: begin
+            PASCALMAIN;
+        end;
+    end;
 end;
 
 // TUI / CRT
@@ -151,13 +164,17 @@ begin
 end;
 
 // DLL console
-procedure _DLLMainCRTStartup(
+procedure _FPC_DLLMainCRTStartup(
     _hinstance: longint;
     _dllreason: dword;
     _dllparam : pointer
 );  stdcall;
     public name '_DLLMainCRTStartup';
 begin
+    SysInstance := _hinstance;
+    DLLReason   := _dllreason;
+    DLLParam    := _dllparam;
+    
     DLL_Entry(SysInitEntryInformation);
 end;
 

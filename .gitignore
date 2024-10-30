@@ -50,3 +50,4 @@ src/test/impFPC_RTL.def
 src/test/fpc_rtl.def
 src/test/fpc.txt
 src/sources/fpc-sys/system.s
+src/utils.dll

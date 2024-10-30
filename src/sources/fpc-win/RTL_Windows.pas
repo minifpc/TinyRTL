@@ -191,7 +191,7 @@ function ReadConsoleA(
     nNumberOfCharsToRead: DWORD;  // Anzahl der Zeichen, die gelesen werden sollen
     lpNumberOfCharsRead: LPDWORD; // Zeiger auf eine DWORD-Variable, die die tatsächliche Anzahl der gelesenen Zeichen enthält
     pInputControl: Pointer        // Sollte in den meisten Fällen NIL sein
-):  BOOL; stdcall;
+):  Boolean; stdcall;
     external kernel32;
 
 function WriteConsoleA(
@@ -253,11 +253,12 @@ const GENERIC_READ    = $80000000;
 // ---------------------------------------------------------------------------
 // win32api constants, and variables ...
 // ---------------------------------------------------------------------------
-const DLL_PROCESS_ATTACH = 1;
-const DLL_PROCESS_DETACH = 0;
-
-const DLL_THREAD_ATTACH  = 2;
-const DLL_THREAD_DETACH  = 3;
+const
+    DLL_PROCESS_DETACH = 0;
+    DLL_PROCESS_ATTACH = 1;
+    //
+    DLL_THREAD_ATTACH  = 2;
+    DLL_THREAD_DETACH  = 3;
 
 // ---------------------------------------------------------------------------
 // win32api file operations ...
@@ -373,7 +374,7 @@ function CloseHandle(
 function fgets(
     buffer: PChar;
     count: DWORD;
-    stream: Pointer
+    stream: DWORD
 ):  PChar; cdecl;
     external 'msvcrt.dll';
 

@@ -53,7 +53,9 @@ set fpcdll=%fpc% %fpcsrc% %fpcEXEx64% %fpcDLLx64%
 cd %prjdir%\test
 ::
 %fpcdll% -dwindll testdll.pas -otestdll.dll
+if errorlevel 1 (goto buildError)
 %fpcexe% -dwinexe testexe.pas -otestexe.exe
+if errorlevel 1 (goto buildError)
 
 nm %prjdir%\test\out\testdll.dll > %prjdir%\test\out\testdll.txt
 nm %prjdir%\test\out\testexe.exe > %prjdir%\test\out\testexe.txt
@@ -67,11 +69,12 @@ nm %prjdir%\test\out\testexe.exe > %prjdir%\test\out\testexe.txt
 %pakup% %prjdir%\test\out\testdll.dll
 %pakup% %prjdir%\test\out\testexe.exe
 
+copy %prjdir%\test\utils.dll %prjdir%\test\out\utils.dll
+
 goto allok
 
 :buildError
 echo =[ build error ]=
-exit
 goto eof
 :allok
 echo =[ done ]=
