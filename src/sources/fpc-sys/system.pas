@@ -9,6 +9,8 @@
 // ---------------------------------------------------------------------------
 {$mode objfpc}{$H+}
 {$modeswitch advancedrecords}
+{$ifdef windll}{$entrypoint _DLLWinMainCRTStartup}{$endif}
+{$ifdef winexe}{$entrypoint _mainCRTStartup}      {$endif}
 unit system;
 
 interface

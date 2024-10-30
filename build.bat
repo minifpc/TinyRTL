@@ -52,8 +52,8 @@ set fpcdll=%fpc% %fpcsrc% %fpcEXEx64% %fpcDLLx64%
 
 cd %prjdir%\test
 ::
-%fpcdll% -XM_DLLWinMainCRTStartup -dwindll testdll.pas -otestdll.dll
-%fpcexe%                          -dwinexe testexe.pas -otestexe.exe
+%fpcdll% -dwindll testdll.pas -otestdll.dll
+%fpcexe% -dwinexe testexe.pas -otestexe.exe
 
 nm %prjdir%\test\out\testdll.dll > %prjdir%\test\out\testdll.txt
 nm %prjdir%\test\out\testexe.exe > %prjdir%\test\out\testexe.txt
