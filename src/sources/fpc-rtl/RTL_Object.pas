@@ -7,11 +7,12 @@
 // (c) Copyright 2024 Jens Kallup - paule32
 // only for non-profit usage !!!
 // ---------------------------------------------------------------------------
-{$ifdef windows_header}
 // ---------------------------------------------------------------------------
 // TObjectm and IUnknown has to be defined first as forward class ...
 // ---------------------------------------------------------------------------
-
+{$ifdef windows_header}
+{$mode delphi}
+{$M-}
 type
     TObject = class
     private
@@ -21,7 +22,7 @@ type
         constructor Create;
         destructor Destroy; virtual;
         
-        function ClassName: String; virtual;
+        function ClassName: TString; virtual;
         class function ClassParent: TObject; virtual;
 
         class procedure InitInstance(Instance: Pointer); virtual;
@@ -44,6 +45,7 @@ type
 {$endif}
 
 {$ifdef windows_source}
+{$mode delphi}
 {$M-}
 // ---------------------------------------------------------------------------
 // TObject: the base class of all sub classes:
@@ -66,7 +68,7 @@ begin
 //
 end;
 
-function TObject.ClassName: String;
+function TObject.ClassName: TString;
 begin
     result := 'TObject';
 end;
@@ -106,6 +108,7 @@ end;
 
 class procedure TObject.FreeInstance;
 begin
+MessageBoxA(0,Pchar('free instance'),pchar('iiffdddd'),0);
     FreeMem(Pointer(FClassInstance));
     if self <> nil then
     begin
@@ -115,16 +118,17 @@ end;
 
 function SafeCallException( obj: codepointer; exceptaddr: codepointer ): HResult;
 begin
-//
+    MessageBoxA(0,Pchar('safecallexc'),pchar('iiffdddd'),0);
 end;
 
 function TObject.SafeCallException(exceptobject : tobject; exceptaddr : codepointer) : HResult;
 begin
-  result := 1;
+    MessageBoxA(0,Pchar('sa feca ll exc'),pchar('iiff dddd'),0);
+  result := 0;
 end;
 
 procedure TObject.DefaultHandler(var message);
 begin
-    //MessageBoxA(0, PChar('tobject DEFAULT HANDLER'), PChar('info'), 0);
+    MessageBoxA(0, PChar('tobject DEFAULT HANDLER'), PChar('info'), 0);
 end;
 {$endif}

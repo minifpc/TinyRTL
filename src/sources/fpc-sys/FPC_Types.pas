@@ -29,6 +29,7 @@ type Integer  = QWord;
 type Cardinal = QWord;
 
 type PtrUInt  = QWord;
+type PLongWord = ^LongWord;
 
 type SizeInt = LongInt;
 

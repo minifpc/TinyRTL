@@ -42,9 +42,13 @@ const rtl_dll  = 'fpc_rtl.dll';
 // ---------------------------------------------------------------------------
 // TObject Framework - win32api ...
 // ---------------------------------------------------------------------------
+{$if declared(TObject) = false}
 {$I RTL_Object.pas}
+{$endif}
+
 {$I RTL_List.pas}
 
+{$I RTL_Exception.pas}
 {$I FPC_SymbolTable.pas}
 
 {$I RTL_DosCmd.pas}
@@ -85,8 +89,10 @@ implementation
 {$I FPC_SysUtils.pas}
 
 {$I RTL_Object.pas}
+
 {$I RTL_List.pas}
 
+{$I RTL_Exception.pas}
 {$I FPC_SymbolTable.pas}
 
 {$I RTL_DosCmd.pas}

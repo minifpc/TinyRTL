@@ -14,6 +14,9 @@
 {$if declared(TSystemCodePage) = false}
     type TSystemCodePage = Word;
 {$endif}
+{$if declared(TObject) = false}
+{$I RTL_Object.pas}
+{$endif}
 
 function MessageBoxA(
     hWnd: HWND;
@@ -98,15 +101,18 @@ type
         valgrind_used       : boolean;
     end;
 
-function FPC_specific_handler(
-    rec     : Pointer;
-    frame   : Pointer;
-    context : Pointer;
-    dispatch: Pointer
-):  integer;
+const
+    EXCEPTION_EXECUTE_HANDLER    =  1;  // continue normal execution
+    EXCEPTION_CONTINUE_EXECUTION = -1;  // resume at the same point
+    EXCEPTION_CONTINUE_SEARCH    =  0;  // search for another handler
+    
+function __FPC_specific_handler(rec, frame, context, dispatch: pointer): integer; cdecl;
+function __FPC_except_handler  (rec, frame, context, dispatch: pointer): integer; cdecl;
+function __FPC_default_handler (rec, frame, context, dispatch: pointer): integer; cdecl;
 
 var
-    InitializationUnitsOK: Boolean = false;  // DLL / EXE !!!
+    in_initialization_code_exe : Boolean = false;
+    in_initialization_code_dll : Boolean = false;
 
 function IsConsoleApp: Boolean;
 procedure PascalMain ; external name 'PASCALMAIN';
@@ -203,15 +209,20 @@ begin
     ExitProcess(0);
 end;
 
-function FPC_specific_handler(
-    rec     : Pointer;
-    frame   : Pointer;
-    context : Pointer;
-    dispatch: Pointer
-):  integer;
-    [public, alias: '__FPC_specific_handler'];
+function __FPC_specific_handler(rec, frame, context, dispatch: pointer): integer; cdecl; [public, alias: '__FPC_specific_handler'];
 begin
-    MessageBoxA(0,'huhu','info',0);
+    MessageBoxA(0,'spec','info',0);
+    result := EXCEPTION_CONTINUE_SEARCH;
+end;
+function __FPC_except_handler(rec, frame, context, dispatch: pointer): integer; cdecl; [public, alias: '__FPC_except_handler'];
+begin      
+    MessageBoxA(0,'spec 222222','info',0);
+    result := EXCEPTION_CONTINUE_SEARCH;
+end;
+function __FPC_default_handler(rec, frame, context, dispatch: pointer): integer; cdecl; [public, alias:'__FPC_DEFAULT_HANDLER'];
+begin   
+  MessageBoxA(0,'DEFAULTERS 2333','info',0);
+  result := EXCEPTION_CONTINUE_SEARCH;
 end;
 
 procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
@@ -223,20 +234,22 @@ procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerpr
 var
     Index: DWORD;
 begin
-    if IsConsoleApp then
+    if in_initialization_code_exe = false then
     begin
-        printf(#0);  // flush buffer => #13
-    end;
-    if not InitializationUnitsOK then
-    begin
+        in_initialization_code_exe := true;
+        if IsConsoleApp then
+        begin
+            printf(#0);
+        end;
+        
         if InitFinalTable.TableCount > 0 then
         begin
+            printf('init: %d'#13#10,InitFinalTable.TableCount);
             for Index := 1 to InitFinalTable.TableCount - 1 do
             begin
                 if Assigned(InitFinalTable.Procs[Index].InitProc) then
                 CallProcedure(InitFinalTable.Procs[Index].InitProc);
             end;
-            InitializationUnitsOK := true;
         end;
     end;
 end;
@@ -249,20 +262,21 @@ procedure fpc_libinitializeunits; [public, alias:'FPC_LIBINITIALIZEUNITS']; comp
 var
     Index: DWORD;
 begin
-    if IsConsoleApp then
+    if in_initialization_code_dll = false then
     begin
-        printf(#0);  // flush buffer => #13
-    end;
-    if not InitializationUnitsOK then
-    begin
+        in_initialization_code_dll := true;
+        if IsConsoleApp then
+        begin
+            printf(#0);
+        end;
+        
         if InitFinalTable.TableCount > 0 then
         begin
-            for Index := 1 to InitFinalTable.TableCount - 1 do
+            for Index := 1 to InitFinalTable.TableCount do
             begin
                 if Assigned(InitFinalTable.Procs[Index].InitProc) then
                 CallProcedure(InitFinalTable.Procs[Index].InitProc);
             end;
-            InitializationUnitsOK := true;
         end;
     end;
 end;
@@ -282,7 +296,8 @@ begin
     end;
     if InitFinalTable.TableCount > 0 then
     begin
-        for Index := 1 to InitFinalTable.TableCount - 1 do
+        printf('init: %d'#13#10,InitFinalTable.TableCount);
+        for Index := InitFinalTable.TableCount downto 1 do
         begin
             if Assigned(InitFinalTable.Procs[Index].FinalProc) then
             CallProcedure(InitFinalTable.Procs[Index].FinalProc);

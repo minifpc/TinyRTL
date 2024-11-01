@@ -42,8 +42,8 @@ set fpcsrc=^
     -Fu%prjdir%\sources\fpc-qt
 
 set fpcEXEx64=^
-    -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os ^
-    -FE%prjdir%\test\out
+    -n -Mdelphi -Twin64 -dwindows -dwin64 -O3 -Os -a ^
+    -FE%prjdir%\test\out -Xs 
 
 set fpcDLLx64=
 
@@ -57,8 +57,8 @@ if errorlevel 1 (goto buildError)
 %fpcexe% -dwinexe testexe.pas -otestexe.exe
 if errorlevel 1 (goto buildError)
 
-nm %prjdir%\test\out\testdll.dll > %prjdir%\test\out\testdll.txt
-nm %prjdir%\test\out\testexe.exe > %prjdir%\test\out\testexe.txt
+::nm %prjdir%\test\out\testdll.dll > %prjdir%\test\out\testdll.txt
+::nm %prjdir%\test\out\testexe.exe > %prjdir%\test\out\testexe.txt
 
 ::set PYTHONHOME=
 ::E:\msys64\mingw64\bin\gdb ./testexe.exe
@@ -69,7 +69,7 @@ nm %prjdir%\test\out\testexe.exe > %prjdir%\test\out\testexe.txt
 %pakup% %prjdir%\test\out\testdll.dll
 %pakup% %prjdir%\test\out\testexe.exe
 
-copy %prjdir%\test\utils.dll %prjdir%\test\out\utils.dll
+copy %prjdir%\..\..\utils.dll %prjdir%\test\out\utils.dll
 
 goto allok
 
