@@ -194,7 +194,7 @@ FPC_RESSTRINITTABLES:
 
 .section .fpc.n_version
 __fpc_ident:
-	.ascii	"FPC 3.2.2 [2021/05/15] for x86_64 - Win64"
+	.ascii	"FPC 3.2.2-r0d122c49 [2024/11/15] for x86_64 - Win64"
 
 .section .data.n___heapsize,"d"
 	.balign 8

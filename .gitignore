@@ -34,3 +34,7 @@ src/test/out/testexe.txt
 src/test/impFPC_RTL.def
 src/test/fpc_rtl.def
 src/test/fpc.txt
+src/sources/fpc-sys/system.pas.bak
+src/sources/fpc-sys/FPC_System.pas.bak
+src/sources/fpc-rtl/RTL_Exception.pas.bak
+src/sources/fpc-win/FPC_Exception.pas.bak

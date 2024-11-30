@@ -64,20 +64,13 @@ if errorlevel 1 (goto buildError)
 ::set PYTHONHOME=
 ::E:\msys64\mingw64\bin\gdb ./testexe.exe
 
-%strip% %prjdir%\test\out\testdll.dll >nul 2>&1
-if errorlevel 1 (goto buildError)
+%strip% %prjdir%\test\out\testdll.dll
+%strip% %prjdir%\test\out\testexe.exe
 
-%strip% %prjdir%\test\out\testexe.exe >nul 2>&1
-if errorlevel 1 (goto buildError)
+%pakup% %prjdir%\test\out\testdll.dll
+%pakup% %prjdir%\test\out\testexe.exe
 
-%pakup% %prjdir%\test\out\testdll.dll >nul 2>&1
-if errorlevel 1 (goto buildError)
-
-%pakup% %prjdir%\test\out\testexe.exe >nul 2>&1
-if errorlevel 1 (goto buildError)
-
-copy %prjdir%\test\utils.dll %prjdir%\test\out\utils.dll >nul 2>&1
-if errorlevel 1 (goto buildError)
+copy %prjdir%\test\utils.dll %prjdir%\test\out\utils.dll
 
 goto allok
 

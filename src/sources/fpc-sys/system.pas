@@ -118,6 +118,7 @@ implementation
 initialization
 begin
     InitSystem;
+
     if isConsoleApp then
     printf('---< hocus pocus >-----'#13#10);
 end;

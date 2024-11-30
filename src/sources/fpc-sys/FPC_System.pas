@@ -209,7 +209,7 @@ begin
     ExitProcess(0);
 end;
 
-function __FPC_specific_handler(rec, frame, context, dispatch: pointer): integer; cdecl; [public, alias: '__FPC_specific_handler'];
+function __FPC_specific_handler(var rec: EXCEPTION_RECORD; var frame: TSEHFrame; var context: TContext; var dispatch: TDispatcherContext): EXCEPTION_DISPOSITION; cdecl;
 begin
     MessageBoxA(0,'spec','info',0);
     result := EXCEPTION_CONTINUE_SEARCH;
@@ -483,7 +483,7 @@ end;
 
 procedure fpc_reraise; compilerproc; //[public, alias:'fpc_reraise']; compilerproc;
 begin
-    
+    MessageBoxA(0,'fpc_reraise','exception',0);
 end;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;

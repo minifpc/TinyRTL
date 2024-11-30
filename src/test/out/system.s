@@ -616,10 +616,10 @@ FPC_ANSISTR_INCR_REF:
 	ret
 .Lc76:
 
-.section .text.n_system$_$fpc_char_to_ansistr$char$word$$ansistring_$$_fin$0000021d,"x"
-SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000021D:
+.section .text.n_system$_$fpc_char_to_ansistr$char$word$$ansistring_$$_fin$0000022a,"x"
+SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000022A:
 .Lc77:
-.seh_proc SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000021D
+.seh_proc SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000022A
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc79:
@@ -676,7 +676,7 @@ fpc_char_to_ansistr:
 	nop
 .Lj116:
 	movq	%rbp,%rcx
-	call	SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000021D
+	call	SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000022A
 	movq	-24(%rbp),%rbx
 	movq	-16(%rbp),%rsi
 	leaq	(%rbp),%rsp
@@ -688,7 +688,7 @@ fpc_char_to_ansistr:
 	.long	0
 	.rva	.Lj115
 	.rva	.Lj116
-	.rva	SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000021D
+	.rva	SYSTEM$_$fpc_char_to_ansistr$CHAR$WORD$$ANSISTRING_$$_fin$0000022A
 
 .section .text.n_fpc_char_to_ansistr,"x"
 .seh_endproc
@@ -706,10 +706,10 @@ fpc_ansistr_unique:
 	ret
 .Lc88:
 
-.section .text.n_system$_$fpc_pchar_to_ansistr$pchar$word$$ansistring_$$_fin$0000021e,"x"
-SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000021E:
+.section .text.n_system$_$fpc_pchar_to_ansistr$pchar$word$$ansistring_$$_fin$0000022b,"x"
+SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000022B:
 .Lc89:
-.seh_proc SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000021E
+.seh_proc SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000022B
 	pushq	%rbp
 .seh_pushreg %rbp
 .Lc91:
@@ -774,7 +774,7 @@ fpc_pchar_to_ansistr:
 	nop
 .Lj129:
 	movq	%rbp,%rcx
-	call	SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000021E
+	call	SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000022B
 	movq	-24(%rbp),%rbx
 	movq	-16(%rbp),%rsi
 	leaq	(%rbp),%rsp
@@ -786,7 +786,7 @@ fpc_pchar_to_ansistr:
 	.long	0
 	.rva	.Lj128
 	.rva	.Lj129
-	.rva	SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000021E
+	.rva	SYSTEM$_$fpc_pchar_to_ansistr$PCHAR$WORD$$ANSISTRING_$$_fin$0000022B
 
 .section .text.n_fpc_pchar_to_ansistr,"x"
 .seh_endproc
@@ -1009,26 +1009,40 @@ fpc_help_fail:
 .globl	fpc_reraise
 fpc_reraise:
 .Lc127:
+.seh_proc fpc_reraise
+	leaq	-40(%rsp),%rsp
+.Lc129:
+.seh_stackalloc 40
+.seh_endprologue
+	xorl	%eax,%eax
+	leaq	_$SYSTEM$_Ld12(%rip),%r8
+	leaq	_$SYSTEM$_Ld13(%rip),%rdx
+	xorl	%ecx,%ecx
+	movl	%eax,%r9d
+	call	_$dll$user32$MessageBoxA
+	nop
+	leaq	40(%rsp),%rsp
 	ret
+.seh_endproc
 .Lc128:
 
 .section .text.n_fpc_finalize,"x"
 .globl	fpc_finalize
 fpc_finalize:
-.Lc129:
+.Lc130:
 	movq	%rcx,%rax
 	ret
-.Lc130:
+.Lc131:
 
 .section .text.n_system_$$_move$formal$formal$longdword,"x"
 .globl	SYSTEM_$$_MOVE$formal$formal$LONGDWORD
 SYSTEM_$$_MOVE$formal$formal$LONGDWORD:
 .globl	FPC_move
 FPC_move:
-.Lc131:
+.Lc132:
 .seh_proc SYSTEM_$$_MOVE$formal$formal$LONGDWORD
 	leaq	-40(%rsp),%rsp
-.Lc133:
+.Lc134:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
@@ -1039,55 +1053,55 @@ FPC_move:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc132:
+.Lc133:
 
 .section .text.n_system_$$_showmessage$pchar,"x"
 .globl	SYSTEM_$$_SHOWMESSAGE$PCHAR
 SYSTEM_$$_SHOWMESSAGE$PCHAR:
-.Lc134:
+.Lc135:
 .seh_proc SYSTEM_$$_SHOWMESSAGE$PCHAR
 	leaq	-40(%rsp),%rsp
-.Lc136:
+.Lc137:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rdx
 	movl	$64,%r9d
-	leaq	_$SYSTEM$_Ld12(%rip),%r8
+	leaq	_$SYSTEM$_Ld14(%rip),%r8
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc135:
+.Lc136:
 
 .section .text.n_system_$$_showwarn$pchar,"x"
 .globl	SYSTEM_$$_SHOWWARN$PCHAR
 SYSTEM_$$_SHOWWARN$PCHAR:
-.Lc137:
+.Lc138:
 .seh_proc SYSTEM_$$_SHOWWARN$PCHAR
 	leaq	-40(%rsp),%rsp
-.Lc139:
+.Lc140:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rdx
 	movl	$48,%r9d
-	leaq	_$SYSTEM$_Ld13(%rip),%r8
+	leaq	_$SYSTEM$_Ld15(%rip),%r8
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc138:
+.Lc139:
 
 .section .text.n_system_$$_showerror$pchar,"x"
 .globl	SYSTEM_$$_SHOWERROR$PCHAR
 SYSTEM_$$_SHOWERROR$PCHAR:
-.Lc140:
+.Lc141:
 .seh_proc SYSTEM_$$_SHOWERROR$PCHAR
 	leaq	-40(%rsp),%rsp
-.Lc142:
+.Lc143:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rdx
@@ -1099,15 +1113,15 @@ SYSTEM_$$_SHOWERROR$PCHAR:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc141:
+.Lc142:
 
 .section .text.n_system_$$_showinfo$pchar,"x"
 .globl	SYSTEM_$$_SHOWINFO$PCHAR
 SYSTEM_$$_SHOWINFO$PCHAR:
-.Lc143:
+.Lc144:
 .seh_proc SYSTEM_$$_SHOWINFO$PCHAR
 	leaq	-40(%rsp),%rsp
-.Lc145:
+.Lc146:
 .seh_stackalloc 40
 .seh_endprologue
 	call	SYSTEM_$$_SHOWMESSAGE$PCHAR
@@ -1115,12 +1129,12 @@ SYSTEM_$$_SHOWINFO$PCHAR:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc144:
+.Lc145:
 
 .section .text.n_system_$$_fillchar$formal$qword$char,"x"
 .globl	SYSTEM_$$_FILLCHAR$formal$QWORD$CHAR
 SYSTEM_$$_FILLCHAR$formal$QWORD$CHAR:
-.Lc146:
+.Lc147:
 	leaq	-1(%rdx),%rax
 	movq	$-1,%rdx
 .Lj183:
@@ -1130,15 +1144,15 @@ SYSTEM_$$_FILLCHAR$formal$QWORD$CHAR:
 	cmpq	%rdx,%rax
 	jnbe	.Lj183
 	ret
-.Lc147:
+.Lc148:
 
 .section .text.n_system_$$_freemem$pointer,"x"
 .globl	SYSTEM_$$_FREEMEM$POINTER
 SYSTEM_$$_FREEMEM$POINTER:
-.Lc148:
+.Lc149:
 .seh_proc SYSTEM_$$_FREEMEM$POINTER
 	leaq	-40(%rsp),%rsp
-.Lc150:
+.Lc151:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
@@ -1153,17 +1167,17 @@ SYSTEM_$$_FREEMEM$POINTER:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc149:
+.Lc150:
 
 .section .text.n_system_$$_getmem$pointer$longdword,"x"
 .globl	SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 SYSTEM_$$_GETMEM$POINTER$LONGDWORD:
-.Lc151:
+.Lc152:
 .seh_proc SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc153:
+.Lc154:
 .seh_stackalloc 32
 .seh_endprologue
 	movq	%rcx,%rbx
@@ -1176,7 +1190,7 @@ SYSTEM_$$_GETMEM$POINTER$LONGDWORD:
 	jne	.Lj193
 	xorl	%r9d,%r9d
 	leaq	_$SYSTEM$_Ld10(%rip),%r8
-	leaq	_$SYSTEM$_Ld14(%rip),%rdx
+	leaq	_$SYSTEM$_Ld16(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	movl	$1,%ecx
@@ -1187,17 +1201,17 @@ SYSTEM_$$_GETMEM$POINTER$LONGDWORD:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc152:
+.Lc153:
 
 .section .text.n_system_$$_lockfile$pointer$$boolean,"x"
 .globl	SYSTEM_$$_LOCKFILE$POINTER$$BOOLEAN
 SYSTEM_$$_LOCKFILE$POINTER$$BOOLEAN:
-.Lc154:
+.Lc155:
 .seh_proc SYSTEM_$$_LOCKFILE$POINTER$$BOOLEAN
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-48(%rsp),%rsp
-.Lc156:
+.Lc157:
 .seh_stackalloc 48
 .seh_endprologue
 	xorb	%bl,%bl
@@ -1207,7 +1221,7 @@ SYSTEM_$$_LOCKFILE$POINTER$$BOOLEAN:
 	call	_$dll$kernel32$LockFile
 	testb	%al,%al
 	jne	.Lj197
-	leaq	_$SYSTEM$_Ld15(%rip),%rcx
+	leaq	_$SYSTEM$_Ld17(%rip),%rcx
 	call	SYSTEM_$$_SHOWERROR$PCHAR
 	jmp	.Lj194
 .Lj197:
@@ -1219,19 +1233,19 @@ SYSTEM_$$_LOCKFILE$POINTER$$BOOLEAN:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc155:
+.Lc156:
 
 .section .text.n_system_$$_writefile$longword$pchar$$qword,"x"
 .globl	SYSTEM_$$_WRITEFILE$LONGWORD$PCHAR$$QWORD
 SYSTEM_$$_WRITEFILE$LONGWORD$PCHAR$$QWORD:
-.Lc157:
+.Lc158:
 .seh_proc SYSTEM_$$_WRITEFILE$LONGWORD$PCHAR$$QWORD
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc159:
+.Lc160:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	%ecx,%ebx
@@ -1251,15 +1265,15 @@ SYSTEM_$$_WRITEFILE$LONGWORD$PCHAR$$QWORD:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc158:
+.Lc159:
 
 .section .text.n_system_$$_writefile$longword$pointer$$qword,"x"
 .globl	SYSTEM_$$_WRITEFILE$LONGWORD$POINTER$$QWORD
 SYSTEM_$$_WRITEFILE$LONGWORD$POINTER$$QWORD:
-.Lc160:
+.Lc161:
 .seh_proc SYSTEM_$$_WRITEFILE$LONGWORD$POINTER$$QWORD
 	leaq	-56(%rsp),%rsp
-.Lc162:
+.Lc163:
 .seh_stackalloc 56
 .seh_endprologue
 	movq	%rdx,40(%rsp)
@@ -1273,12 +1287,12 @@ SYSTEM_$$_WRITEFILE$LONGWORD$POINTER$$QWORD:
 	leaq	56(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc161:
+.Lc162:
 
 .section .text.n_system_$$_filecreate$pchar$boolean$$pointer,"x"
 .globl	SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER
 SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
-.Lc163:
+.Lc164:
 .seh_proc SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER
 	pushq	%rbx
 .seh_pushreg %rbx
@@ -1291,12 +1305,12 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 	pushq	%r13
 .seh_pushreg %r13
 	leaq	-64(%rsp),%rsp
-.Lc165:
+.Lc166:
 .seh_stackalloc 64
 .seh_endprologue
 	movq	%rcx,%rbx
 	movb	%dl,%sil
-	leaq	_$SYSTEM$_Ld16(%rip),%rcx
+	leaq	_$SYSTEM$_Ld18(%rip),%rcx
 	call	SYSTEM_$$_SHOWINFO$PCHAR
 	movq	%rbx,%rcx
 	call	_$dll$shlwapi$PathFileExistsA
@@ -1310,20 +1324,20 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 	movl	$255,%edx
 	call	SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 	movq	56(%rsp),%rcx
-	leaq	_$SYSTEM$_Ld17(%rip),%rdx
+	leaq	_$SYSTEM$_Ld19(%rip),%rdx
 	call	_$dll$ucrtbase$strcpy
 	movq	%rbx,%rdx
 	movq	56(%rsp),%rcx
 	call	_$dll$ucrtbase$strcat
 	movq	56(%rsp),%rcx
-	leaq	_$SYSTEM$_Ld18(%rip),%rdx
+	leaq	_$SYSTEM$_Ld20(%rip),%rdx
 	call	_$dll$ucrtbase$strcat
 	movq	56(%rsp),%rcx
-	leaq	_$SYSTEM$_Ld19(%rip),%rdx
+	leaq	_$SYSTEM$_Ld21(%rip),%rdx
 	call	_$dll$ucrtbase$strcat
 	movq	56(%rsp),%rdx
 	movl	$4,%r9d
-	leaq	_$SYSTEM$_Ld12(%rip),%r8
+	leaq	_$SYSTEM$_Ld14(%rip),%r8
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	movl	%eax,%edi
@@ -1342,7 +1356,7 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 	call	SYSTEM_$$_FREEMEM$POINTER
 	testl	%r12d,%r12d
 	je	.Lj217
-	leaq	_$SYSTEM$_Ld20(%rip),%rcx
+	leaq	_$SYSTEM$_Ld22(%rip),%rcx
 	call	SYSTEM_$$_SHOWERROR$PCHAR
 	jmp	.Lj202
 	jmp	.Lj217
@@ -1354,7 +1368,7 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 	movb	%al,%dl
 	testb	%dil,%dil
 	jne	.Lj216
-	leaq	_$SYSTEM$_Ld21(%rip),%rcx
+	leaq	_$SYSTEM$_Ld23(%rip),%rcx
 	call	SYSTEM_$$_SHOWMESSAGE$PCHAR
 .Lj216:
 	movq	$0,48(%rsp)
@@ -1382,7 +1396,7 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 	call	_$dll$kernel32$GetLastError
 	testl	%eax,%eax
 	je	.Lj219
-	leaq	_$SYSTEM$_Ld20(%rip),%rcx
+	leaq	_$SYSTEM$_Ld22(%rip),%rcx
 	call	SYSTEM_$$_SHOWERROR$PCHAR
 	jmp	.Lj202
 .Lj219:
@@ -1394,13 +1408,13 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 	movl	$255,%edx
 	call	SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 	movq	56(%rsp),%rcx
-	leaq	_$SYSTEM$_Ld17(%rip),%rdx
+	leaq	_$SYSTEM$_Ld19(%rip),%rdx
 	call	_$dll$ucrtbase$strcpy
 	movq	%rbx,%rdx
 	movq	56(%rsp),%rcx
 	call	_$dll$ucrtbase$strcat
 	movq	56(%rsp),%rcx
-	leaq	_$SYSTEM$_Ld22(%rip),%rdx
+	leaq	_$SYSTEM$_Ld24(%rip),%rdx
 	call	_$dll$ucrtbase$strcat
 	movq	56(%rsp),%rcx
 	call	SYSTEM_$$_SHOWERROR$PCHAR
@@ -1421,15 +1435,15 @@ SYSTEM_$$_FILECREATE$PCHAR$BOOLEAN$$POINTER:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc164:
+.Lc165:
 
 .section .text.n_system_$$_filecreate$rawbytestring$boolean$$pointer,"x"
 .globl	SYSTEM_$$_FILECREATE$RAWBYTESTRING$BOOLEAN$$POINTER
 SYSTEM_$$_FILECREATE$RAWBYTESTRING$BOOLEAN$$POINTER:
-.Lc166:
+.Lc167:
 .seh_proc SYSTEM_$$_FILECREATE$RAWBYTESTRING$BOOLEAN$$POINTER
 	leaq	-40(%rsp),%rsp
-.Lc168:
+.Lc169:
 .seh_stackalloc 40
 .seh_endprologue
 	testq	%rcx,%rcx
@@ -1441,15 +1455,15 @@ SYSTEM_$$_FILECREATE$RAWBYTESTRING$BOOLEAN$$POINTER:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc167:
+.Lc168:
 
 .section .text.n_system_$$_filedelete$pchar$$boolean,"x"
 .globl	SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN
 SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN:
-.Lc169:
+.Lc170:
 .seh_proc SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN
 	leaq	-40(%rsp),%rsp
-.Lc171:
+.Lc172:
 .seh_stackalloc 40
 .seh_endprologue
 	call	_$dll$kernel32$DeleteFileA
@@ -1457,15 +1471,15 @@ SYSTEM_$$_FILEDELETE$PCHAR$$BOOLEAN:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc170:
+.Lc171:
 
 .section .text.n_system_$$_filedelete$rawbytestring$$boolean,"x"
 .globl	SYSTEM_$$_FILEDELETE$RAWBYTESTRING$$BOOLEAN
 SYSTEM_$$_FILEDELETE$RAWBYTESTRING$$BOOLEAN:
-.Lc172:
+.Lc173:
 .seh_proc SYSTEM_$$_FILEDELETE$RAWBYTESTRING$$BOOLEAN
 	leaq	-40(%rsp),%rsp
-.Lc174:
+.Lc175:
 .seh_stackalloc 40
 .seh_endprologue
 	testq	%rcx,%rcx
@@ -1477,17 +1491,17 @@ SYSTEM_$$_FILEDELETE$RAWBYTESTRING$$BOOLEAN:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc173:
+.Lc174:
 
 .section .text.n_system_$$_fileseek$longword$longdword$longdword$$longdword,"x"
 .globl	SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD
 SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD:
-.Lc175:
+.Lc176:
 .seh_proc SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc177:
+.Lc178:
 .seh_stackalloc 32
 .seh_endprologue
 	movl	%r8d,%r9d
@@ -1499,7 +1513,7 @@ SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD:
 	jne	.Lj233
 	testl	%eax,%eax
 	je	.Lj233
-	leaq	_$SYSTEM$_Ld23(%rip),%rcx
+	leaq	_$SYSTEM$_Ld25(%rip),%rcx
 	call	SYSTEM_$$_SHOWERROR$PCHAR
 	movl	$4294967295,%eax
 	jmp	.Lj230
@@ -1511,15 +1525,15 @@ SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc176:
+.Lc177:
 
 .section .text.n_system_$$_fileseek$pointer$longdword$longdword$$longdword,"x"
 .globl	SYSTEM_$$_FILESEEK$POINTER$LONGDWORD$LONGDWORD$$LONGDWORD
 SYSTEM_$$_FILESEEK$POINTER$LONGDWORD$LONGDWORD$$LONGDWORD:
-.Lc178:
+.Lc179:
 .seh_proc SYSTEM_$$_FILESEEK$POINTER$LONGDWORD$LONGDWORD$$LONGDWORD
 	leaq	-40(%rsp),%rsp
-.Lc180:
+.Lc181:
 .seh_stackalloc 40
 .seh_endprologue
 	call	SYSTEM_$$_FILESEEK$LONGWORD$LONGDWORD$LONGDWORD$$LONGDWORD
@@ -1528,19 +1542,19 @@ SYSTEM_$$_FILESEEK$POINTER$LONGDWORD$LONGDWORD$$LONGDWORD:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc179:
+.Lc180:
 
 .section .text.n_system$_$tobject_$__$$_create$$tobject,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT
 SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT:
-.Lc181:
+.Lc182:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc183:
 .Lc184:
-	movq	%rsp,%rbp
 .Lc185:
+	movq	%rsp,%rbp
+.Lc186:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
@@ -1604,19 +1618,19 @@ SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT:
 
 .section .text.n_system$_$tobject_$__$$_create$$tobject,"x"
 .seh_endproc
-.Lc182:
+.Lc183:
 
 .section .text.n_system$_$tobject_$__$$_destroy,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_DESTROY
 SYSTEM$_$TOBJECT_$__$$_DESTROY:
-.Lc186:
+.Lc187:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_DESTROY
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc188:
+.Lc189:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rbx
@@ -1644,41 +1658,41 @@ SYSTEM$_$TOBJECT_$__$$_DESTROY:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc187:
+.Lc188:
 
 .section .text.n_system$_$tobject_$__$$_afterconstruction,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_AFTERCONSTRUCTION
 SYSTEM$_$TOBJECT_$__$$_AFTERCONSTRUCTION:
-.Lc189:
+.Lc190:
 	movq	%rcx,%rax
 	ret
-.Lc190:
+.Lc191:
 
 .section .text.n_system$_$tobject_$__$$_beforedestruction,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_BEFOREDESTRUCTION
 SYSTEM$_$TOBJECT_$__$$_BEFOREDESTRUCTION:
-.Lc191:
+.Lc192:
 	movq	%rcx,%rax
 	ret
-.Lc192:
+.Lc193:
 
 .section .text.n_system$_$tobject_$__$$_classname$$pchar,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$PCHAR
 SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$PCHAR:
-.Lc193:
-	leaq	_$SYSTEM$_Ld24(%rip),%rax
-	ret
 .Lc194:
+	leaq	_$SYSTEM$_Ld26(%rip),%rax
+	ret
+.Lc195:
 
 .section .text.n_system$_$tobject_$__$$_getinstance$$tobject,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_GETINSTANCE$$TOBJECT
 SYSTEM$_$TOBJECT_$__$$_GETINSTANCE$$TOBJECT:
-.Lc195:
+.Lc196:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_GETINSTANCE$$TOBJECT
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc197:
+.Lc198:
 .seh_stackalloc 32
 .seh_endprologue
 	xorl	%ebx,%ebx
@@ -1686,7 +1700,7 @@ SYSTEM$_$TOBJECT_$__$$_GETINSTANCE$$TOBJECT:
 	jne	.Lj272
 	xorl	%r9d,%r9d
 	leaq	_$SYSTEM$_Ld10(%rip),%r8
-	leaq	_$SYSTEM$_Ld25(%rip),%rdx
+	leaq	_$SYSTEM$_Ld27(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	jmp	.Lj269
@@ -1699,23 +1713,23 @@ SYSTEM$_$TOBJECT_$__$$_GETINSTANCE$$TOBJECT:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc196:
+.Lc197:
 
 .section .text.n_system$_$tobject_$__$$_classparent$$tobject,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT
 SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT:
-.Lc198:
+.Lc199:
 	xorl	%eax,%eax
 	ret
-.Lc199:
+.Lc200:
 
 .section .text.n_system$_$tobject_$__$$_free,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_FREE
 SYSTEM$_$TOBJECT_$__$$_FREE:
-.Lc200:
+.Lc201:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_FREE
 	leaq	-40(%rsp),%rsp
-.Lc202:
+.Lc203:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
@@ -1729,15 +1743,15 @@ SYSTEM$_$TOBJECT_$__$$_FREE:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc201:
+.Lc202:
 
 .section .text.n_system$_$tobject_$__$$_newinstance$$tobject,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
 SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT:
-.Lc203:
+.Lc204:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
 	leaq	-40(%rsp),%rsp
-.Lc205:
+.Lc206:
 .seh_stackalloc 40
 .seh_endprologue
 	leaq	U_$SYSTEM_$$__static_tobject_FCLASSINSTANCE(%rip),%rcx
@@ -1748,29 +1762,29 @@ SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc204:
+.Lc205:
 
 .section .text.n_system$_$tobject_$__$$_initinstance$pointer,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
 SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER:
-.Lc206:
+.Lc207:
 	movq	%rcx,(%rdx)
 	ret
-.Lc207:
+.Lc208:
 
 .section .text.n_system$_$tobject_$__$$_freeinstance,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
 SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE:
-.Lc208:
+.Lc209:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
 	leaq	-40(%rsp),%rsp
-.Lc210:
+.Lc211:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,32(%rsp)
 	xorl	%eax,%eax
-	leaq	_$SYSTEM$_Ld26(%rip),%r8
-	leaq	_$SYSTEM$_Ld27(%rip),%rdx
+	leaq	_$SYSTEM$_Ld28(%rip),%r8
+	leaq	_$SYSTEM$_Ld29(%rip),%rdx
 	xorl	%ecx,%ecx
 	movl	%eax,%r9d
 	call	_$dll$user32$MessageBoxA
@@ -1785,19 +1799,19 @@ SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc209:
+.Lc210:
 
 .section .text.n_system_$$_safecallexception$pointer$pointer$$shortdword,"x"
 SYSTEM_$$_SAFECALLEXCEPTION$POINTER$POINTER$$SHORTDWORD:
-.Lc211:
+.Lc212:
 .seh_proc SYSTEM_$$_SAFECALLEXCEPTION$POINTER$POINTER$$SHORTDWORD
 	leaq	-40(%rsp),%rsp
-.Lc213:
+.Lc214:
 .seh_stackalloc 40
 .seh_endprologue
 	xorl	%r9d,%r9d
-	leaq	_$SYSTEM$_Ld26(%rip),%r8
-	leaq	_$SYSTEM$_Ld28(%rip),%rdx
+	leaq	_$SYSTEM$_Ld28(%rip),%r8
+	leaq	_$SYSTEM$_Ld30(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	movl	%edx,%eax
@@ -1805,20 +1819,20 @@ SYSTEM_$$_SAFECALLEXCEPTION$POINTER$POINTER$$SHORTDWORD:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc212:
+.Lc213:
 
 .section .text.n_system$_$tobject_$__$$_safecallexception$tobject$pointer$$shortdword,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
 SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD:
-.Lc214:
+.Lc215:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
 	leaq	-40(%rsp),%rsp
-.Lc216:
+.Lc217:
 .seh_stackalloc 40
 .seh_endprologue
 	xorl	%r9d,%r9d
-	leaq	_$SYSTEM$_Ld29(%rip),%r8
-	leaq	_$SYSTEM$_Ld30(%rip),%rdx
+	leaq	_$SYSTEM$_Ld31(%rip),%r8
+	leaq	_$SYSTEM$_Ld32(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	xorl	%eax,%eax
@@ -1826,40 +1840,40 @@ SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc215:
+.Lc216:
 
 .section .text.n_system$_$tobject_$__$$_defaulthandler$formal,"x"
 .globl	SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal
 SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal:
-.Lc217:
+.Lc218:
 .seh_proc SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal
 	leaq	-40(%rsp),%rsp
-.Lc219:
+.Lc220:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	xorl	%r9d,%r9d
 	leaq	_$SYSTEM$_Ld1(%rip),%r8
-	leaq	_$SYSTEM$_Ld31(%rip),%rdx
+	leaq	_$SYSTEM$_Ld33(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc218:
+.Lc219:
 
 .section .text.n_system$_$tlist_$__$$_create$$tlist,"x"
 .globl	SYSTEM$_$TLIST_$__$$_CREATE$$TLIST
 SYSTEM$_$TLIST_$__$$_CREATE$$TLIST:
-.Lc220:
+.Lc221:
 .seh_proc SYSTEM$_$TLIST_$__$$_CREATE$$TLIST
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc222:
 .Lc223:
-	movq	%rsp,%rbp
 .Lc224:
+	movq	%rsp,%rbp
+.Lc225:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
@@ -1920,19 +1934,19 @@ SYSTEM$_$TLIST_$__$$_CREATE$$TLIST:
 
 .section .text.n_system$_$tlist_$__$$_create$$tlist,"x"
 .seh_endproc
-.Lc221:
+.Lc222:
 
 .section .text.n_system$_$tlist_$__$$_destroy,"x"
 .globl	SYSTEM$_$TLIST_$__$$_DESTROY
 SYSTEM$_$TLIST_$__$$_DESTROY:
-.Lc225:
+.Lc226:
 .seh_proc SYSTEM$_$TLIST_$__$$_DESTROY
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc227:
+.Lc228:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rbx
@@ -1960,12 +1974,12 @@ SYSTEM$_$TLIST_$__$$_DESTROY:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc226:
+.Lc227:
 
 .section .text.n_fpc_raiseexception,"x"
 .globl	fpc_raiseexception
 fpc_raiseexception:
-.Lc228:
+.Lc229:
 .seh_proc fpc_raiseexception
 	pushq	%rbx
 .seh_pushreg %rbx
@@ -1974,7 +1988,7 @@ fpc_raiseexception:
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-48(%rsp),%rsp
-.Lc230:
+.Lc231:
 .seh_stackalloc 48
 .seh_endprologue
 	movq	%rcx,%rbx
@@ -1983,33 +1997,41 @@ fpc_raiseexception:
 	testq	%r8,%r8
 	jne	.Lj322
 	xorl	%r9d,%r9d
-	leaq	_$SYSTEM$_Ld32(%rip),%r8
-	leaq	_$SYSTEM$_Ld33(%rip),%rdx
+	leaq	_$SYSTEM$_Ld34(%rip),%r8
+	leaq	_$SYSTEM$_Ld35(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 .Lj322:
 	testq	%rsi,%rsi
 	jne	.Lj324
 	xorl	%r9d,%r9d
-	leaq	_$SYSTEM$_Ld34(%rip),%r8
-	leaq	_$SYSTEM$_Ld35(%rip),%rdx
+	leaq	_$SYSTEM$_Ld36(%rip),%r8
+	leaq	_$SYSTEM$_Ld37(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 .Lj324:
 	testq	%rbx,%rbx
 	jne	.Lj326
 	xorl	%r9d,%r9d
-	leaq	_$SYSTEM$_Ld36(%rip),%r8
-	leaq	_$SYSTEM$_Ld37(%rip),%rdx
+	leaq	_$SYSTEM$_Ld38(%rip),%r8
+	leaq	_$SYSTEM$_Ld39(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	movq	%rdi,32(%rsp)
 	movq	%rsi,%r9
-	leaq	_$SYSTEM$_Ld38(%rip),%r8
+	leaq	_$SYSTEM$_Ld40(%rip),%r8
 	movl	$1,%edx
 	leaq	VMT_$SYSTEM_$$_EXCEPTION(%rip),%rcx
 	call	SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$POINTER$POINTER$$EXCEPTION
 	movq	%rax,%rbx
+	movq	%rsi,%rdx
+	movq	%rbx,%rcx
+	call	SYSTEM$_$EXCEPTION_$__$$_HANDLEEXCEPTION$POINTER
+	xorl	%r9d,%r9d
+	leaq	_$SYSTEM$_Ld38(%rip),%r8
+	leaq	_$SYSTEM$_Ld41(%rip),%rdx
+	xorl	%ecx,%ecx
+	call	_$dll$user32$MessageBoxA
 .Lj326:
 	nop
 	leaq	48(%rsp),%rsp
@@ -2018,27 +2040,27 @@ fpc_raiseexception:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc229:
+.Lc230:
 
 .section .text.n_system$_$exception_$__$$_classname$$pchar,"x"
 .globl	SYSTEM$_$EXCEPTION_$__$$_CLASSNAME$$PCHAR
 SYSTEM$_$EXCEPTION_$__$$_CLASSNAME$$PCHAR:
-.Lc231:
-	leaq	_$SYSTEM$_Ld39(%rip),%rax
-	ret
 .Lc232:
+	leaq	_$SYSTEM$_Ld42(%rip),%rax
+	ret
+.Lc233:
 
 .section .text.n_system$_$exception_$__$$_create$pchar$pointer$pointer$$exception,"x"
 .globl	SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$POINTER$POINTER$$EXCEPTION
 SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$POINTER$POINTER$$EXCEPTION:
-.Lc233:
+.Lc234:
 .seh_proc SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$POINTER$POINTER$$EXCEPTION
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc235:
 .Lc236:
-	movq	%rsp,%rbp
 .Lc237:
+	movq	%rsp,%rbp
+.Lc238:
 	leaq	-80(%rsp),%rsp
 .seh_stackalloc 80
 .seh_endprologue
@@ -2059,13 +2081,36 @@ SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$POINTER$POINTER$$EXCEPTION:
 .Lj340:
 	nop
 .Lj339:
-	movq	$-1,-40(%rbp)
-	leaq	_$SYSTEM$_Ld40(%rip),%rcx
+	movq	$-1,-48(%rbp)
+	xorl	%r9d,%r9d
+	leaq	_$SYSTEM$_Ld43(%rip),%r8
+	leaq	_$SYSTEM$_Ld43(%rip),%rdx
+	xorl	%ecx,%ecx
+	call	_$dll$user32$MessageBoxA
+	cmpq	$0,-16(%rbp)
+	jne	.Lj343
+	leaq	_$SYSTEM$_Ld44(%rip),%rcx
 	call	_$dll$msvcrt$printf
-	movq	-32(%rbp),%rax
-	movq	-8(%rbp),%rdx
-	movq	%rdx,8(%rax)
-	movq	$1,-40(%rbp)
+.Lj343:
+	leaq	_$SYSTEM$_Ld45(%rip),%rcx
+	call	_$dll$msvcrt$printf
+	movq	-16(%rbp),%rax
+	movq	%rax,-40(%rbp)
+	xorl	%r9d,%r9d
+	leaq	_$SYSTEM$_Ld38(%rip),%r8
+	leaq	_$SYSTEM$_Ld46(%rip),%rdx
+	xorl	%ecx,%ecx
+	call	_$dll$user32$MessageBoxA
+	call	*-40(%rbp)
+	xorl	%r9d,%r9d
+	leaq	_$SYSTEM$_Ld38(%rip),%r8
+	leaq	_$SYSTEM$_Ld47(%rip),%rdx
+	xorl	%ecx,%ecx
+	call	_$dll$user32$MessageBoxA
+	movq	-32(%rbp),%rdx
+	movq	-8(%rbp),%rax
+	movq	%rax,8(%rdx)
+	movq	$1,-48(%rbp)
 	cmpq	$0,-32(%rbp)
 	je	.Lj337
 	cmpq	$0,-24(%rbp)
@@ -2077,16 +2122,16 @@ SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$POINTER$POINTER$$EXCEPTION:
 	jmp	.Lj337
 .Lj336:
 	cmpq	$0,-24(%rbp)
-	je	.Lj346
-	movq	-40(%rbp),%rdx
+	je	.Lj348
+	movq	-48(%rbp),%rdx
 	movq	-32(%rbp),%rcx
 	movq	-32(%rbp),%rax
 	movq	(%rax),%rax
 	call	*96(%rax)
-.Lj346:
+.Lj348:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj347:
+.Lj349:
 	nop
 .Lj337:
 .Lj329:
@@ -2105,30 +2150,137 @@ SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$POINTER$POINTER$$EXCEPTION:
 
 .section .text.n_system$_$exception_$__$$_create$pchar$pointer$pointer$$exception,"x"
 .seh_endproc
-.Lc234:
+.Lc235:
+
+.section .text.n_system$_$exception_$__$$_create$pchar$qword$$exception,"x"
+.globl	SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$QWORD$$EXCEPTION
+SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$QWORD$$EXCEPTION:
+.Lc239:
+.seh_proc SYSTEM$_$EXCEPTION_$__$$_CREATE$PCHAR$QWORD$$EXCEPTION
+	pushq	%rbp
+.seh_pushreg %rbp
+.Lc241:
+.Lc242:
+	movq	%rsp,%rbp
+.Lc243:
+	leaq	-80(%rsp),%rsp
+.seh_stackalloc 80
+.seh_endprologue
+	movq	%rcx,-32(%rbp)
+	movq	%rdx,-24(%rbp)
+	movq	%r8,-8(%rbp)
+	movq	%r9,-16(%rbp)
+	cmpq	$1,-24(%rbp)
+	jne	.Lj353
+	movq	-32(%rbp),%rax
+	movq	-32(%rbp),%rdx
+	movq	%rax,%rcx
+	call	*128(%rdx)
+	movq	%rax,-32(%rbp)
+.Lj353:
+	cmpq	$0,-32(%rbp)
+	je	.Lj350
+.Lj361:
+	nop
+.Lj360:
+	movq	$-1,-40(%rbp)
+	movq	-32(%rbp),%rax
+	movq	-8(%rbp),%rdx
+	movq	%rdx,8(%rax)
+	movq	-32(%rbp),%rax
+	movl	-16(%rbp),%edx
+	movl	%edx,16(%rax)
+	movq	$1,-40(%rbp)
+	cmpq	$0,-32(%rbp)
+	je	.Lj358
+	cmpq	$0,-24(%rbp)
+	je	.Lj358
+	movq	-32(%rbp),%rcx
+	movq	-32(%rbp),%rax
+	movq	(%rax),%rax
+	call	*168(%rax)
+	jmp	.Lj358
+.Lj357:
+	cmpq	$0,-24(%rbp)
+	je	.Lj367
+	movq	-40(%rbp),%rdx
+	movq	-32(%rbp),%rcx
+	movq	-32(%rbp),%rax
+	movq	(%rax),%rax
+	call	*96(%rax)
+.Lj367:
+	call	fpc_reraise
+	call	FPC_DONEEXCEPTION
+.Lj368:
+	nop
+.Lj358:
+.Lj350:
+	movq	-32(%rbp),%rax
+	nop
+	leaq	(%rbp),%rsp
+	popq	%rbp
+	ret
+.seh_handler __FPC_specific_handler,@except,@unwind
+.seh_handlerdata
+	.long	1
+	.long	1
+	.rva	.Lj360
+	.rva	.Lj357
+	.rva	.Lj358
+
+.section .text.n_system$_$exception_$__$$_create$pchar$qword$$exception,"x"
+.seh_endproc
+.Lc240:
+
+.section .text.n_system$_$exception_$__$$_handleexception$pointer,"x"
+.globl	SYSTEM$_$EXCEPTION_$__$$_HANDLEEXCEPTION$POINTER
+SYSTEM$_$EXCEPTION_$__$$_HANDLEEXCEPTION$POINTER:
+.Lc244:
+.seh_proc SYSTEM$_$EXCEPTION_$__$$_HANDLEEXCEPTION$POINTER
+	pushq	%rbx
+.seh_pushreg %rbx
+	leaq	-32(%rsp),%rsp
+.Lc246:
+.seh_stackalloc 32
+.seh_endprologue
+	movq	%rdx,%rbx
+	leaq	_$SYSTEM$_Ld45(%rip),%rcx
+	call	_$dll$msvcrt$printf
+	xorl	%r9d,%r9d
+	leaq	_$SYSTEM$_Ld38(%rip),%r8
+	leaq	_$SYSTEM$_Ld48(%rip),%rdx
+	xorl	%ecx,%ecx
+	call	_$dll$user32$MessageBoxA
+	call	*%rbx
+	nop
+	leaq	32(%rsp),%rsp
+	popq	%rbx
+	ret
+.seh_endproc
+.Lc245:
 
 .section .text.n_system_$$_stringlength$ansistring$$longdword,"x"
 SYSTEM_$$_STRINGLENGTH$ANSISTRING$$LONGDWORD:
-.Lc238:
+.Lc247:
 	xorl	%eax,%eax
-	jmp	.Lj351
-.Lj350:
+	jmp	.Lj374
+.Lj373:
 	incl	%eax
-.Lj351:
+.Lj374:
 	movl	%eax,%edx
 	incq	%rdx
 	cmpb	$0,-1(%rcx,%rdx,1)
-	jne	.Lj350
+	jne	.Lj373
 	ret
-.Lc239:
+.Lc248:
 
 .section .text.n_system_$$_initconsole,"x"
 .globl	SYSTEM_$$_INITCONSOLE
 SYSTEM_$$_INITCONSOLE:
-.Lc240:
+.Lc249:
 .seh_proc SYSTEM_$$_INITCONSOLE
 	leaq	-40(%rsp),%rsp
-.Lc242:
+.Lc251:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	$1,%eax
@@ -2140,60 +2292,60 @@ SYSTEM_$$_INITCONSOLE:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc241:
+.Lc250:
 
 .section .text.n_system_$$_doneconsole,"x"
 .globl	SYSTEM_$$_DONECONSOLE
 SYSTEM_$$_DONECONSOLE:
-.Lc243:
+.Lc252:
 .seh_proc SYSTEM_$$_DONECONSOLE
 	leaq	-40(%rsp),%rsp
-.Lc245:
+.Lc254:
 .seh_stackalloc 40
 .seh_endprologue
 	cmpq	$0,TC_$SYSTEM_$$_DOS(%rip)
-	je	.Lj358
+	je	.Lj381
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rax
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rdx
 	movq	(%rdx),%rdx
 	movq	%rax,%rcx
 	call	*184(%rdx)
-.Lj358:
+.Lj381:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc244:
+.Lc253:
 
 .section .text.n_system$_$tdoscmd_$__$$_create$$tdoscmd,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_CREATE$$TDOSCMD
 SYSTEM$_$TDOSCMD_$__$$_CREATE$$TDOSCMD:
-.Lc246:
+.Lc255:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_CREATE$$TDOSCMD
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc248:
-.Lc249:
+.Lc257:
+.Lc258:
 	movq	%rsp,%rbp
-.Lc250:
+.Lc259:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
 	movq	%rcx,-16(%rbp)
 	movq	%rdx,-8(%rbp)
 	cmpq	$1,%rdx
-	jne	.Lj362
+	jne	.Lj385
 	movq	-16(%rbp),%rax
 	movq	-16(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-16(%rbp)
-.Lj362:
+.Lj385:
 	cmpq	$0,-16(%rbp)
-	je	.Lj359
-.Lj370:
+	je	.Lj382
+.Lj393:
 	nop
-.Lj369:
+.Lj392:
 	movq	$-1,-24(%rbp)
 	movq	-16(%rbp),%rcx
 	xorl	%edx,%edx
@@ -2212,40 +2364,40 @@ SYSTEM$_$TDOSCMD_$__$$_CREATE$$TDOSCMD:
 	movl	%eax,32(%rdx)
 	movq	-16(%rbp),%rax
 	leaq	16(%rax),%rcx
-	leaq	.Ld41(%rip),%rdx
+	leaq	.Ld49(%rip),%rdx
 	call	fpc_ansistr_assign
 	movl	$65001,%ecx
 	call	_$dll$kernel32$SetConsoleOutputCP
 	movl	$65001,%ecx
 	call	_$dll$kernel32$SetConsoleCP
 	movq	-16(%rbp),%rcx
-	leaq	_$SYSTEM$_Ld42(%rip),%rdx
+	leaq	_$SYSTEM$_Ld50(%rip),%rdx
 	call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 	movq	$1,-24(%rbp)
 	cmpq	$0,-16(%rbp)
-	je	.Lj367
+	je	.Lj390
 	cmpq	$0,-8(%rbp)
-	je	.Lj367
+	je	.Lj390
 	movq	-16(%rbp),%rcx
 	movq	-16(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj367
-.Lj366:
+	jmp	.Lj390
+.Lj389:
 	cmpq	$0,-8(%rbp)
-	je	.Lj376
+	je	.Lj399
 	movq	-24(%rbp),%rdx
 	movq	-16(%rbp),%rcx
 	movq	-16(%rbp),%rax
 	movq	(%rax),%rax
 	call	*96(%rax)
-.Lj376:
+.Lj399:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj377:
+.Lj400:
 	nop
-.Lj367:
-.Lj359:
+.Lj390:
+.Lj382:
 	movq	-16(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -2255,92 +2407,92 @@ SYSTEM$_$TDOSCMD_$__$$_CREATE$$TDOSCMD:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj369
-	.rva	.Lj366
-	.rva	.Lj367
+	.rva	.Lj392
+	.rva	.Lj389
+	.rva	.Lj390
 
 .section .text.n_system$_$tdoscmd_$__$$_create$$tdoscmd,"x"
 .seh_endproc
-.Lc247:
+.Lc256:
 
 .section .text.n_system$_$tdoscmd_$__$$_destroy,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_DESTROY
 SYSTEM$_$TDOSCMD_$__$$_DESTROY:
-.Lc251:
+.Lc260:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_DESTROY
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc253:
+.Lc262:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rbx
 	movq	%rdx,%rsi
 	testq	%rsi,%rsi
-	jng	.Lj381
+	jng	.Lj404
 	movq	%rbx,%rcx
 	movq	(%rbx),%rax
 	call	*176(%rax)
-.Lj381:
+.Lj404:
 	movq	%rbx,%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_DESTROY
 	testq	%rbx,%rbx
-	je	.Lj383
+	je	.Lj406
 	testq	%rsi,%rsi
-	je	.Lj383
+	je	.Lj406
 	movq	(%rbx),%rcx
 	movq	(%rbx),%rax
 	call	*136(%rax)
-.Lj383:
+.Lj406:
 	nop
 	leaq	40(%rsp),%rsp
 	popq	%rsi
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc252:
+.Lc261:
 
 .section .text.n_system$_$tdoscmd_$__$$_free,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_FREE
 SYSTEM$_$TDOSCMD_$__$$_FREE:
-.Lc254:
+.Lc263:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_FREE
 	leaq	-40(%rsp),%rsp
-.Lc256:
+.Lc265:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	testq	%rcx,%rcx
-	je	.Lj388
+	je	.Lj411
 	movq	%rax,%rcx
 	movl	$1,%edx
 	movq	(%rax),%rax
 	call	*96(%rax)
-.Lj388:
+.Lj411:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc255:
+.Lc264:
 
 .section .text.n_system$_$tdoscmd_$__$$_cls,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_CLS
 SYSTEM$_$TDOSCMD_$__$$_CLS:
-.Lc257:
+.Lc266:
 	movq	%rcx,%rax
 	ret
-.Lc258:
+.Lc267:
 
 .section .text.n_system$_$tdoscmd_$__$$_clrscr,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_CLRSCR
 SYSTEM$_$TDOSCMD_$__$$_CLRSCR:
-.Lc259:
+.Lc268:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_CLRSCR
 	leaq	-40(%rsp),%rsp
-.Lc261:
+.Lc270:
 .seh_stackalloc 40
 .seh_endprologue
 	call	SYSTEM$_$TDOSCMD_$__$$_CLS
@@ -2348,15 +2500,15 @@ SYSTEM$_$TDOSCMD_$__$$_CLRSCR:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc260:
+.Lc269:
 
 .section .text.n_system$_$tdoscmd_$__$$_clearscreen,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_CLEARSCREEN
 SYSTEM$_$TDOSCMD_$__$$_CLEARSCREEN:
-.Lc262:
+.Lc271:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_CLEARSCREEN
 	leaq	-40(%rsp),%rsp
-.Lc264:
+.Lc273:
 .seh_stackalloc 40
 .seh_endprologue
 	call	SYSTEM$_$TDOSCMD_$__$$_CLS
@@ -2364,24 +2516,24 @@ SYSTEM$_$TDOSCMD_$__$$_CLEARSCREEN:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc263:
+.Lc272:
 
 .section .text.n_system$_$tdoscmd_$__$$_messagebox$pchar$pchar$$longdword,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_MESSAGEBOX$PCHAR$PCHAR$$LONGDWORD
 SYSTEM$_$TDOSCMD_$__$$_MESSAGEBOX$PCHAR$PCHAR$$LONGDWORD:
-.Lc265:
+.Lc274:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_MESSAGEBOX$PCHAR$PCHAR$$LONGDWORD
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc267:
+.Lc276:
 .seh_stackalloc 32
 .seh_endprologue
 	movq	%r8,%rbx
-	leaq	_$SYSTEM$_Ld43(%rip),%rcx
+	leaq	_$SYSTEM$_Ld51(%rip),%rcx
 	call	_$dll$msvcrt$printf
 	movq	%rbx,%rdx
-	leaq	_$SYSTEM$_Ld44(%rip),%rcx
+	leaq	_$SYSTEM$_Ld52(%rip),%rcx
 	call	_$dll$msvcrt$printf
 	xorl	%eax,%eax
 	nop
@@ -2389,88 +2541,88 @@ SYSTEM$_$TDOSCMD_$__$$_MESSAGEBOX$PCHAR$PCHAR$$LONGDWORD:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc266:
+.Lc275:
 
 .section .text.n_system$_$tdoscmd_$__$$_write$pchar,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_WRITE$PCHAR
 SYSTEM$_$TDOSCMD_$__$$_WRITE$PCHAR:
-.Lc268:
+.Lc277:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_WRITE$PCHAR
 	leaq	-40(%rsp),%rsp
-.Lc270:
+.Lc279:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
-	leaq	_$SYSTEM$_Ld45(%rip),%rcx
+	leaq	_$SYSTEM$_Ld53(%rip),%rcx
 	call	_$dll$msvcrt$printf
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc269:
+.Lc278:
 
 .section .text.n_system$_$tdoscmd_$__$$_writeln$pchar,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR:
-.Lc271:
+.Lc280:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 	leaq	-40(%rsp),%rsp
-.Lc273:
+.Lc282:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
-	leaq	_$SYSTEM$_Ld46(%rip),%rcx
+	leaq	_$SYSTEM$_Ld54(%rip),%rcx
 	call	_$dll$msvcrt$printf
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc272:
+.Lc281:
 
 .section .text.n_system$_$tdoscmd_$__$$_readln$pchar$pchar,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_READLN$PCHAR$PCHAR
 SYSTEM$_$TDOSCMD_$__$$_READLN$PCHAR$PCHAR:
-.Lc274:
+.Lc283:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_READLN$PCHAR$PCHAR
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc276:
+.Lc285:
 .seh_stackalloc 32
 .seh_endprologue
 	movq	%rcx,%rax
 	movq	%rdx,%rbx
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rcx
-	leaq	_$SYSTEM$_Ld47(%rip),%rdx
+	leaq	_$SYSTEM$_Ld55(%rip),%rdx
 	call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 	movq	%rbx,%rdx
-	leaq	_$SYSTEM$_Ld45(%rip),%rcx
+	leaq	_$SYSTEM$_Ld53(%rip),%rcx
 	call	_$dll$msvcrt$scanf
 	nop
 	leaq	32(%rsp),%rsp
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc275:
+.Lc284:
 
 .section .text.n_system$_$tdoscmd_$__$$_readln$pchar,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_READLN$PCHAR
 SYSTEM$_$TDOSCMD_$__$$_READLN$PCHAR:
-.Lc277:
+.Lc286:
 	movq	%rcx,%rax
 	ret
-.Lc278:
+.Lc287:
 
-.section .text.n_system$_$tdoscmd_$_read$pchar$pchar_$$_fin$00000220,"x"
-SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$00000220:
-.Lc279:
-.seh_proc SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$00000220
+.section .text.n_system$_$tdoscmd_$_read$pchar$pchar_$$_fin$0000022d,"x"
+SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$0000022D:
+.Lc288:
+.seh_proc SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$0000022D
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc281:
-.Lc282:
+.Lc290:
+.Lc291:
 	movq	%rcx,%rbp
-.Lc283:
+.Lc292:
 	leaq	-32(%rsp),%rsp
 .seh_stackalloc 32
 .seh_endprologue
@@ -2483,19 +2635,19 @@ SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$00000220:
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc280:
+.Lc289:
 
 .section .text.n_system$_$tdoscmd_$__$$_read$pchar$pchar,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR$PCHAR
 SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR$PCHAR:
-.Lc284:
+.Lc293:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR$PCHAR
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc286:
-.Lc287:
+.Lc295:
+.Lc296:
 	movq	%rsp,%rbp
-.Lc288:
+.Lc297:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 	movq	%rbx,-24(%rbp)
@@ -2506,9 +2658,9 @@ SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR$PCHAR:
 	movq	%r8,%rdx
 	movq	$0,-16(%rbp)
 	movq	$0,-8(%rbp)
-.Lj413:
+.Lj436:
 	nop
-.Lj409:
+.Lj432:
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rcx
 	call	SYSTEM$_$TDOSCMD_$__$$_WRITE$PCHAR
 	movq	%rbx,%rcx
@@ -2519,7 +2671,7 @@ SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR$PCHAR:
 	movq	(%rbx),%rcx
 	call	_$dll$ucrtbase$strcpy
 	movq	(%rbx),%rdx
-	leaq	_$SYSTEM$_Ld48(%rip),%rcx
+	leaq	_$SYSTEM$_Ld56(%rip),%rcx
 	call	_$dll$msvcrt$printf
 	leaq	-8(%rbp),%rcx
 	call	fpc_ansistr_decr_ref
@@ -2529,21 +2681,21 @@ SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR$PCHAR:
 	call	fpc_pchar_to_ansistr
 	movq	-16(%rbp),%r8
 	xorl	%r9d,%r9d
-	leaq	.Ld49(%rip),%rdx
+	leaq	.Ld57(%rip),%rdx
 	leaq	-8(%rbp),%rcx
 	call	fpc_ansistr_concat
 	movq	-8(%rbp),%rdx
 	testq	%rdx,%rdx
-	jne	.Lj414
+	jne	.Lj437
 	leaq	FPC_EMPTYCHAR(%rip),%rdx
-.Lj414:
+.Lj437:
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rcx
 	call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
-.Lj411:
+.Lj434:
 	nop
-.Lj410:
+.Lj433:
 	movq	%rbp,%rcx
-	call	SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$00000220
+	call	SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$0000022D
 	movq	-24(%rbp),%rbx
 	leaq	(%rbp),%rsp
 	popq	%rbp
@@ -2552,40 +2704,40 @@ SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR$PCHAR:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj409
-	.rva	.Lj410
-	.rva	SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$00000220
+	.rva	.Lj432
+	.rva	.Lj433
+	.rva	SYSTEM$_$TDOSCMD_$_READ$PCHAR$PCHAR_$$_fin$0000022D
 
 .section .text.n_system$_$tdoscmd_$__$$_read$pchar$pchar,"x"
 .seh_endproc
-.Lc285:
+.Lc294:
 
 .section .text.n_system$_$tdoscmd_$__$$_read$pchar,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR
 SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR:
-.Lc289:
+.Lc298:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_READ$PCHAR
 	leaq	-40(%rsp),%rsp
-.Lc291:
+.Lc300:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rcx
-	leaq	_$SYSTEM$_Ld50(%rip),%rdx
+	leaq	_$SYSTEM$_Ld58(%rip),%rdx
 	call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc290:
+.Lc299:
 
 .section .text.n_system$_$tdoscmd_$__$$_get_stdin$$longdword,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_GET_STDIN$$LONGDWORD
 SYSTEM$_$TDOSCMD_$__$$_GET_STDIN$$LONGDWORD:
-.Lc292:
+.Lc301:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_GET_STDIN$$LONGDWORD
 	leaq	-40(%rsp),%rsp
-.Lc294:
+.Lc303:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	$4294967286,%ecx
@@ -2594,15 +2746,15 @@ SYSTEM$_$TDOSCMD_$__$$_GET_STDIN$$LONGDWORD:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc293:
+.Lc302:
 
 .section .text.n_system$_$tdoscmd_$__$$_get_stderr$$longdword,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_GET_STDERR$$LONGDWORD
 SYSTEM$_$TDOSCMD_$__$$_GET_STDERR$$LONGDWORD:
-.Lc295:
+.Lc304:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_GET_STDERR$$LONGDWORD
 	leaq	-40(%rsp),%rsp
-.Lc297:
+.Lc306:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	$4294967284,%ecx
@@ -2611,15 +2763,15 @@ SYSTEM$_$TDOSCMD_$__$$_GET_STDERR$$LONGDWORD:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc296:
+.Lc305:
 
 .section .text.n_system$_$tdoscmd_$__$$_get_stdout$$longdword,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_GET_STDOUT$$LONGDWORD
 SYSTEM$_$TDOSCMD_$__$$_GET_STDOUT$$LONGDWORD:
-.Lc298:
+.Lc307:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_GET_STDOUT$$LONGDWORD
 	leaq	-40(%rsp),%rsp
-.Lc300:
+.Lc309:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	$4294967285,%ecx
@@ -2628,17 +2780,17 @@ SYSTEM$_$TDOSCMD_$__$$_GET_STDOUT$$LONGDWORD:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc299:
+.Lc308:
 
 .section .text.n_system$_$tdoscmd_$__$$_set_stdin$longdword$longdword,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_SET_STDIN$LONGDWORD$LONGDWORD
 SYSTEM$_$TDOSCMD_$__$$_SET_STDIN$LONGDWORD$LONGDWORD:
-.Lc301:
+.Lc310:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_SET_STDIN$LONGDWORD$LONGDWORD
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc303:
+.Lc312:
 .seh_stackalloc 32
 .seh_endprologue
 	movq	%rcx,%rax
@@ -2653,17 +2805,17 @@ SYSTEM$_$TDOSCMD_$__$$_SET_STDIN$LONGDWORD$LONGDWORD:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc302:
+.Lc311:
 
 .section .text.n_system$_$tdoscmd_$__$$_set_stdout$longdword$longdword,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_SET_STDOUT$LONGDWORD$LONGDWORD
 SYSTEM$_$TDOSCMD_$__$$_SET_STDOUT$LONGDWORD$LONGDWORD:
-.Lc304:
+.Lc313:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_SET_STDOUT$LONGDWORD$LONGDWORD
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc306:
+.Lc315:
 .seh_stackalloc 32
 .seh_endprologue
 	movq	%rcx,%rax
@@ -2678,17 +2830,17 @@ SYSTEM$_$TDOSCMD_$__$$_SET_STDOUT$LONGDWORD$LONGDWORD:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc305:
+.Lc314:
 
 .section .text.n_system$_$tdoscmd_$__$$_set_stderr$longdword$longdword,"x"
 .globl	SYSTEM$_$TDOSCMD_$__$$_SET_STDERR$LONGDWORD$LONGDWORD
 SYSTEM$_$TDOSCMD_$__$$_SET_STDERR$LONGDWORD$LONGDWORD:
-.Lc307:
+.Lc316:
 .seh_proc SYSTEM$_$TDOSCMD_$__$$_SET_STDERR$LONGDWORD$LONGDWORD
 	pushq	%rbx
 .seh_pushreg %rbx
 	leaq	-32(%rsp),%rsp
-.Lc309:
+.Lc318:
 .seh_stackalloc 32
 .seh_endprologue
 	movq	%rcx,%rax
@@ -2703,15 +2855,15 @@ SYSTEM$_$TDOSCMD_$__$$_SET_STDERR$LONGDWORD$LONGDWORD:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc308:
+.Lc317:
 
 .section .text.n_system_$$_initwindows,"x"
 .globl	SYSTEM_$$_INITWINDOWS
 SYSTEM_$$_INITWINDOWS:
-.Lc310:
+.Lc319:
 .seh_proc SYSTEM_$$_INITWINDOWS
 	leaq	-40(%rsp),%rsp
-.Lc312:
+.Lc321:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	$1,%eax
@@ -2723,87 +2875,87 @@ SYSTEM_$$_INITWINDOWS:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc311:
+.Lc320:
 
 .section .text.n_system_$$_donewindows,"x"
 .globl	SYSTEM_$$_DONEWINDOWS
 SYSTEM_$$_DONEWINDOWS:
-.Lc313:
+.Lc322:
 .seh_proc SYSTEM_$$_DONEWINDOWS
 	leaq	-40(%rsp),%rsp
-.Lc315:
+.Lc324:
 .seh_stackalloc 40
 .seh_endprologue
 	cmpq	$0,U_$SYSTEM_$$_WINDOWS(%rip)
-	je	.Lj434
+	je	.Lj457
 	movq	U_$SYSTEM_$$_WINDOWS(%rip),%rax
 	movq	U_$SYSTEM_$$_WINDOWS(%rip),%rdx
 	movq	(%rdx),%rdx
 	movq	%rax,%rcx
 	call	*184(%rdx)
-.Lj434:
+.Lj457:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc314:
+.Lc323:
 
 .section .text.n_system$_$windows_class_$__$$_create$$windows_class,"x"
 .globl	SYSTEM$_$WINDOWS_CLASS_$__$$_CREATE$$WINDOWS_CLASS
 SYSTEM$_$WINDOWS_CLASS_$__$$_CREATE$$WINDOWS_CLASS:
-.Lc316:
+.Lc325:
 .seh_proc SYSTEM$_$WINDOWS_CLASS_$__$$_CREATE$$WINDOWS_CLASS
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc318:
-.Lc319:
+.Lc327:
+.Lc328:
 	movq	%rsp,%rbp
-.Lc320:
+.Lc329:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
 	movq	%rcx,-16(%rbp)
 	movq	%rdx,-8(%rbp)
 	cmpq	$1,%rdx
-	jne	.Lj438
+	jne	.Lj461
 	movq	-16(%rbp),%rax
 	movq	-16(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-16(%rbp)
-.Lj438:
+.Lj461:
 	cmpq	$0,-16(%rbp)
-	je	.Lj435
-.Lj446:
+	je	.Lj458
+.Lj469:
 	nop
-.Lj445:
+.Lj468:
 	movq	$-1,-24(%rbp)
 	movq	-16(%rbp),%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT
 	movq	$1,-24(%rbp)
 	cmpq	$0,-16(%rbp)
-	je	.Lj443
+	je	.Lj466
 	cmpq	$0,-8(%rbp)
-	je	.Lj443
+	je	.Lj466
 	movq	-16(%rbp),%rcx
 	movq	-16(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj443
-.Lj442:
+	jmp	.Lj466
+.Lj465:
 	cmpq	$0,-8(%rbp)
-	je	.Lj452
+	je	.Lj475
 	movq	-24(%rbp),%rdx
 	movq	-16(%rbp),%rcx
 	call	SYSTEM$_$WINDOWS_CLASS_$__$$_DESTROY
-.Lj452:
+.Lj475:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj453:
+.Lj476:
 	nop
-.Lj443:
-.Lj435:
+.Lj466:
+.Lj458:
 	movq	-16(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -2813,86 +2965,86 @@ SYSTEM$_$WINDOWS_CLASS_$__$$_CREATE$$WINDOWS_CLASS:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj445
-	.rva	.Lj442
-	.rva	.Lj443
+	.rva	.Lj468
+	.rva	.Lj465
+	.rva	.Lj466
 
 .section .text.n_system$_$windows_class_$__$$_create$$windows_class,"x"
 .seh_endproc
-.Lc317:
+.Lc326:
 
 .section .text.n_system$_$windows_class_$__$$_destroy,"x"
 .globl	SYSTEM$_$WINDOWS_CLASS_$__$$_DESTROY
 SYSTEM$_$WINDOWS_CLASS_$__$$_DESTROY:
-.Lc321:
+.Lc330:
 .seh_proc SYSTEM$_$WINDOWS_CLASS_$__$$_DESTROY
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc323:
+.Lc332:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rbx
 	movq	%rdx,%rsi
 	testq	%rsi,%rsi
-	jng	.Lj457
+	jng	.Lj480
 	movq	%rbx,%rcx
 	movq	(%rbx),%rax
 	call	*176(%rax)
-.Lj457:
+.Lj480:
 	movq	%rbx,%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_DESTROY
 	testq	%rbx,%rbx
-	je	.Lj459
+	je	.Lj482
 	testq	%rsi,%rsi
-	je	.Lj459
+	je	.Lj482
 	movq	(%rbx),%rcx
 	movq	(%rbx),%rax
 	call	*136(%rax)
-.Lj459:
+.Lj482:
 	nop
 	leaq	40(%rsp),%rsp
 	popq	%rsi
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc322:
+.Lc331:
 
 .section .text.n_system$_$windows_class_$__$$_free,"x"
 .globl	SYSTEM$_$WINDOWS_CLASS_$__$$_FREE
 SYSTEM$_$WINDOWS_CLASS_$__$$_FREE:
-.Lc324:
+.Lc333:
 .seh_proc SYSTEM$_$WINDOWS_CLASS_$__$$_FREE
 	leaq	-40(%rsp),%rsp
-.Lc326:
+.Lc335:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	testq	%rcx,%rcx
-	je	.Lj464
+	je	.Lj487
 	movq	%rax,%rcx
 	movl	$1,%edx
 	call	SYSTEM$_$WINDOWS_CLASS_$__$$_DESTROY
-.Lj464:
+.Lj487:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc325:
+.Lc334:
 
-.section .text.n_system$_$windows_class_$_messagebox$ansistring$ansistring$$longdword_$$_fin$00000221,"x"
-SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$00000221:
-.Lc327:
-.seh_proc SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$00000221
+.section .text.n_system$_$windows_class_$_messagebox$ansistring$ansistring$$longdword_$$_fin$0000022e,"x"
+SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$0000022E:
+.Lc336:
+.seh_proc SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$0000022E
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc329:
-.Lc330:
+.Lc338:
+.Lc339:
 	movq	%rcx,%rbp
-.Lc331:
+.Lc340:
 	leaq	-32(%rsp),%rsp
 .seh_stackalloc 32
 .seh_endprologue
@@ -2905,19 +3057,19 @@ SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$0000
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc328:
+.Lc337:
 
 .section .text.n_system$_$windows_class_$__$$_messagebox$ansistring$ansistring$$longdword,"x"
 .globl	SYSTEM$_$WINDOWS_CLASS_$__$$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD
 SYSTEM$_$WINDOWS_CLASS_$__$$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD:
-.Lc332:
+.Lc341:
 .seh_proc SYSTEM$_$WINDOWS_CLASS_$__$$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc334:
-.Lc335:
+.Lc343:
+.Lc344:
 	movq	%rsp,%rbp
-.Lc336:
+.Lc345:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 	movq	%rbx,-24(%rbp)
@@ -2929,28 +3081,28 @@ SYSTEM$_$WINDOWS_CLASS_$__$$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD:
 	call	fpc_ansistr_incr_ref
 	movq	-16(%rbp),%rcx
 	call	fpc_ansistr_incr_ref
-.Lj473:
+.Lj496:
 	nop
-.Lj469:
+.Lj492:
 	movq	-16(%rbp),%r8
 	testq	%r8,%r8
-	jne	.Lj474
+	jne	.Lj497
 	leaq	FPC_EMPTYCHAR(%rip),%r8
-.Lj474:
+.Lj497:
 	movq	-8(%rbp),%rdx
 	testq	%rdx,%rdx
-	jne	.Lj475
+	jne	.Lj498
 	leaq	FPC_EMPTYCHAR(%rip),%rdx
-.Lj475:
+.Lj498:
 	xorl	%r9d,%r9d
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	xorl	%ebx,%ebx
-.Lj471:
+.Lj494:
 	nop
-.Lj470:
+.Lj493:
 	movq	%rbp,%rcx
-	call	SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$00000221
+	call	SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$0000022E
 	movl	%ebx,%eax
 	movq	-24(%rbp),%rbx
 	leaq	(%rbp),%rsp
@@ -2960,25 +3112,25 @@ SYSTEM$_$WINDOWS_CLASS_$__$$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj469
-	.rva	.Lj470
-	.rva	SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$00000221
+	.rva	.Lj492
+	.rva	.Lj493
+	.rva	SYSTEM$_$WINDOWS_CLASS_$_MESSAGEBOX$ANSISTRING$ANSISTRING$$LONGDWORD_$$_fin$0000022E
 
 .section .text.n_system$_$windows_class_$__$$_messagebox$ansistring$ansistring$$longdword,"x"
 .seh_endproc
-.Lc333:
+.Lc342:
 
 .section .text.n_system$_$tvgaio_$__$$_$lower$tvgaio$ansistring$$boolean,"x"
 .globl	SYSTEM$_$TVGAIO_$__$$_$lower$TVGAIO$ANSISTRING$$BOOLEAN
 SYSTEM$_$TVGAIO_$__$$_$lower$TVGAIO$ANSISTRING$$BOOLEAN:
-.Lc337:
+.Lc346:
 .seh_proc SYSTEM$_$TVGAIO_$__$$_$lower$TVGAIO$ANSISTRING$$BOOLEAN
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc339:
-.Lc340:
+.Lc348:
+.Lc349:
 	movq	%rsp,%rbp
-.Lc341:
+.Lc350:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 	movq	%rdi,-32(%rbp)
@@ -3000,19 +3152,19 @@ SYSTEM$_$TVGAIO_$__$$_$lower$TVGAIO$ANSISTRING$$BOOLEAN:
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc338:
+.Lc347:
 
 .section .text.n_system$_$tvgaio_$__$$_$greater$tvgaio$ansistring$$boolean,"x"
 .globl	SYSTEM$_$TVGAIO_$__$$_$greater$TVGAIO$ANSISTRING$$BOOLEAN
 SYSTEM$_$TVGAIO_$__$$_$greater$TVGAIO$ANSISTRING$$BOOLEAN:
-.Lc342:
+.Lc351:
 .seh_proc SYSTEM$_$TVGAIO_$__$$_$greater$TVGAIO$ANSISTRING$$BOOLEAN
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc344:
-.Lc345:
+.Lc353:
+.Lc354:
 	movq	%rsp,%rbp
-.Lc346:
+.Lc355:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 	movq	%rdi,-32(%rbp)
@@ -3034,18 +3186,18 @@ SYSTEM$_$TVGAIO_$__$$_$greater$TVGAIO$ANSISTRING$$BOOLEAN:
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc343:
+.Lc352:
 
-.section .text.n_system$_$tsystemio_$_lower$tsystemio$ansistring$$boolean_$$_fin$00000224,"x"
-SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000224:
-.Lc347:
-.seh_proc SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000224
+.section .text.n_system$_$tsystemio_$_lower$tsystemio$ansistring$$boolean_$$_fin$00000231,"x"
+SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000231:
+.Lc356:
+.seh_proc SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000231
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc349:
-.Lc350:
+.Lc358:
+.Lc359:
 	movq	%rcx,%rbp
-.Lc351:
+.Lc360:
 	leaq	-32(%rsp),%rsp
 .seh_stackalloc 32
 .seh_endprologue
@@ -3056,19 +3208,19 @@ SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000224:
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc348:
+.Lc357:
 
 .section .text.n_system$_$tsystemio_$__$$_$lower$tsystemio$ansistring$$boolean,"x"
 .globl	SYSTEM$_$TSYSTEMIO_$__$$_$lower$TSYSTEMIO$ANSISTRING$$BOOLEAN
 SYSTEM$_$TSYSTEMIO_$__$$_$lower$TSYSTEMIO$ANSISTRING$$BOOLEAN:
-.Lc352:
+.Lc361:
 .seh_proc SYSTEM$_$TSYSTEMIO_$__$$_$lower$TSYSTEMIO$ANSISTRING$$BOOLEAN
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc354:
-.Lc355:
+.Lc363:
+.Lc364:
 	movq	%rsp,%rbp
-.Lc356:
+.Lc365:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 	movq	%rdi,-32(%rbp)
@@ -3081,21 +3233,21 @@ SYSTEM$_$TSYSTEMIO_$__$$_$lower$TSYSTEMIO$ANSISTRING$$BOOLEAN:
 	leaq	-12(%rbp),%rdi
 	movq	-8(%rbp),%rcx
 	call	fpc_ansistr_incr_ref
-.Lj492:
+.Lj515:
 	nop
-.Lj488:
+.Lj511:
 	movq	-8(%rbp),%rdx
 	testq	%rdx,%rdx
-	jne	.Lj493
+	jne	.Lj516
 	leaq	FPC_EMPTYCHAR(%rip),%rdx
-.Lj493:
+.Lj516:
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rcx
 	call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
-.Lj490:
+.Lj513:
 	nop
-.Lj489:
+.Lj512:
 	movq	%rbp,%rcx
-	call	SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000224
+	call	SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000231
 	movb	%dl,%al
 	movq	-32(%rbp),%rdi
 	movq	-24(%rbp),%rsi
@@ -3106,24 +3258,24 @@ SYSTEM$_$TSYSTEMIO_$__$$_$lower$TSYSTEMIO$ANSISTRING$$BOOLEAN:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj488
-	.rva	.Lj489
-	.rva	SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000224
+	.rva	.Lj511
+	.rva	.Lj512
+	.rva	SYSTEM$_$TSYSTEMIO_$_lower$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000231
 
 .section .text.n_system$_$tsystemio_$__$$_$lower$tsystemio$ansistring$$boolean,"x"
 .seh_endproc
-.Lc353:
+.Lc362:
 
-.section .text.n_system$_$tsystemio_$_greater$tsystemio$ansistring$$boolean_$$_fin$00000225,"x"
-SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000225:
-.Lc357:
-.seh_proc SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000225
+.section .text.n_system$_$tsystemio_$_greater$tsystemio$ansistring$$boolean_$$_fin$00000232,"x"
+SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000232:
+.Lc366:
+.seh_proc SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000232
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc359:
-.Lc360:
+.Lc368:
+.Lc369:
 	movq	%rcx,%rbp
-.Lc361:
+.Lc370:
 	leaq	-32(%rsp),%rsp
 .seh_stackalloc 32
 .seh_endprologue
@@ -3134,19 +3286,19 @@ SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000225:
 	popq	%rbp
 	ret
 .seh_endproc
-.Lc358:
+.Lc367:
 
 .section .text.n_system$_$tsystemio_$__$$_$greater$tsystemio$ansistring$$boolean,"x"
 .globl	SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$ANSISTRING$$BOOLEAN
 SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$ANSISTRING$$BOOLEAN:
-.Lc362:
+.Lc371:
 .seh_proc SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$ANSISTRING$$BOOLEAN
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc364:
-.Lc365:
+.Lc373:
+.Lc374:
 	movq	%rsp,%rbp
-.Lc366:
+.Lc375:
 	leaq	-80(%rsp),%rsp
 .seh_stackalloc 80
 	movq	%rbx,-40(%rbp)
@@ -3161,15 +3313,15 @@ SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$ANSISTRING$$BOOLEAN:
 	leaq	-12(%rbp),%rdi
 	movq	-8(%rbp),%rcx
 	call	fpc_ansistr_incr_ref
-.Lj502:
+.Lj525:
 	nop
-.Lj498:
+.Lj521:
 	movb	$1,%bl
-.Lj500:
+.Lj523:
 	nop
-.Lj499:
+.Lj522:
 	movq	%rbp,%rcx
-	call	SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000225
+	call	SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000232
 	movb	%bl,%al
 	movq	-40(%rbp),%rbx
 	movq	-32(%rbp),%rdi
@@ -3181,25 +3333,25 @@ SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$ANSISTRING$$BOOLEAN:
 .seh_handlerdata
 	.long	1
 	.long	0
-	.rva	.Lj498
-	.rva	.Lj499
-	.rva	SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000225
+	.rva	.Lj521
+	.rva	.Lj522
+	.rva	SYSTEM$_$TSYSTEMIO_$_greater$TSYSTEMIO$ANSISTRING$$BOOLEAN_$$_fin$00000232
 
 .section .text.n_system$_$tsystemio_$__$$_$greater$tsystemio$ansistring$$boolean,"x"
 .seh_endproc
-.Lc363:
+.Lc372:
 
 .section .text.n_system$_$tsystemio_$__$$_$greater$tsystemio$longdword$$qword,"x"
 .globl	SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$LONGDWORD$$QWORD
 SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$LONGDWORD$$QWORD:
-.Lc367:
+.Lc376:
 .seh_proc SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$LONGDWORD$$QWORD
 	pushq	%rdi
 .seh_pushreg %rdi
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-8(%rsp),%rsp
-.Lc369:
+.Lc378:
 .seh_stackalloc 8
 .seh_endprologue
 	movq	%rcx,%rsi
@@ -3210,64 +3362,64 @@ SYSTEM$_$TSYSTEMIO_$__$$_$greater$TSYSTEMIO$LONGDWORD$$QWORD:
 	popq	%rdi
 	ret
 .seh_endproc
-.Lc368:
+.Lc377:
 
 .section .text.n_system$_$tcpu_$__$$_create$$tcpu,"x"
 .globl	SYSTEM$_$TCPU_$__$$_CREATE$$TCPU
 SYSTEM$_$TCPU_$__$$_CREATE$$TCPU:
-.Lc370:
+.Lc379:
 .seh_proc SYSTEM$_$TCPU_$__$$_CREATE$$TCPU
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc372:
-.Lc373:
+.Lc381:
+.Lc382:
 	movq	%rsp,%rbp
-.Lc374:
+.Lc383:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
 	movq	%rcx,-16(%rbp)
 	movq	%rdx,-8(%rbp)
 	cmpq	$1,%rdx
-	jne	.Lj508
+	jne	.Lj531
 	movq	-16(%rbp),%rax
 	movq	-16(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-16(%rbp)
-.Lj508:
+.Lj531:
 	cmpq	$0,-16(%rbp)
-	je	.Lj505
-.Lj516:
+	je	.Lj528
+.Lj539:
 	nop
-.Lj515:
+.Lj538:
 	movq	$-1,-24(%rbp)
 	movq	-16(%rbp),%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT
 	movq	$1,-24(%rbp)
 	cmpq	$0,-16(%rbp)
-	je	.Lj513
+	je	.Lj536
 	cmpq	$0,-8(%rbp)
-	je	.Lj513
+	je	.Lj536
 	movq	-16(%rbp),%rcx
 	movq	-16(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj513
-.Lj512:
+	jmp	.Lj536
+.Lj535:
 	cmpq	$0,-8(%rbp)
-	je	.Lj522
+	je	.Lj545
 	movq	-24(%rbp),%rdx
 	movq	-16(%rbp),%rcx
 	call	SYSTEM$_$TCPU_$__$$_DESTROY
-.Lj522:
+.Lj545:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj523:
+.Lj546:
 	nop
-.Lj513:
-.Lj505:
+.Lj536:
+.Lj528:
 	movq	-16(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -3277,80 +3429,80 @@ SYSTEM$_$TCPU_$__$$_CREATE$$TCPU:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj515
-	.rva	.Lj512
-	.rva	.Lj513
+	.rva	.Lj538
+	.rva	.Lj535
+	.rva	.Lj536
 
 .section .text.n_system$_$tcpu_$__$$_create$$tcpu,"x"
 .seh_endproc
-.Lc371:
+.Lc380:
 
 .section .text.n_system$_$tcpu_$__$$_destroy,"x"
 .globl	SYSTEM$_$TCPU_$__$$_DESTROY
 SYSTEM$_$TCPU_$__$$_DESTROY:
-.Lc375:
+.Lc384:
 .seh_proc SYSTEM$_$TCPU_$__$$_DESTROY
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc377:
+.Lc386:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rbx
 	movq	%rdx,%rsi
 	testq	%rsi,%rsi
-	jng	.Lj527
+	jng	.Lj550
 	movq	%rbx,%rcx
 	movq	(%rbx),%rax
 	call	*176(%rax)
-.Lj527:
+.Lj550:
 	movq	%rbx,%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_DESTROY
 	testq	%rbx,%rbx
-	je	.Lj529
+	je	.Lj552
 	testq	%rsi,%rsi
-	je	.Lj529
+	je	.Lj552
 	movq	(%rbx),%rcx
 	movq	(%rbx),%rax
 	call	*136(%rax)
-.Lj529:
+.Lj552:
 	nop
 	leaq	40(%rsp),%rsp
 	popq	%rsi
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc376:
+.Lc385:
 
 .section .text.n_system$_$tcpu_$__$$_classname$$ansistring,"x"
 .globl	SYSTEM$_$TCPU_$__$$_CLASSNAME$$ANSISTRING
 SYSTEM$_$TCPU_$__$$_CLASSNAME$$ANSISTRING:
-.Lc378:
+.Lc387:
 .seh_proc SYSTEM$_$TCPU_$__$$_CLASSNAME$$ANSISTRING
 	leaq	-40(%rsp),%rsp
-.Lc380:
+.Lc389:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	movq	%rdx,%rcx
-	leaq	.Ld51(%rip),%rdx
+	leaq	.Ld59(%rip),%rdx
 	call	fpc_ansistr_assign
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc379:
+.Lc388:
 
 .section .text.n_system$_$tcpu_$__$$_classparent$$tobject,"x"
 .globl	SYSTEM$_$TCPU_$__$$_CLASSPARENT$$TOBJECT
 SYSTEM$_$TCPU_$__$$_CLASSPARENT$$TOBJECT:
-.Lc381:
+.Lc390:
 .seh_proc SYSTEM$_$TCPU_$__$$_CLASSPARENT$$TOBJECT
 	leaq	-40(%rsp),%rsp
-.Lc383:
+.Lc392:
 .seh_stackalloc 40
 .seh_endprologue
 	call	SYSTEM$_$TCPU_$__$$_GETPARENT$$TOBJECT
@@ -3358,23 +3510,23 @@ SYSTEM$_$TCPU_$__$$_CLASSPARENT$$TOBJECT:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc382:
+.Lc391:
 
 .section .text.n_system$_$tcpu_$__$$_getparent$$tobject,"x"
 .globl	SYSTEM$_$TCPU_$__$$_GETPARENT$$TOBJECT
 SYSTEM$_$TCPU_$__$$_GETPARENT$$TOBJECT:
-.Lc384:
+.Lc393:
 	movq	U_$SYSTEM_$$__static_tcpu_FCLASSPARENT(%rip),%rax
 	ret
-.Lc385:
+.Lc394:
 
 .section .text.n_system_$$_initmemory,"x"
 .globl	SYSTEM_$$_INITMEMORY
 SYSTEM_$$_INITMEMORY:
-.Lc386:
+.Lc395:
 .seh_proc SYSTEM_$$_INITMEMORY
 	leaq	-40(%rsp),%rsp
-.Lc388:
+.Lc397:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	$1,%eax
@@ -3386,15 +3538,15 @@ SYSTEM_$$_INITMEMORY:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc387:
+.Lc396:
 
 .section .text.n_system_$$_donememory,"x"
 .globl	SYSTEM_$$_DONEMEMORY
 SYSTEM_$$_DONEMEMORY:
-.Lc389:
+.Lc398:
 .seh_proc SYSTEM_$$_DONEMEMORY
 	leaq	-40(%rsp),%rsp
-.Lc391:
+.Lc400:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	TC_$SYSTEM_$$_MEM(%rip),%rax
@@ -3406,37 +3558,37 @@ SYSTEM_$$_DONEMEMORY:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc390:
+.Lc399:
 
 .section .text.n_system$_$tmemory_$__$$_create$$tmemory,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_CREATE$$TMEMORY
 SYSTEM$_$TMEMORY_$__$$_CREATE$$TMEMORY:
-.Lc392:
+.Lc401:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_CREATE$$TMEMORY
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc394:
-.Lc395:
+.Lc403:
+.Lc404:
 	movq	%rsp,%rbp
-.Lc396:
+.Lc405:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
 	movq	%rcx,-16(%rbp)
 	movq	%rdx,-8(%rbp)
 	cmpq	$1,%rdx
-	jne	.Lj544
+	jne	.Lj567
 	movq	-16(%rbp),%rax
 	movq	-16(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-16(%rbp)
-.Lj544:
+.Lj567:
 	cmpq	$0,-16(%rbp)
-	je	.Lj541
-.Lj552:
+	je	.Lj564
+.Lj575:
 	nop
-.Lj551:
+.Lj574:
 	movq	$-1,-24(%rbp)
 	movq	-16(%rbp),%rcx
 	xorl	%edx,%edx
@@ -3447,27 +3599,27 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$$TMEMORY:
 	call	SYSTEM$_$TMEMORY_$__$$_CREATE$LONGDWORD$$TMEMORY
 	movq	$1,-24(%rbp)
 	cmpq	$0,-16(%rbp)
-	je	.Lj549
+	je	.Lj572
 	cmpq	$0,-8(%rbp)
-	je	.Lj549
+	je	.Lj572
 	movq	-16(%rbp),%rcx
 	movq	-16(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj549
-.Lj548:
+	jmp	.Lj572
+.Lj571:
 	cmpq	$0,-8(%rbp)
-	je	.Lj558
+	je	.Lj581
 	movq	-24(%rbp),%rdx
 	movq	-16(%rbp),%rcx
 	call	SYSTEM$_$TMEMORY_$__$$_DESTROY
-.Lj558:
+.Lj581:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj559:
+.Lj582:
 	nop
-.Lj549:
-.Lj541:
+.Lj572:
+.Lj564:
 	movq	-16(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -3477,25 +3629,25 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$$TMEMORY:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj551
-	.rva	.Lj548
-	.rva	.Lj549
+	.rva	.Lj574
+	.rva	.Lj571
+	.rva	.Lj572
 
 .section .text.n_system$_$tmemory_$__$$_create$$tmemory,"x"
 .seh_endproc
-.Lc393:
+.Lc402:
 
 .section .text.n_system$_$tmemory_$__$$_create$longdword$$tmemory,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_CREATE$LONGDWORD$$TMEMORY
 SYSTEM$_$TMEMORY_$__$$_CREATE$LONGDWORD$$TMEMORY:
-.Lc397:
+.Lc406:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_CREATE$LONGDWORD$$TMEMORY
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc399:
-.Lc400:
+.Lc408:
+.Lc409:
 	movq	%rsp,%rbp
-.Lc401:
+.Lc410:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
@@ -3503,18 +3655,18 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$LONGDWORD$$TMEMORY:
 	movq	%rdx,-16(%rbp)
 	movl	%r8d,-8(%rbp)
 	cmpq	$1,-16(%rbp)
-	jne	.Lj563
+	jne	.Lj586
 	movq	-24(%rbp),%rax
 	movq	-24(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-24(%rbp)
-.Lj563:
+.Lj586:
 	cmpq	$0,-24(%rbp)
-	je	.Lj560
-.Lj571:
+	je	.Lj583
+.Lj594:
 	nop
-.Lj570:
+.Lj593:
 	movq	$-1,-32(%rbp)
 	movq	-24(%rbp),%rcx
 	xorl	%edx,%edx
@@ -3527,27 +3679,27 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$LONGDWORD$$TMEMORY:
 	movq	$0,U_$SYSTEM_$$__static_tmemory_FCLASSPARENT(%rip)
 	movq	$1,-32(%rbp)
 	cmpq	$0,-24(%rbp)
-	je	.Lj568
+	je	.Lj591
 	cmpq	$0,-16(%rbp)
-	je	.Lj568
+	je	.Lj591
 	movq	-24(%rbp),%rcx
 	movq	-24(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj568
-.Lj567:
+	jmp	.Lj591
+.Lj590:
 	cmpq	$0,-16(%rbp)
-	je	.Lj577
+	je	.Lj600
 	movq	-32(%rbp),%rdx
 	movq	-24(%rbp),%rcx
 	call	SYSTEM$_$TMEMORY_$__$$_DESTROY
-.Lj577:
+.Lj600:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj578:
+.Lj601:
 	nop
-.Lj568:
-.Lj560:
+.Lj591:
+.Lj583:
 	movq	-24(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -3557,25 +3709,25 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$LONGDWORD$$TMEMORY:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj570
-	.rva	.Lj567
-	.rva	.Lj568
+	.rva	.Lj593
+	.rva	.Lj590
+	.rva	.Lj591
 
 .section .text.n_system$_$tmemory_$__$$_create$longdword$$tmemory,"x"
 .seh_endproc
-.Lc398:
+.Lc407:
 
 .section .text.n_system$_$tmemory_$__$$_create$tobject$longdword$$tmemory,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$LONGDWORD$$TMEMORY
 SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$LONGDWORD$$TMEMORY:
-.Lc402:
+.Lc411:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$LONGDWORD$$TMEMORY
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc404:
-.Lc405:
+.Lc413:
+.Lc414:
 	movq	%rsp,%rbp
-.Lc406:
+.Lc415:
 	leaq	-80(%rsp),%rsp
 .seh_stackalloc 80
 .seh_endprologue
@@ -3584,18 +3736,18 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$LONGDWORD$$TMEMORY:
 	movq	%r8,-8(%rbp)
 	movl	%r9d,-16(%rbp)
 	cmpq	$1,-24(%rbp)
-	jne	.Lj582
+	jne	.Lj605
 	movq	-32(%rbp),%rax
 	movq	-32(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-32(%rbp)
-.Lj582:
+.Lj605:
 	cmpq	$0,-32(%rbp)
-	je	.Lj579
-.Lj590:
+	je	.Lj602
+.Lj613:
 	nop
-.Lj589:
+.Lj612:
 	movq	$-1,-40(%rbp)
 	movq	-32(%rbp),%rcx
 	xorl	%edx,%edx
@@ -3608,27 +3760,27 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$LONGDWORD$$TMEMORY:
 	movq	%rax,U_$SYSTEM_$$__static_tmemory_FCLASSPARENT(%rip)
 	movq	$1,-40(%rbp)
 	cmpq	$0,-32(%rbp)
-	je	.Lj587
+	je	.Lj610
 	cmpq	$0,-24(%rbp)
-	je	.Lj587
+	je	.Lj610
 	movq	-32(%rbp),%rcx
 	movq	-32(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj587
-.Lj586:
+	jmp	.Lj610
+.Lj609:
 	cmpq	$0,-24(%rbp)
-	je	.Lj596
+	je	.Lj619
 	movq	-40(%rbp),%rdx
 	movq	-32(%rbp),%rcx
 	call	SYSTEM$_$TMEMORY_$__$$_DESTROY
-.Lj596:
+.Lj619:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj597:
+.Lj620:
 	nop
-.Lj587:
-.Lj579:
+.Lj610:
+.Lj602:
 	movq	-32(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -3638,25 +3790,25 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$LONGDWORD$$TMEMORY:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj589
-	.rva	.Lj586
-	.rva	.Lj587
+	.rva	.Lj612
+	.rva	.Lj609
+	.rva	.Lj610
 
 .section .text.n_system$_$tmemory_$__$$_create$tobject$longdword$$tmemory,"x"
 .seh_endproc
-.Lc403:
+.Lc412:
 
 .section .text.n_system$_$tmemory_$__$$_create$tobject$$tmemory,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$$TMEMORY
 SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$$TMEMORY:
-.Lc407:
+.Lc416:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$$TMEMORY
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc409:
-.Lc410:
+.Lc418:
+.Lc419:
 	movq	%rsp,%rbp
-.Lc411:
+.Lc420:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
@@ -3664,65 +3816,65 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$$TMEMORY:
 	movq	%rdx,-16(%rbp)
 	movq	%r8,-8(%rbp)
 	cmpq	$1,-16(%rbp)
-	jne	.Lj601
+	jne	.Lj624
 	movq	-24(%rbp),%rax
 	movq	-24(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-24(%rbp)
-.Lj601:
+.Lj624:
 	cmpq	$0,-24(%rbp)
-	je	.Lj598
-.Lj609:
+	je	.Lj621
+.Lj632:
 	nop
-.Lj608:
+.Lj631:
 	movq	$-1,-32(%rbp)
 	movq	-24(%rbp),%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_CREATE$$TOBJECT
 	xorl	%r9d,%r9d
 	leaq	_$SYSTEM$_Ld1(%rip),%r8
-	leaq	_$SYSTEM$_Ld52(%rip),%rdx
+	leaq	_$SYSTEM$_Ld60(%rip),%rdx
 	xorl	%ecx,%ecx
 	call	_$dll$user32$MessageBoxA
 	cmpq	$0,-8(%rbp)
-	jne	.Lj612
+	jne	.Lj635
 	movl	$8,%edx
 	movl	%edx,U_$SYSTEM_$$__static_tmemory_FCLASSMEMSIZE(%rip)
 	leaq	U_$SYSTEM_$$__static_tmemory_FCLASSMEMORY(%rip),%rcx
 	call	SYSTEM_$$_GETMEM$POINTER$LONGDWORD
-	jmp	.Lj613
-.Lj612:
+	jmp	.Lj636
+.Lj635:
 	movq	-8(%rbp),%rax
 	movq	%rax,U_$SYSTEM_$$__static_tmemory_FCLASSPARENT(%rip)
 	movq	-24(%rbp),%rcx
 	movl	$8,%edx
 	call	SYSTEM$_$TMEMORY_$__$$_ALLOC$LONGDWORD$$POINTER
 	movq	%rax,U_$SYSTEM_$$__static_tmemory_FCLASSMEMORY(%rip)
-.Lj613:
+.Lj636:
 	movq	$1,-32(%rbp)
 	cmpq	$0,-24(%rbp)
-	je	.Lj606
+	je	.Lj629
 	cmpq	$0,-16(%rbp)
-	je	.Lj606
+	je	.Lj629
 	movq	-24(%rbp),%rcx
 	movq	-24(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj606
-.Lj605:
+	jmp	.Lj629
+.Lj628:
 	cmpq	$0,-16(%rbp)
-	je	.Lj618
+	je	.Lj641
 	movq	-32(%rbp),%rdx
 	movq	-24(%rbp),%rcx
 	call	SYSTEM$_$TMEMORY_$__$$_DESTROY
-.Lj618:
+.Lj641:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj619:
+.Lj642:
 	nop
-.Lj606:
-.Lj598:
+.Lj629:
+.Lj621:
 	movq	-24(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -3732,99 +3884,99 @@ SYSTEM$_$TMEMORY_$__$$_CREATE$TOBJECT$$TMEMORY:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj608
-	.rva	.Lj605
-	.rva	.Lj606
+	.rva	.Lj631
+	.rva	.Lj628
+	.rva	.Lj629
 
 .section .text.n_system$_$tmemory_$__$$_create$tobject$$tmemory,"x"
 .seh_endproc
-.Lc408:
+.Lc417:
 
 .section .text.n_system$_$tmemory_$__$$_destroy,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_DESTROY
 SYSTEM$_$TMEMORY_$__$$_DESTROY:
-.Lc412:
+.Lc421:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_DESTROY
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc414:
+.Lc423:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rbx
 	movq	%rdx,%rsi
 	testq	%rsi,%rsi
-	jng	.Lj623
+	jng	.Lj646
 	movq	%rbx,%rcx
 	movq	(%rbx),%rax
 	call	*176(%rax)
-.Lj623:
+.Lj646:
 	movq	%rbx,%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_DESTROY
 	testq	%rbx,%rbx
-	je	.Lj625
+	je	.Lj648
 	testq	%rsi,%rsi
-	je	.Lj625
+	je	.Lj648
 	movq	(%rbx),%rcx
 	movq	(%rbx),%rax
 	call	*136(%rax)
-.Lj625:
+.Lj648:
 	nop
 	leaq	40(%rsp),%rsp
 	popq	%rsi
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc413:
+.Lc422:
 
 .section .text.n_system$_$tmemory_$__$$_classname$$ansistring,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_CLASSNAME$$ANSISTRING
 SYSTEM$_$TMEMORY_$__$$_CLASSNAME$$ANSISTRING:
-.Lc415:
+.Lc424:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_CLASSNAME$$ANSISTRING
 	leaq	-40(%rsp),%rsp
-.Lc417:
+.Lc426:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	movq	%rdx,%rcx
-	leaq	.Ld53(%rip),%rdx
+	leaq	.Ld61(%rip),%rdx
 	call	fpc_ansistr_assign
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc416:
+.Lc425:
 
 .section .text.n_system$_$tmemory_$__$$_alloc$longdword$$pointer,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_ALLOC$LONGDWORD$$POINTER
 SYSTEM$_$TMEMORY_$__$$_ALLOC$LONGDWORD$$POINTER:
-.Lc418:
+.Lc427:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_ALLOC$LONGDWORD$$POINTER
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc420:
+.Lc429:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	%edx,%ebx
 	xorl	%esi,%esi
 	cmpl	U_$SYSTEM_$$__static_tmemory_FCLASSMEMSIZE(%rip),%ebx
-	je	.Lj629
+	je	.Lj652
 	cmpl	$0,U_$SYSTEM_$$__static_tmemory_FCLASSMEMSIZE(%rip)
-	jne	.Lj635
+	jne	.Lj658
 	movl	%ebx,%edx
 	leaq	U_$SYSTEM_$$__static_tmemory_FCLASSMEMORY(%rip),%rcx
 	call	SYSTEM_$$_GETMEM$POINTER$LONGDWORD
 	movl	%ebx,U_$SYSTEM_$$__static_tmemory_FCLASSMEMSIZE(%rip)
-.Lj635:
+.Lj658:
 	movq	U_$SYSTEM_$$__static_tmemory_FCLASSMEMORY(%rip),%rsi
-.Lj629:
+.Lj652:
 	movq	%rsi,%rax
 	nop
 	leaq	40(%rsp),%rsp
@@ -3832,15 +3984,15 @@ SYSTEM$_$TMEMORY_$__$$_ALLOC$LONGDWORD$$POINTER:
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc419:
+.Lc428:
 
 .section .text.n_system$_$tmemory_$__$$_alloc,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_ALLOC
 SYSTEM$_$TMEMORY_$__$$_ALLOC:
-.Lc421:
+.Lc430:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_ALLOC
 	leaq	-40(%rsp),%rsp
-.Lc423:
+.Lc432:
 .seh_stackalloc 40
 .seh_endprologue
 	movl	$512,%edx
@@ -3849,47 +4001,47 @@ SYSTEM$_$TMEMORY_$__$$_ALLOC:
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc422:
+.Lc431:
 
 .section .text.n_system$_$tmemory_$__$$_free,"x"
 .globl	SYSTEM$_$TMEMORY_$__$$_FREE
 SYSTEM$_$TMEMORY_$__$$_FREE:
-.Lc424:
+.Lc433:
 .seh_proc SYSTEM$_$TMEMORY_$__$$_FREE
 	leaq	-40(%rsp),%rsp
-.Lc426:
+.Lc435:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	leaq	U_$SYSTEM_$$__static_tmemory_FCLASSMEMORY(%rip),%rcx
 	call	SYSTEM_$$_FREEMEM$POINTER
 	cmpq	$0,U_$SYSTEM_$$__static_tmemory_FCLASSPARENT(%rip)
-	je	.Lj641
+	je	.Lj664
 	movq	U_$SYSTEM_$$__static_tmemory_FCLASSPARENT(%rip),%rcx
 	movq	U_$SYSTEM_$$__static_tmemory_FCLASSPARENT(%rip),%rax
 	movq	(%rax),%rax
 	call	*160(%rax)
-.Lj641:
+.Lj664:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc425:
+.Lc434:
 
 .section .text.n_system_$$_initsystem,"x"
 .globl	SYSTEM_$$_INITSYSTEM
 SYSTEM_$$_INITSYSTEM:
-.Lc427:
+.Lc436:
 .seh_proc SYSTEM_$$_INITSYSTEM
 	leaq	-40(%rsp),%rsp
-.Lc429:
+.Lc438:
 .seh_stackalloc 40
 .seh_endprologue
 	call	_$dll$kernel32$GetConsoleWindow
 	testl	%eax,%eax
-	je	.Lj645
+	je	.Lj668
 	call	SYSTEM_$$_INITCONSOLE
-.Lj645:
+.Lj668:
 	movl	$1,%edx
 	leaq	VMT_$SYSTEM_$$_TSYSTEM(%rip),%rcx
 	call	SYSTEM$_$TSYSTEM_$__$$_CREATE$$TSYSTEM
@@ -3899,63 +4051,63 @@ SYSTEM_$$_INITSYSTEM:
 	call	SYSTEM$_$TMEMORY_$__$$_CREATE$$TMEMORY
 	movq	%rax,TC_$SYSTEM_$$_MEM(%rip)
 	movq	TC_$SYSTEM_$$_DOS(%rip),%rcx
-	leaq	_$SYSTEM$_Ld54(%rip),%rdx
+	leaq	_$SYSTEM$_Ld62(%rip),%rdx
 	call	SYSTEM$_$TDOSCMD_$__$$_WRITELN$PCHAR
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc428:
+.Lc437:
 
 .section .text.n_system_$$_donesystem,"x"
 .globl	SYSTEM_$$_DONESYSTEM
 SYSTEM_$$_DONESYSTEM:
-.Lc430:
+.Lc439:
 .seh_proc SYSTEM_$$_DONESYSTEM
 	leaq	-40(%rsp),%rsp
-.Lc432:
+.Lc441:
 .seh_stackalloc 40
 .seh_endprologue
 	call	_$dll$kernel32$GetConsoleWindow
 	testl	%eax,%eax
-	je	.Lj649
+	je	.Lj672
 	call	SYSTEM_$$_DONECONSOLE
-.Lj649:
+.Lj672:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc431:
+.Lc440:
 
 .section .text.n_system$_$tsystem_$__$$_create$$tsystem,"x"
 .globl	SYSTEM$_$TSYSTEM_$__$$_CREATE$$TSYSTEM
 SYSTEM$_$TSYSTEM_$__$$_CREATE$$TSYSTEM:
-.Lc433:
+.Lc442:
 .seh_proc SYSTEM$_$TSYSTEM_$__$$_CREATE$$TSYSTEM
 	pushq	%rbp
 .seh_pushreg %rbp
-.Lc435:
-.Lc436:
+.Lc444:
+.Lc445:
 	movq	%rsp,%rbp
-.Lc437:
+.Lc446:
 	leaq	-64(%rsp),%rsp
 .seh_stackalloc 64
 .seh_endprologue
 	movq	%rcx,-16(%rbp)
 	movq	%rdx,-8(%rbp)
 	cmpq	$1,%rdx
-	jne	.Lj653
+	jne	.Lj676
 	movq	-16(%rbp),%rax
 	movq	-16(%rbp),%rdx
 	movq	%rax,%rcx
 	call	*128(%rdx)
 	movq	%rax,-16(%rbp)
-.Lj653:
+.Lj676:
 	cmpq	$0,-16(%rbp)
-	je	.Lj650
-.Lj661:
+	je	.Lj673
+.Lj684:
 	nop
-.Lj660:
+.Lj683:
 	movq	$-1,-24(%rbp)
 	movq	-16(%rbp),%rcx
 	xorl	%edx,%edx
@@ -3966,27 +4118,27 @@ SYSTEM$_$TSYSTEM_$__$$_CREATE$$TSYSTEM:
 	movq	%rax,U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip)
 	movq	$1,-24(%rbp)
 	cmpq	$0,-16(%rbp)
-	je	.Lj658
+	je	.Lj681
 	cmpq	$0,-8(%rbp)
-	je	.Lj658
+	je	.Lj681
 	movq	-16(%rbp),%rcx
 	movq	-16(%rbp),%rax
 	movq	(%rax),%rax
 	call	*168(%rax)
-	jmp	.Lj658
-.Lj657:
+	jmp	.Lj681
+.Lj680:
 	cmpq	$0,-8(%rbp)
-	je	.Lj667
+	je	.Lj690
 	movq	-24(%rbp),%rdx
 	movq	-16(%rbp),%rcx
 	call	SYSTEM$_$TSYSTEM_$__$$_DESTROY
-.Lj667:
+.Lj690:
 	call	fpc_reraise
 	call	FPC_DONEEXCEPTION
-.Lj668:
+.Lj691:
 	nop
-.Lj658:
-.Lj650:
+.Lj681:
+.Lj673:
 	movq	-16(%rbp),%rax
 	nop
 	leaq	(%rbp),%rsp
@@ -3996,151 +4148,151 @@ SYSTEM$_$TSYSTEM_$__$$_CREATE$$TSYSTEM:
 .seh_handlerdata
 	.long	1
 	.long	1
-	.rva	.Lj660
-	.rva	.Lj657
-	.rva	.Lj658
+	.rva	.Lj683
+	.rva	.Lj680
+	.rva	.Lj681
 
 .section .text.n_system$_$tsystem_$__$$_create$$tsystem,"x"
 .seh_endproc
-.Lc434:
+.Lc443:
 
 .section .text.n_system$_$tsystem_$__$$_destroy,"x"
 .globl	SYSTEM$_$TSYSTEM_$__$$_DESTROY
 SYSTEM$_$TSYSTEM_$__$$_DESTROY:
-.Lc438:
+.Lc447:
 .seh_proc SYSTEM$_$TSYSTEM_$__$$_DESTROY
 	pushq	%rbx
 .seh_pushreg %rbx
 	pushq	%rsi
 .seh_pushreg %rsi
 	leaq	-40(%rsp),%rsp
-.Lc440:
+.Lc449:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rbx
 	movq	%rdx,%rsi
 	testq	%rsi,%rsi
-	jng	.Lj672
+	jng	.Lj695
 	movq	%rbx,%rcx
 	movq	(%rbx),%rax
 	call	*176(%rax)
-.Lj672:
+.Lj695:
 	cmpq	$0,U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip)
-	je	.Lj674
+	je	.Lj697
 	movq	U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip),%rcx
 	movq	U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip),%rax
 	movq	(%rax),%rax
 	call	*184(%rax)
 	movq	$0,U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip)
-.Lj674:
+.Lj697:
 	movq	%rbx,%rcx
 	xorl	%edx,%edx
 	call	SYSTEM$_$TOBJECT_$__$$_DESTROY
 	testq	%rbx,%rbx
-	je	.Lj676
+	je	.Lj699
 	testq	%rsi,%rsi
-	je	.Lj676
+	je	.Lj699
 	movq	(%rbx),%rcx
 	movq	(%rbx),%rax
 	call	*136(%rax)
-.Lj676:
+.Lj699:
 	nop
 	leaq	40(%rsp),%rsp
 	popq	%rsi
 	popq	%rbx
 	ret
 .seh_endproc
-.Lc439:
+.Lc448:
 
 .section .text.n_system$_$tsystem_$__$$_getmemory$$tmemory,"x"
 .globl	SYSTEM$_$TSYSTEM_$__$$_GETMEMORY$$TMEMORY
 SYSTEM$_$TSYSTEM_$__$$_GETMEMORY$$TMEMORY:
-.Lc441:
+.Lc450:
 .seh_proc SYSTEM$_$TSYSTEM_$__$$_GETMEMORY$$TMEMORY
 	leaq	-40(%rsp),%rsp
-.Lc443:
+.Lc452:
 .seh_stackalloc 40
 .seh_endprologue
 	cmpq	$0,U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip)
-	jne	.Lj681
+	jne	.Lj704
 	movl	$1,%edx
 	leaq	VMT_$SYSTEM_$$_TMEMORY(%rip),%rcx
 	call	SYSTEM$_$TMEMORY_$__$$_CREATE$$TMEMORY
 	movq	%rax,U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip)
-.Lj681:
+.Lj704:
 	movq	U_$SYSTEM_$$__static_tsystem_FMEMCLASS(%rip),%rax
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc442:
+.Lc451:
 
 .section .text.n_system$_$tsystem_$__$$_classname$$ansistring,"x"
 .globl	SYSTEM$_$TSYSTEM_$__$$_CLASSNAME$$ANSISTRING
 SYSTEM$_$TSYSTEM_$__$$_CLASSNAME$$ANSISTRING:
-.Lc444:
+.Lc453:
 .seh_proc SYSTEM$_$TSYSTEM_$__$$_CLASSNAME$$ANSISTRING
 	leaq	-40(%rsp),%rsp
-.Lc446:
+.Lc455:
 .seh_stackalloc 40
 .seh_endprologue
 	movq	%rcx,%rax
 	movq	%rdx,%rcx
-	leaq	.Ld55(%rip),%rdx
+	leaq	.Ld63(%rip),%rdx
 	call	fpc_ansistr_assign
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc445:
+.Lc454:
 
 .section .text.n_system_$$_init$,"x"
 .globl	INIT$_$SYSTEM
 INIT$_$SYSTEM:
 .globl	SYSTEM_$$_init$
 SYSTEM_$$_init$:
-.Lc447:
+.Lc456:
 .seh_proc SYSTEM_$$_init$
 	leaq	-40(%rsp),%rsp
-.Lc449:
+.Lc458:
 .seh_stackalloc 40
 .seh_endprologue
 	call	SYSTEM_$$_INITSYSTEM
 	call	SYSTEM_$$_ISCONSOLEAPP$$BOOLEAN
 	testb	%al,%al
-	je	.Lj687
-	leaq	_$SYSTEM$_Ld64(%rip),%rcx
+	je	.Lj710
+	leaq	_$SYSTEM$_Ld75(%rip),%rcx
 	call	_$dll$msvcrt$printf
-.Lj687:
+.Lj710:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc448:
+.Lc457:
 
 .section .text.n_system_$$_finalize$,"x"
 .globl	FINALIZE$_$SYSTEM
 FINALIZE$_$SYSTEM:
 .globl	SYSTEM_$$_finalize$
 SYSTEM_$$_finalize$:
-.Lc450:
+.Lc459:
 .seh_proc SYSTEM_$$_finalize$
 	leaq	-40(%rsp),%rsp
-.Lc452:
+.Lc461:
 .seh_stackalloc 40
 .seh_endprologue
 	call	SYSTEM_$$_DONESYSTEM
 	call	SYSTEM_$$_ISCONSOLEAPP$$BOOLEAN
 	testb	%al,%al
-	je	.Lj689
-	leaq	_$SYSTEM$_Ld65(%rip),%rcx
+	je	.Lj712
+	leaq	_$SYSTEM$_Ld76(%rip),%rcx
 	call	_$dll$msvcrt$printf
-.Lj689:
+.Lj712:
 	nop
 	leaq	40(%rsp),%rsp
 	ret
 .seh_endproc
-.Lc451:
+.Lc460:
 # End asmlist al_procedures
 # Begin asmlist al_globals
 
@@ -4228,7 +4380,7 @@ U_$SYSTEM_$$_DLLPARAM:
 .globl	VMT_$SYSTEM_$$_TOBJECT
 VMT_$SYSTEM_$$_TOBJECT:
 	.quad	8,-8,0
-	.quad	.Ld56
+	.quad	.Ld64
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_TOBJECT
 	.quad	0,0,0,0
@@ -4251,7 +4403,7 @@ VMT_$SYSTEM_$$_TOBJECT:
 VMT_$SYSTEM_$$_TLIST:
 	.quad	8,-8
 	.quad	VMT_$SYSTEM_$$_TOBJECT$indirect
-	.quad	.Ld57
+	.quad	.Ld65
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_TLIST
 	.quad	0,0,0,0
@@ -4274,9 +4426,81 @@ VMT_$SYSTEM_$$_TLIST:
 VMT_$SYSTEM_$$_EXCEPTION:
 	.quad	24,-24
 	.quad	VMT_$SYSTEM_$$_TOBJECT$indirect
-	.quad	.Ld58
+	.quad	.Ld66
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_EXCEPTION
+	.quad	0,0,0,0
+	.quad	SYSTEM$_$TOBJECT_$__$$_DESTROY
+	.quad	SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$PCHAR
+	.quad	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT
+	.quad	SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
+	.quad	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
+	.quad	SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
+	.quad	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
+	.quad	SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal
+	.quad	SYSTEM$_$TOBJECT_$__$$_FREE
+	.quad	FPC_EMPTYMETHOD
+	.quad	FPC_EMPTYMETHOD
+	.quad	SYSTEM$_$EXCEPTION_$__$$_CLASSNAME$$PCHAR
+	.quad	0
+
+.section .rodata.n_VMT_$SYSTEM_$$_EDIVBYZERO,"d"
+	.balign 8
+.globl	VMT_$SYSTEM_$$_EDIVBYZERO
+VMT_$SYSTEM_$$_EDIVBYZERO:
+	.quad	24,-24
+	.quad	VMT_$SYSTEM_$$_EXCEPTION$indirect
+	.quad	.Ld67
+	.quad	0,0,0
+	.quad	RTTI_$SYSTEM_$$_EDIVBYZERO
+	.quad	0,0,0,0
+	.quad	SYSTEM$_$TOBJECT_$__$$_DESTROY
+	.quad	SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$PCHAR
+	.quad	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT
+	.quad	SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
+	.quad	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
+	.quad	SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
+	.quad	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
+	.quad	SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal
+	.quad	SYSTEM$_$TOBJECT_$__$$_FREE
+	.quad	FPC_EMPTYMETHOD
+	.quad	FPC_EMPTYMETHOD
+	.quad	SYSTEM$_$EXCEPTION_$__$$_CLASSNAME$$PCHAR
+	.quad	0
+
+.section .rodata.n_VMT_$SYSTEM_$$_EOUTOFMEMORY,"d"
+	.balign 8
+.globl	VMT_$SYSTEM_$$_EOUTOFMEMORY
+VMT_$SYSTEM_$$_EOUTOFMEMORY:
+	.quad	24,-24
+	.quad	VMT_$SYSTEM_$$_EXCEPTION$indirect
+	.quad	.Ld68
+	.quad	0,0,0
+	.quad	RTTI_$SYSTEM_$$_EOUTOFMEMORY
+	.quad	0,0,0,0
+	.quad	SYSTEM$_$TOBJECT_$__$$_DESTROY
+	.quad	SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$PCHAR
+	.quad	SYSTEM$_$TOBJECT_$__$$_CLASSPARENT$$TOBJECT
+	.quad	SYSTEM$_$TOBJECT_$__$$_INITINSTANCE$POINTER
+	.quad	SYSTEM$_$TOBJECT_$__$$_NEWINSTANCE$$TOBJECT
+	.quad	SYSTEM$_$TOBJECT_$__$$_FREEINSTANCE
+	.quad	SYSTEM$_$TOBJECT_$__$$_SAFECALLEXCEPTION$TOBJECT$POINTER$$SHORTDWORD
+	.quad	SYSTEM$_$TOBJECT_$__$$_DEFAULTHANDLER$formal
+	.quad	SYSTEM$_$TOBJECT_$__$$_FREE
+	.quad	FPC_EMPTYMETHOD
+	.quad	FPC_EMPTYMETHOD
+	.quad	SYSTEM$_$EXCEPTION_$__$$_CLASSNAME$$PCHAR
+	.quad	0
+
+.section .rodata.n_VMT_$SYSTEM_$$_EACCESSVIOLATION,"d"
+	.balign 8
+.globl	VMT_$SYSTEM_$$_EACCESSVIOLATION
+VMT_$SYSTEM_$$_EACCESSVIOLATION:
+	.quad	24,-24
+	.quad	VMT_$SYSTEM_$$_EXCEPTION$indirect
+	.quad	.Ld69
+	.quad	0,0,0
+	.quad	RTTI_$SYSTEM_$$_EACCESSVIOLATION
 	.quad	0,0,0,0
 	.quad	SYSTEM$_$TOBJECT_$__$$_DESTROY
 	.quad	SYSTEM$_$TOBJECT_$__$$_CLASSNAME$$PCHAR
@@ -4298,7 +4522,7 @@ VMT_$SYSTEM_$$_EXCEPTION:
 VMT_$SYSTEM_$$_TDOSCMD:
 	.quad	40,-40
 	.quad	VMT_$SYSTEM_$$_TOBJECT$indirect
-	.quad	.Ld59
+	.quad	.Ld70
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_TDOSCMD
 	.quad	INIT_$SYSTEM_$$_TDOSCMD
@@ -4323,7 +4547,7 @@ VMT_$SYSTEM_$$_TDOSCMD:
 VMT_$SYSTEM_$$_WINDOWS_CLASS:
 	.quad	8,-8
 	.quad	VMT_$SYSTEM_$$_TOBJECT$indirect
-	.quad	.Ld60
+	.quad	.Ld71
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_WINDOWS_CLASS
 	.quad	0,0,0,0
@@ -4347,7 +4571,7 @@ VMT_$SYSTEM_$$_WINDOWS_CLASS:
 VMT_$SYSTEM_$$_TCPU:
 	.quad	8,-8
 	.quad	VMT_$SYSTEM_$$_TOBJECT$indirect
-	.quad	.Ld61
+	.quad	.Ld72
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_TCPU
 	.quad	0,0,0,0
@@ -4372,7 +4596,7 @@ VMT_$SYSTEM_$$_TCPU:
 VMT_$SYSTEM_$$_TMEMORY:
 	.quad	8,-8
 	.quad	VMT_$SYSTEM_$$_TOBJECT$indirect
-	.quad	.Ld62
+	.quad	.Ld73
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_TMEMORY
 	.quad	0,0,0,0
@@ -4397,7 +4621,7 @@ VMT_$SYSTEM_$$_TMEMORY:
 VMT_$SYSTEM_$$_TSYSTEM:
 	.quad	8,-8
 	.quad	VMT_$SYSTEM_$$_TOBJECT$indirect
-	.quad	.Ld63
+	.quad	.Ld74
 	.quad	0,0,0
 	.quad	RTTI_$SYSTEM_$$_TSYSTEM
 	.quad	0,0,0,0
@@ -4418,49 +4642,67 @@ VMT_$SYSTEM_$$_TSYSTEM:
 
 .section .rodata.n_VMT_$SYSTEM_$$_TOBJECT,"d"
 	.balign 8
-.Ld56:
+.Ld64:
 	.byte	7
 	.ascii	"TObject"
 
 .section .rodata.n_VMT_$SYSTEM_$$_TLIST,"d"
 	.balign 8
-.Ld57:
+.Ld65:
 	.byte	5
 	.ascii	"TList"
 
 .section .rodata.n_VMT_$SYSTEM_$$_EXCEPTION,"d"
 	.balign 8
-.Ld58:
+.Ld66:
 	.byte	9
 	.ascii	"Exception"
 
+.section .rodata.n_VMT_$SYSTEM_$$_EDIVBYZERO,"d"
+	.balign 8
+.Ld67:
+	.byte	10
+	.ascii	"EDivByZero"
+
+.section .rodata.n_VMT_$SYSTEM_$$_EOUTOFMEMORY,"d"
+	.balign 8
+.Ld68:
+	.byte	12
+	.ascii	"EOutOfMemory"
+
+.section .rodata.n_VMT_$SYSTEM_$$_EACCESSVIOLATION,"d"
+	.balign 8
+.Ld69:
+	.byte	16
+	.ascii	"EAccessViolation"
+
 .section .rodata.n_VMT_$SYSTEM_$$_TDOSCMD,"d"
 	.balign 8
-.Ld59:
+.Ld70:
 	.byte	7
 	.ascii	"TDosCmd"
 
 .section .rodata.n_VMT_$SYSTEM_$$_WINDOWS_CLASS,"d"
 	.balign 8
-.Ld60:
+.Ld71:
 	.byte	13
 	.ascii	"Windows_Class"
 
 .section .rodata.n_VMT_$SYSTEM_$$_TCPU,"d"
 	.balign 8
-.Ld61:
+.Ld72:
 	.byte	4
 	.ascii	"TCPU"
 
 .section .rodata.n_VMT_$SYSTEM_$$_TMEMORY,"d"
 	.balign 8
-.Ld62:
+.Ld73:
 	.byte	7
 	.ascii	"TMemory"
 
 .section .rodata.n_VMT_$SYSTEM_$$_TSYSTEM,"d"
 	.balign 8
-.Ld63:
+.Ld74:
 	.byte	7
 	.ascii	"TSystem"
 # End asmlist al_const
@@ -4482,6 +4724,16 @@ TC_$SYSTEM_$$_SYSINITENTRYINFORMATION:
 	.quad	0,0,0,0,0
 	.quad	PASCALMAIN
 	.byte	0,0,0,0,0,0,0,0
+
+.section .data.n_TC_$SYSTEM_$$_EXCEPTION_CLASSES,"d"
+.globl	TC_$SYSTEM_$$_EXCEPTION_CLASSES
+TC_$SYSTEM_$$_EXCEPTION_CLASSES:
+	.quad	VMT_$SYSTEM_$$_EDIVBYZERO
+	.quad	0,0
+	.quad	VMT_$SYSTEM_$$_EOUTOFMEMORY
+	.quad	0,0,0,0,0,0,0,0,0,0,0,0
+	.quad	VMT_$SYSTEM_$$_EACCESSVIOLATION
+	.quad	0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 
 .section .data.n_TC_$SYSTEM_$$_DOS,"d"
 .globl	TC_$SYSTEM_$$_DOS
@@ -4560,246 +4812,286 @@ _$SYSTEM$_Ld11:
 .section .rodata.n__$SYSTEM$_Ld12,"d"
 .globl	_$SYSTEM$_Ld12
 _$SYSTEM$_Ld12:
-	.ascii	"Information\000"
+	.ascii	"exception\000"
 
 .section .rodata.n__$SYSTEM$_Ld13,"d"
 .globl	_$SYSTEM$_Ld13
 _$SYSTEM$_Ld13:
-	.ascii	"Warning\000"
+	.ascii	"fpc_reraise\000"
 
 .section .rodata.n__$SYSTEM$_Ld14,"d"
 .globl	_$SYSTEM$_Ld14
 _$SYSTEM$_Ld14:
-	.ascii	"Error: could not allocate memory.\000"
+	.ascii	"Information\000"
 
 .section .rodata.n__$SYSTEM$_Ld15,"d"
 .globl	_$SYSTEM$_Ld15
 _$SYSTEM$_Ld15:
-	.ascii	"File can not be lock.\000"
+	.ascii	"Warning\000"
 
 .section .rodata.n__$SYSTEM$_Ld16,"d"
 .globl	_$SYSTEM$_Ld16
 _$SYSTEM$_Ld16:
-	.ascii	"pacher\000"
+	.ascii	"Error: could not allocate memory.\000"
 
 .section .rodata.n__$SYSTEM$_Ld17,"d"
 .globl	_$SYSTEM$_Ld17
 _$SYSTEM$_Ld17:
-	.ascii	"File: \"\000"
+	.ascii	"File can not be lock.\000"
 
 .section .rodata.n__$SYSTEM$_Ld18,"d"
 .globl	_$SYSTEM$_Ld18
 _$SYSTEM$_Ld18:
-	.ascii	"\" already exists.\\n\000"
+	.ascii	"pacher\000"
 
 .section .rodata.n__$SYSTEM$_Ld19,"d"
 .globl	_$SYSTEM$_Ld19
 _$SYSTEM$_Ld19:
-	.ascii	"Would you like override it ?\000"
+	.ascii	"File: \"\000"
 
 .section .rodata.n__$SYSTEM$_Ld20,"d"
 .globl	_$SYSTEM$_Ld20
 _$SYSTEM$_Ld20:
-	.ascii	"file could not be created !\000"
+	.ascii	"\" already exists.\\n\000"
 
 .section .rodata.n__$SYSTEM$_Ld21,"d"
 .globl	_$SYSTEM$_Ld21
 _$SYSTEM$_Ld21:
-	.ascii	"file not delete\000"
+	.ascii	"Would you like override it ?\000"
 
 .section .rodata.n__$SYSTEM$_Ld22,"d"
 .globl	_$SYSTEM$_Ld22
 _$SYSTEM$_Ld22:
-	.ascii	"\" could not be open.\000"
+	.ascii	"file could not be created !\000"
 
 .section .rodata.n__$SYSTEM$_Ld23,"d"
 .globl	_$SYSTEM$_Ld23
 _$SYSTEM$_Ld23:
-	.ascii	"SetFilePointer() failed.\000"
+	.ascii	"file not delete\000"
 
 .section .rodata.n__$SYSTEM$_Ld24,"d"
 .globl	_$SYSTEM$_Ld24
 _$SYSTEM$_Ld24:
-	.ascii	"TObject\000"
+	.ascii	"\" could not be open.\000"
 
 .section .rodata.n__$SYSTEM$_Ld25,"d"
 .globl	_$SYSTEM$_Ld25
 _$SYSTEM$_Ld25:
-	.ascii	"Error: instance is not allocated.\000"
+	.ascii	"SetFilePointer() failed.\000"
 
 .section .rodata.n__$SYSTEM$_Ld26,"d"
 .globl	_$SYSTEM$_Ld26
 _$SYSTEM$_Ld26:
-	.ascii	"iiffdddd\000"
+	.ascii	"TObject\000"
 
 .section .rodata.n__$SYSTEM$_Ld27,"d"
 .globl	_$SYSTEM$_Ld27
 _$SYSTEM$_Ld27:
-	.ascii	"free instance\000"
+	.ascii	"Error: instance is not allocated.\000"
 
 .section .rodata.n__$SYSTEM$_Ld28,"d"
 .globl	_$SYSTEM$_Ld28
 _$SYSTEM$_Ld28:
-	.ascii	"safecallexc\000"
+	.ascii	"iiffdddd\000"
 
 .section .rodata.n__$SYSTEM$_Ld29,"d"
 .globl	_$SYSTEM$_Ld29
 _$SYSTEM$_Ld29:
-	.ascii	"iiff dddd\000"
+	.ascii	"free instance\000"
 
 .section .rodata.n__$SYSTEM$_Ld30,"d"
 .globl	_$SYSTEM$_Ld30
 _$SYSTEM$_Ld30:
-	.ascii	"sa feca ll exc\000"
+	.ascii	"safecallexc\000"
 
 .section .rodata.n__$SYSTEM$_Ld31,"d"
 .globl	_$SYSTEM$_Ld31
 _$SYSTEM$_Ld31:
-	.ascii	"tobject DEFAULT HANDLER\000"
+	.ascii	"iiff dddd\000"
 
 .section .rodata.n__$SYSTEM$_Ld32,"d"
 .globl	_$SYSTEM$_Ld32
 _$SYSTEM$_Ld32:
-	.ascii	"dfegf\000"
+	.ascii	"sa feca ll exc\000"
 
 .section .rodata.n__$SYSTEM$_Ld33,"d"
 .globl	_$SYSTEM$_Ld33
 _$SYSTEM$_Ld33:
-	.ascii	"pointer adrame\000"
+	.ascii	"tobject DEFAULT HANDLER\000"
 
 .section .rodata.n__$SYSTEM$_Ld34,"d"
 .globl	_$SYSTEM$_Ld34
 _$SYSTEM$_Ld34:
-	.ascii	"ino\000"
+	.ascii	"dfegf\000"
 
 .section .rodata.n__$SYSTEM$_Ld35,"d"
 .globl	_$SYSTEM$_Ld35
 _$SYSTEM$_Ld35:
-	.ascii	"andaddr\000"
+	.ascii	"pointer adrame\000"
 
 .section .rodata.n__$SYSTEM$_Ld36,"d"
 .globl	_$SYSTEM$_Ld36
 _$SYSTEM$_Ld36:
-	.ascii	"inngo\000"
+	.ascii	"ino\000"
 
 .section .rodata.n__$SYSTEM$_Ld37,"d"
 .globl	_$SYSTEM$_Ld37
 _$SYSTEM$_Ld37:
-	.ascii	"fpc_raiseexception\000"
+	.ascii	"andaddr\000"
 
 .section .rodata.n__$SYSTEM$_Ld38,"d"
 .globl	_$SYSTEM$_Ld38
 _$SYSTEM$_Ld38:
-	.ascii	"execp\000"
+	.ascii	"inngo\000"
 
 .section .rodata.n__$SYSTEM$_Ld39,"d"
 .globl	_$SYSTEM$_Ld39
 _$SYSTEM$_Ld39:
-	.ascii	"Exception\000"
+	.ascii	"1 fpc_raiseexception\000"
 
 .section .rodata.n__$SYSTEM$_Ld40,"d"
 .globl	_$SYSTEM$_Ld40
 _$SYSTEM$_Ld40:
-	.ascii	"woooopsss\015\012\000"
+	.ascii	"execp\000"
 
-.section .rodata.n_.Ld41,"d"
-.Ld41$strlab:
-	.short	0,1
-	.long	0
-	.quad	-1,2
-.Ld41:
-	.ascii	"\015\012\000"
+.section .rodata.n__$SYSTEM$_Ld41,"d"
+.globl	_$SYSTEM$_Ld41
+_$SYSTEM$_Ld41:
+	.ascii	"2 fpc_raiseexception\000"
 
 .section .rodata.n__$SYSTEM$_Ld42,"d"
 .globl	_$SYSTEM$_Ld42
 _$SYSTEM$_Ld42:
-	.ascii	"xxxxx\000"
+	.ascii	"Exception\000"
 
 .section .rodata.n__$SYSTEM$_Ld43,"d"
 .globl	_$SYSTEM$_Ld43
 _$SYSTEM$_Ld43:
-	.ascii	"Message: %s\000"
+	.ascii	"exerc\000"
 
 .section .rodata.n__$SYSTEM$_Ld44,"d"
 .globl	_$SYSTEM$_Ld44
 _$SYSTEM$_Ld44:
-	.ascii	"Title  : %s\000"
+	.ascii	"anAddr is not assigned.\000"
 
 .section .rodata.n__$SYSTEM$_Ld45,"d"
 .globl	_$SYSTEM$_Ld45
 _$SYSTEM$_Ld45:
-	.ascii	"%s\000"
+	.ascii	"woooopsss\015\012\000"
 
 .section .rodata.n__$SYSTEM$_Ld46,"d"
 .globl	_$SYSTEM$_Ld46
 _$SYSTEM$_Ld46:
-	.ascii	"%s\015\012\000"
+	.ascii	"wooooopppsss\000"
 
 .section .rodata.n__$SYSTEM$_Ld47,"d"
 .globl	_$SYSTEM$_Ld47
 _$SYSTEM$_Ld47:
-	.ascii	"PChar(AString)\000"
+	.ascii	"okokik\000"
 
 .section .rodata.n__$SYSTEM$_Ld48,"d"
 .globl	_$SYSTEM$_Ld48
 _$SYSTEM$_Ld48:
-	.ascii	">>----->>> %s\000"
+	.ascii	"22 wooooopppsss\000"
 
 .section .rodata.n_.Ld49,"d"
 .Ld49$strlab:
 	.short	0,1
 	.long	0
-	.quad	-1,13
+	.quad	-1,2
 .Ld49:
-	.ascii	"-----------> \000"
+	.ascii	"\015\012\000"
 
 .section .rodata.n__$SYSTEM$_Ld50,"d"
 .globl	_$SYSTEM$_Ld50
 _$SYSTEM$_Ld50:
-	.ascii	"uhuhuhuhu\000"
+	.ascii	"xxxxx\000"
 
-.section .rodata.n_.Ld51,"d"
-.Ld51$strlab:
-	.short	0,1
-	.long	0
-	.quad	-1,4
-.Ld51:
-	.ascii	"TCPU\000"
+.section .rodata.n__$SYSTEM$_Ld51,"d"
+.globl	_$SYSTEM$_Ld51
+_$SYSTEM$_Ld51:
+	.ascii	"Message: %s\000"
 
 .section .rodata.n__$SYSTEM$_Ld52,"d"
 .globl	_$SYSTEM$_Ld52
 _$SYSTEM$_Ld52:
-	.ascii	"memory 5555\000"
+	.ascii	"Title  : %s\000"
 
-.section .rodata.n_.Ld53,"d"
-.Ld53$strlab:
-	.short	0,1
-	.long	0
-	.quad	-1,7
-.Ld53:
-	.ascii	"TMemory\000"
+.section .rodata.n__$SYSTEM$_Ld53,"d"
+.globl	_$SYSTEM$_Ld53
+_$SYSTEM$_Ld53:
+	.ascii	"%s\000"
 
 .section .rodata.n__$SYSTEM$_Ld54,"d"
 .globl	_$SYSTEM$_Ld54
 _$SYSTEM$_Ld54:
-	.ascii	"start...\000"
+	.ascii	"%s\015\012\000"
 
-.section .rodata.n_.Ld55,"d"
-.Ld55$strlab:
+.section .rodata.n__$SYSTEM$_Ld55,"d"
+.globl	_$SYSTEM$_Ld55
+_$SYSTEM$_Ld55:
+	.ascii	"PChar(AString)\000"
+
+.section .rodata.n__$SYSTEM$_Ld56,"d"
+.globl	_$SYSTEM$_Ld56
+_$SYSTEM$_Ld56:
+	.ascii	">>----->>> %s\000"
+
+.section .rodata.n_.Ld57,"d"
+.Ld57$strlab:
+	.short	0,1
+	.long	0
+	.quad	-1,13
+.Ld57:
+	.ascii	"-----------> \000"
+
+.section .rodata.n__$SYSTEM$_Ld58,"d"
+.globl	_$SYSTEM$_Ld58
+_$SYSTEM$_Ld58:
+	.ascii	"uhuhuhuhu\000"
+
+.section .rodata.n_.Ld59,"d"
+.Ld59$strlab:
+	.short	0,1
+	.long	0
+	.quad	-1,4
+.Ld59:
+	.ascii	"TCPU\000"
+
+.section .rodata.n__$SYSTEM$_Ld60,"d"
+.globl	_$SYSTEM$_Ld60
+_$SYSTEM$_Ld60:
+	.ascii	"memory 5555\000"
+
+.section .rodata.n_.Ld61,"d"
+.Ld61$strlab:
 	.short	0,1
 	.long	0
 	.quad	-1,7
-.Ld55:
+.Ld61:
+	.ascii	"TMemory\000"
+
+.section .rodata.n__$SYSTEM$_Ld62,"d"
+.globl	_$SYSTEM$_Ld62
+_$SYSTEM$_Ld62:
+	.ascii	"start...\000"
+
+.section .rodata.n_.Ld63,"d"
+.Ld63$strlab:
+	.short	0,1
+	.long	0
+	.quad	-1,7
+.Ld63:
 	.ascii	"TSystem\000"
 
-.section .rodata.n__$SYSTEM$_Ld64,"d"
-.globl	_$SYSTEM$_Ld64
-_$SYSTEM$_Ld64:
+.section .rodata.n__$SYSTEM$_Ld75,"d"
+.globl	_$SYSTEM$_Ld75
+_$SYSTEM$_Ld75:
 	.ascii	"---< hocus pocus >-----\015\012\000"
 
-.section .rodata.n__$SYSTEM$_Ld65,"d"
-.globl	_$SYSTEM$_Ld65
-_$SYSTEM$_Ld65:
+.section .rodata.n__$SYSTEM$_Ld76,"d"
+.globl	_$SYSTEM$_Ld76
+_$SYSTEM$_Ld76:
 	.ascii	"---< the end >-----\015\012\000"
 # End asmlist al_typedconsts
 # Begin asmlist al_rtti
@@ -6745,6 +7037,78 @@ RTTI_$SYSTEM_$$_EXCEPTION:
 	.ascii	"system"
 	.short	0
 
+.section .rodata.n_INIT_$SYSTEM_$$_EDIVBYZERO,"d"
+	.balign 8
+.globl	INIT_$SYSTEM_$$_EDIVBYZERO
+INIT_$SYSTEM_$$_EDIVBYZERO:
+	.byte	15,10
+	.ascii	"EDivByZero"
+	.quad	0
+	.long	8
+	.quad	0,0
+	.long	0
+
+.section .rodata.n_RTTI_$SYSTEM_$$_EDIVBYZERO,"d"
+	.balign 8
+.globl	RTTI_$SYSTEM_$$_EDIVBYZERO
+RTTI_$SYSTEM_$$_EDIVBYZERO:
+	.byte	15,10
+	.ascii	"EDivByZero"
+	.quad	VMT_$SYSTEM_$$_EDIVBYZERO
+	.quad	RTTI_$SYSTEM_$$_EXCEPTION$indirect
+	.short	0
+	.byte	6
+	.ascii	"system"
+	.short	0
+
+.section .rodata.n_INIT_$SYSTEM_$$_EOUTOFMEMORY,"d"
+	.balign 8
+.globl	INIT_$SYSTEM_$$_EOUTOFMEMORY
+INIT_$SYSTEM_$$_EOUTOFMEMORY:
+	.byte	15,12
+	.ascii	"EOutOfMemory"
+	.quad	0
+	.long	8
+	.quad	0,0
+	.long	0
+
+.section .rodata.n_RTTI_$SYSTEM_$$_EOUTOFMEMORY,"d"
+	.balign 8
+.globl	RTTI_$SYSTEM_$$_EOUTOFMEMORY
+RTTI_$SYSTEM_$$_EOUTOFMEMORY:
+	.byte	15,12
+	.ascii	"EOutOfMemory"
+	.quad	VMT_$SYSTEM_$$_EOUTOFMEMORY
+	.quad	RTTI_$SYSTEM_$$_EXCEPTION$indirect
+	.short	0
+	.byte	6
+	.ascii	"system"
+	.short	0
+
+.section .rodata.n_INIT_$SYSTEM_$$_EACCESSVIOLATION,"d"
+	.balign 8
+.globl	INIT_$SYSTEM_$$_EACCESSVIOLATION
+INIT_$SYSTEM_$$_EACCESSVIOLATION:
+	.byte	15,16
+	.ascii	"EAccessViolation"
+	.quad	0
+	.long	8
+	.quad	0,0
+	.long	0
+
+.section .rodata.n_RTTI_$SYSTEM_$$_EACCESSVIOLATION,"d"
+	.balign 8
+.globl	RTTI_$SYSTEM_$$_EACCESSVIOLATION
+RTTI_$SYSTEM_$$_EACCESSVIOLATION:
+	.byte	15,16
+	.ascii	"EAccessViolation"
+	.quad	VMT_$SYSTEM_$$_EACCESSVIOLATION
+	.quad	RTTI_$SYSTEM_$$_EXCEPTION$indirect
+	.short	0
+	.byte	6
+	.ascii	"system"
+	.short	0
+
 .section .rodata.n_RTTI_$SYSTEM_$$_TPROCEDURE,"d"
 	.balign 8
 .globl	RTTI_$SYSTEM_$$_TPROCEDURE
@@ -6790,10 +7154,10 @@ INIT_$SYSTEM_$$_TINITFINALTABLE:
 	.quad	0,0
 	.long	0
 
-.section .rodata.n_RTTI_$SYSTEM_$$_def000001A0,"d"
+.section .rodata.n_RTTI_$SYSTEM_$$_def000001AD,"d"
 	.balign 8
-.globl	RTTI_$SYSTEM_$$_def000001A0
-RTTI_$SYSTEM_$$_def000001A0:
+.globl	RTTI_$SYSTEM_$$_def000001AD
+RTTI_$SYSTEM_$$_def000001AD:
 	.byte	12,0
 	.quad	16384,1024
 	.quad	RTTI_$SYSTEM_$$_TINITFINALREC$indirect
@@ -6812,7 +7176,7 @@ RTTI_$SYSTEM_$$_TINITFINALTABLE:
 	.quad	0
 	.quad	RTTI_$SYSTEM_$$_QWORD$indirect
 	.quad	8
-	.quad	RTTI_$SYSTEM_$$_def000001A0$indirect
+	.quad	RTTI_$SYSTEM_$$_def000001AD$indirect
 	.quad	16
 
 .section .rodata.n_RTTI_$SYSTEM_$$_PINITFINALTABLE,"d"
@@ -7004,6 +7368,24 @@ VMT_$SYSTEM_$$_TLIST$indirect:
 .globl	VMT_$SYSTEM_$$_EXCEPTION$indirect
 VMT_$SYSTEM_$$_EXCEPTION$indirect:
 	.quad	VMT_$SYSTEM_$$_EXCEPTION
+
+.section .rodata.n_VMT_$SYSTEM_$$_EDIVBYZERO,"d"
+	.balign 8
+.globl	VMT_$SYSTEM_$$_EDIVBYZERO$indirect
+VMT_$SYSTEM_$$_EDIVBYZERO$indirect:
+	.quad	VMT_$SYSTEM_$$_EDIVBYZERO
+
+.section .rodata.n_VMT_$SYSTEM_$$_EOUTOFMEMORY,"d"
+	.balign 8
+.globl	VMT_$SYSTEM_$$_EOUTOFMEMORY$indirect
+VMT_$SYSTEM_$$_EOUTOFMEMORY$indirect:
+	.quad	VMT_$SYSTEM_$$_EOUTOFMEMORY
+
+.section .rodata.n_VMT_$SYSTEM_$$_EACCESSVIOLATION,"d"
+	.balign 8
+.globl	VMT_$SYSTEM_$$_EACCESSVIOLATION$indirect
+VMT_$SYSTEM_$$_EACCESSVIOLATION$indirect:
+	.quad	VMT_$SYSTEM_$$_EACCESSVIOLATION
 
 .section .rodata.n_VMT_$SYSTEM_$$_TDOSCMD,"d"
 	.balign 8
@@ -8037,6 +8419,42 @@ INIT_$SYSTEM_$$_EXCEPTION$indirect:
 RTTI_$SYSTEM_$$_EXCEPTION$indirect:
 	.quad	RTTI_$SYSTEM_$$_EXCEPTION
 
+.section .rodata.n_INIT_$SYSTEM_$$_EDIVBYZERO,"d"
+	.balign 8
+.globl	INIT_$SYSTEM_$$_EDIVBYZERO$indirect
+INIT_$SYSTEM_$$_EDIVBYZERO$indirect:
+	.quad	INIT_$SYSTEM_$$_EDIVBYZERO
+
+.section .rodata.n_RTTI_$SYSTEM_$$_EDIVBYZERO,"d"
+	.balign 8
+.globl	RTTI_$SYSTEM_$$_EDIVBYZERO$indirect
+RTTI_$SYSTEM_$$_EDIVBYZERO$indirect:
+	.quad	RTTI_$SYSTEM_$$_EDIVBYZERO
+
+.section .rodata.n_INIT_$SYSTEM_$$_EOUTOFMEMORY,"d"
+	.balign 8
+.globl	INIT_$SYSTEM_$$_EOUTOFMEMORY$indirect
+INIT_$SYSTEM_$$_EOUTOFMEMORY$indirect:
+	.quad	INIT_$SYSTEM_$$_EOUTOFMEMORY
+
+.section .rodata.n_RTTI_$SYSTEM_$$_EOUTOFMEMORY,"d"
+	.balign 8
+.globl	RTTI_$SYSTEM_$$_EOUTOFMEMORY$indirect
+RTTI_$SYSTEM_$$_EOUTOFMEMORY$indirect:
+	.quad	RTTI_$SYSTEM_$$_EOUTOFMEMORY
+
+.section .rodata.n_INIT_$SYSTEM_$$_EACCESSVIOLATION,"d"
+	.balign 8
+.globl	INIT_$SYSTEM_$$_EACCESSVIOLATION$indirect
+INIT_$SYSTEM_$$_EACCESSVIOLATION$indirect:
+	.quad	INIT_$SYSTEM_$$_EACCESSVIOLATION
+
+.section .rodata.n_RTTI_$SYSTEM_$$_EACCESSVIOLATION,"d"
+	.balign 8
+.globl	RTTI_$SYSTEM_$$_EACCESSVIOLATION$indirect
+RTTI_$SYSTEM_$$_EACCESSVIOLATION$indirect:
+	.quad	RTTI_$SYSTEM_$$_EACCESSVIOLATION
+
 .section .rodata.n_RTTI_$SYSTEM_$$_TPROCEDURE,"d"
 	.balign 8
 .globl	RTTI_$SYSTEM_$$_TPROCEDURE$indirect
@@ -8061,11 +8479,11 @@ RTTI_$SYSTEM_$$_TINITFINALREC$indirect:
 INIT_$SYSTEM_$$_TINITFINALTABLE$indirect:
 	.quad	INIT_$SYSTEM_$$_TINITFINALTABLE
 
-.section .rodata.n_RTTI_$SYSTEM_$$_def000001A0,"d"
+.section .rodata.n_RTTI_$SYSTEM_$$_def000001AD,"d"
 	.balign 8
-.globl	RTTI_$SYSTEM_$$_def000001A0$indirect
-RTTI_$SYSTEM_$$_def000001A0$indirect:
-	.quad	RTTI_$SYSTEM_$$_def000001A0
+.globl	RTTI_$SYSTEM_$$_def000001AD$indirect
+RTTI_$SYSTEM_$$_def000001AD$indirect:
+	.quad	RTTI_$SYSTEM_$$_def000001AD
 
 .section .rodata.n_RTTI_$SYSTEM_$$_TINITFINALTABLE,"d"
 	.balign 8
@@ -8166,9 +8584,9 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 # Begin asmlist al_dwarf_frame
 
 .section .debug_frame
-.Lc453:
-	.long	.Lc455-.Lc454
-.Lc454:
+.Lc462:
+	.long	.Lc464-.Lc463
+.Lc463:
 	.long	-1
 	.byte	1
 	.byte	0
@@ -8182,10 +8600,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.uleb128	16
 	.uleb128	2
 	.balign 4,0
-.Lc455:
-	.long	.Lc457-.Lc456
-.Lc456:
-	.secrel32	.Lc453
+.Lc464:
+	.long	.Lc466-.Lc465
+.Lc465:
+	.secrel32	.Lc462
 	.quad	.Lc1
 	.quad	.Lc2-.Lc1
 	.byte	4
@@ -8193,10 +8611,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	40
 	.balign 4,0
-.Lc457:
-	.long	.Lc459-.Lc458
-.Lc458:
-	.secrel32	.Lc453
+.Lc466:
+	.long	.Lc468-.Lc467
+.Lc467:
+	.secrel32	.Lc462
 	.quad	.Lc4
 	.quad	.Lc5-.Lc4
 	.byte	4
@@ -8204,10 +8622,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc459:
-	.long	.Lc461-.Lc460
-.Lc460:
-	.secrel32	.Lc453
+.Lc468:
+	.long	.Lc470-.Lc469
+.Lc469:
+	.secrel32	.Lc462
 	.quad	.Lc7
 	.quad	.Lc8-.Lc7
 	.byte	4
@@ -8215,10 +8633,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc461:
-	.long	.Lc463-.Lc462
-.Lc462:
-	.secrel32	.Lc453
+.Lc470:
+	.long	.Lc472-.Lc471
+.Lc471:
+	.secrel32	.Lc462
 	.quad	.Lc10
 	.quad	.Lc11-.Lc10
 	.byte	4
@@ -8226,10 +8644,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc463:
-	.long	.Lc465-.Lc464
-.Lc464:
-	.secrel32	.Lc453
+.Lc472:
+	.long	.Lc474-.Lc473
+.Lc473:
+	.secrel32	.Lc462
 	.quad	.Lc13
 	.quad	.Lc14-.Lc13
 	.byte	4
@@ -8237,10 +8655,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc465:
-	.long	.Lc467-.Lc466
-.Lc466:
-	.secrel32	.Lc453
+.Lc474:
+	.long	.Lc476-.Lc475
+.Lc475:
+	.secrel32	.Lc462
 	.quad	.Lc16
 	.quad	.Lc17-.Lc16
 	.byte	4
@@ -8248,10 +8666,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc467:
-	.long	.Lc469-.Lc468
-.Lc468:
-	.secrel32	.Lc453
+.Lc476:
+	.long	.Lc478-.Lc477
+.Lc477:
+	.secrel32	.Lc462
 	.quad	.Lc19
 	.quad	.Lc20-.Lc19
 	.byte	4
@@ -8259,10 +8677,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc469:
-	.long	.Lc471-.Lc470
-.Lc470:
-	.secrel32	.Lc453
+.Lc478:
+	.long	.Lc480-.Lc479
+.Lc479:
+	.secrel32	.Lc462
 	.quad	.Lc22
 	.quad	.Lc23-.Lc22
 	.byte	4
@@ -8270,10 +8688,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc471:
-	.long	.Lc473-.Lc472
-.Lc472:
-	.secrel32	.Lc453
+.Lc480:
+	.long	.Lc482-.Lc481
+.Lc481:
+	.secrel32	.Lc462
 	.quad	.Lc25
 	.quad	.Lc26-.Lc25
 	.byte	4
@@ -8281,10 +8699,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc473:
-	.long	.Lc475-.Lc474
-.Lc474:
-	.secrel32	.Lc453
+.Lc482:
+	.long	.Lc484-.Lc483
+.Lc483:
+	.secrel32	.Lc462
 	.quad	.Lc28
 	.quad	.Lc29-.Lc28
 	.byte	4
@@ -8292,10 +8710,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc475:
-	.long	.Lc477-.Lc476
-.Lc476:
-	.secrel32	.Lc453
+.Lc484:
+	.long	.Lc486-.Lc485
+.Lc485:
+	.secrel32	.Lc462
 	.quad	.Lc31
 	.quad	.Lc32-.Lc31
 	.byte	4
@@ -8303,10 +8721,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc477:
-	.long	.Lc479-.Lc478
-.Lc478:
-	.secrel32	.Lc453
+.Lc486:
+	.long	.Lc488-.Lc487
+.Lc487:
+	.secrel32	.Lc462
 	.quad	.Lc34
 	.quad	.Lc35-.Lc34
 	.byte	4
@@ -8314,10 +8732,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc479:
-	.long	.Lc481-.Lc480
-.Lc480:
-	.secrel32	.Lc453
+.Lc488:
+	.long	.Lc490-.Lc489
+.Lc489:
+	.secrel32	.Lc462
 	.quad	.Lc37
 	.quad	.Lc38-.Lc37
 	.byte	4
@@ -8325,10 +8743,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc481:
-	.long	.Lc483-.Lc482
-.Lc482:
-	.secrel32	.Lc453
+.Lc490:
+	.long	.Lc492-.Lc491
+.Lc491:
+	.secrel32	.Lc462
 	.quad	.Lc40
 	.quad	.Lc41-.Lc40
 	.byte	4
@@ -8336,10 +8754,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc483:
-	.long	.Lc485-.Lc484
-.Lc484:
-	.secrel32	.Lc453
+.Lc492:
+	.long	.Lc494-.Lc493
+.Lc493:
+	.secrel32	.Lc462
 	.quad	.Lc43
 	.quad	.Lc44-.Lc43
 	.byte	4
@@ -8347,10 +8765,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	40
 	.balign 4,0
-.Lc485:
-	.long	.Lc487-.Lc486
-.Lc486:
-	.secrel32	.Lc453
+.Lc494:
+	.long	.Lc496-.Lc495
+.Lc495:
+	.secrel32	.Lc462
 	.quad	.Lc46
 	.quad	.Lc47-.Lc46
 	.byte	4
@@ -8358,45 +8776,45 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc487:
-	.long	.Lc489-.Lc488
-.Lc488:
-	.secrel32	.Lc453
+.Lc496:
+	.long	.Lc498-.Lc497
+.Lc497:
+	.secrel32	.Lc462
 	.quad	.Lc49
 	.quad	.Lc50-.Lc49
 	.balign 4,0
-.Lc489:
-	.long	.Lc491-.Lc490
-.Lc490:
-	.secrel32	.Lc453
+.Lc498:
+	.long	.Lc500-.Lc499
+.Lc499:
+	.secrel32	.Lc462
 	.quad	.Lc51
 	.quad	.Lc52-.Lc51
 	.balign 4,0
-.Lc491:
-	.long	.Lc493-.Lc492
-.Lc492:
-	.secrel32	.Lc453
+.Lc500:
+	.long	.Lc502-.Lc501
+.Lc501:
+	.secrel32	.Lc462
 	.quad	.Lc53
 	.quad	.Lc54-.Lc53
 	.balign 4,0
-.Lc493:
-	.long	.Lc495-.Lc494
-.Lc494:
-	.secrel32	.Lc453
+.Lc502:
+	.long	.Lc504-.Lc503
+.Lc503:
+	.secrel32	.Lc462
 	.quad	.Lc55
 	.quad	.Lc56-.Lc55
 	.balign 4,0
-.Lc495:
-	.long	.Lc497-.Lc496
-.Lc496:
-	.secrel32	.Lc453
+.Lc504:
+	.long	.Lc506-.Lc505
+.Lc505:
+	.secrel32	.Lc462
 	.quad	.Lc57
 	.quad	.Lc58-.Lc57
 	.balign 4,0
-.Lc497:
-	.long	.Lc499-.Lc498
-.Lc498:
-	.secrel32	.Lc453
+.Lc506:
+	.long	.Lc508-.Lc507
+.Lc507:
+	.secrel32	.Lc462
 	.quad	.Lc59
 	.quad	.Lc60-.Lc59
 	.byte	4
@@ -8404,24 +8822,24 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc499:
-	.long	.Lc501-.Lc500
-.Lc500:
-	.secrel32	.Lc453
+.Lc508:
+	.long	.Lc510-.Lc509
+.Lc509:
+	.secrel32	.Lc462
 	.quad	.Lc62
 	.quad	.Lc63-.Lc62
 	.balign 4,0
-.Lc501:
-	.long	.Lc503-.Lc502
-.Lc502:
-	.secrel32	.Lc453
+.Lc510:
+	.long	.Lc512-.Lc511
+.Lc511:
+	.secrel32	.Lc462
 	.quad	.Lc64
 	.quad	.Lc65-.Lc64
 	.balign 4,0
-.Lc503:
-	.long	.Lc505-.Lc504
-.Lc504:
-	.secrel32	.Lc453
+.Lc512:
+	.long	.Lc514-.Lc513
+.Lc513:
+	.secrel32	.Lc462
 	.quad	.Lc66
 	.quad	.Lc67-.Lc66
 	.byte	4
@@ -8429,38 +8847,38 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	40
 	.balign 4,0
-.Lc505:
-	.long	.Lc507-.Lc506
-.Lc506:
-	.secrel32	.Lc453
+.Lc514:
+	.long	.Lc516-.Lc515
+.Lc515:
+	.secrel32	.Lc462
 	.quad	.Lc69
 	.quad	.Lc70-.Lc69
 	.balign 4,0
-.Lc507:
-	.long	.Lc509-.Lc508
-.Lc508:
-	.secrel32	.Lc453
+.Lc516:
+	.long	.Lc518-.Lc517
+.Lc517:
+	.secrel32	.Lc462
 	.quad	.Lc71
 	.quad	.Lc72-.Lc71
 	.balign 4,0
-.Lc509:
-	.long	.Lc511-.Lc510
-.Lc510:
-	.secrel32	.Lc453
+.Lc518:
+	.long	.Lc520-.Lc519
+.Lc519:
+	.secrel32	.Lc462
 	.quad	.Lc73
 	.quad	.Lc74-.Lc73
 	.balign 4,0
-.Lc511:
-	.long	.Lc513-.Lc512
-.Lc512:
-	.secrel32	.Lc453
+.Lc520:
+	.long	.Lc522-.Lc521
+.Lc521:
+	.secrel32	.Lc462
 	.quad	.Lc75
 	.quad	.Lc76-.Lc75
 	.balign 4,0
-.Lc513:
-	.long	.Lc515-.Lc514
-.Lc514:
-	.secrel32	.Lc453
+.Lc522:
+	.long	.Lc524-.Lc523
+.Lc523:
+	.secrel32	.Lc462
 	.quad	.Lc77
 	.quad	.Lc78-.Lc77
 	.byte	4
@@ -8477,10 +8895,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc515:
-	.long	.Lc517-.Lc516
-.Lc516:
-	.secrel32	.Lc453
+.Lc524:
+	.long	.Lc526-.Lc525
+.Lc525:
+	.secrel32	.Lc462
 	.quad	.Lc82
 	.quad	.Lc83-.Lc82
 	.byte	4
@@ -8497,17 +8915,17 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc517:
-	.long	.Lc519-.Lc518
-.Lc518:
-	.secrel32	.Lc453
+.Lc526:
+	.long	.Lc528-.Lc527
+.Lc527:
+	.secrel32	.Lc462
 	.quad	.Lc87
 	.quad	.Lc88-.Lc87
 	.balign 4,0
-.Lc519:
-	.long	.Lc521-.Lc520
-.Lc520:
-	.secrel32	.Lc453
+.Lc528:
+	.long	.Lc530-.Lc529
+.Lc529:
+	.secrel32	.Lc462
 	.quad	.Lc89
 	.quad	.Lc90-.Lc89
 	.byte	4
@@ -8524,10 +8942,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc521:
-	.long	.Lc523-.Lc522
-.Lc522:
-	.secrel32	.Lc453
+.Lc530:
+	.long	.Lc532-.Lc531
+.Lc531:
+	.secrel32	.Lc462
 	.quad	.Lc94
 	.quad	.Lc95-.Lc94
 	.byte	4
@@ -8544,10 +8962,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc523:
-	.long	.Lc525-.Lc524
-.Lc524:
-	.secrel32	.Lc453
+.Lc532:
+	.long	.Lc534-.Lc533
+.Lc533:
+	.secrel32	.Lc462
 	.quad	.Lc99
 	.quad	.Lc100-.Lc99
 	.byte	4
@@ -8555,10 +8973,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	56
 	.balign 4,0
-.Lc525:
-	.long	.Lc527-.Lc526
-.Lc526:
-	.secrel32	.Lc453
+.Lc534:
+	.long	.Lc536-.Lc535
+.Lc535:
+	.secrel32	.Lc462
 	.quad	.Lc102
 	.quad	.Lc103-.Lc102
 	.byte	4
@@ -8566,10 +8984,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	64
 	.balign 4,0
-.Lc527:
-	.long	.Lc529-.Lc528
-.Lc528:
-	.secrel32	.Lc453
+.Lc536:
+	.long	.Lc538-.Lc537
+.Lc537:
+	.secrel32	.Lc462
 	.quad	.Lc105
 	.quad	.Lc106-.Lc105
 	.byte	4
@@ -8586,10 +9004,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc529:
-	.long	.Lc531-.Lc530
-.Lc530:
-	.secrel32	.Lc453
+.Lc538:
+	.long	.Lc540-.Lc539
+.Lc539:
+	.secrel32	.Lc462
 	.quad	.Lc110
 	.quad	.Lc111-.Lc110
 	.byte	4
@@ -8597,579 +9015,581 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc531:
-	.long	.Lc533-.Lc532
-.Lc532:
-	.secrel32	.Lc453
+.Lc540:
+	.long	.Lc542-.Lc541
+.Lc541:
+	.secrel32	.Lc462
 	.quad	.Lc113
 	.quad	.Lc114-.Lc113
 	.balign 4,0
-.Lc533:
-	.long	.Lc535-.Lc534
-.Lc534:
-	.secrel32	.Lc453
+.Lc542:
+	.long	.Lc544-.Lc543
+.Lc543:
+	.secrel32	.Lc462
 	.quad	.Lc115
 	.quad	.Lc116-.Lc115
 	.balign 4,0
-.Lc535:
-	.long	.Lc537-.Lc536
-.Lc536:
-	.secrel32	.Lc453
+.Lc544:
+	.long	.Lc546-.Lc545
+.Lc545:
+	.secrel32	.Lc462
 	.quad	.Lc117
 	.quad	.Lc118-.Lc117
 	.balign 4,0
-.Lc537:
-	.long	.Lc539-.Lc538
-.Lc538:
-	.secrel32	.Lc453
+.Lc546:
+	.long	.Lc548-.Lc547
+.Lc547:
+	.secrel32	.Lc462
 	.quad	.Lc119
 	.quad	.Lc120-.Lc119
 	.balign 4,0
-.Lc539:
-	.long	.Lc541-.Lc540
-.Lc540:
-	.secrel32	.Lc453
+.Lc548:
+	.long	.Lc550-.Lc549
+.Lc549:
+	.secrel32	.Lc462
 	.quad	.Lc121
 	.quad	.Lc122-.Lc121
 	.balign 4,0
-.Lc541:
-	.long	.Lc543-.Lc542
-.Lc542:
-	.secrel32	.Lc453
+.Lc550:
+	.long	.Lc552-.Lc551
+.Lc551:
+	.secrel32	.Lc462
 	.quad	.Lc123
 	.quad	.Lc124-.Lc123
 	.balign 4,0
-.Lc543:
-	.long	.Lc545-.Lc544
-.Lc544:
-	.secrel32	.Lc453
+.Lc552:
+	.long	.Lc554-.Lc553
+.Lc553:
+	.secrel32	.Lc462
 	.quad	.Lc125
 	.quad	.Lc126-.Lc125
 	.balign 4,0
-.Lc545:
-	.long	.Lc547-.Lc546
-.Lc546:
-	.secrel32	.Lc453
+.Lc554:
+	.long	.Lc556-.Lc555
+.Lc555:
+	.secrel32	.Lc462
 	.quad	.Lc127
 	.quad	.Lc128-.Lc127
-	.balign 4,0
-.Lc547:
-	.long	.Lc549-.Lc548
-.Lc548:
-	.secrel32	.Lc453
-	.quad	.Lc129
-	.quad	.Lc130-.Lc129
-	.balign 4,0
-.Lc549:
-	.long	.Lc551-.Lc550
-.Lc550:
-	.secrel32	.Lc453
-	.quad	.Lc131
-	.quad	.Lc132-.Lc131
 	.byte	4
-	.long	.Lc133-.Lc131
+	.long	.Lc129-.Lc127
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc551:
-	.long	.Lc553-.Lc552
-.Lc552:
-	.secrel32	.Lc453
-	.quad	.Lc134
-	.quad	.Lc135-.Lc134
-	.byte	4
-	.long	.Lc136-.Lc134
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc553:
-	.long	.Lc555-.Lc554
-.Lc554:
-	.secrel32	.Lc453
-	.quad	.Lc137
-	.quad	.Lc138-.Lc137
-	.byte	4
-	.long	.Lc139-.Lc137
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc555:
-	.long	.Lc557-.Lc556
 .Lc556:
-	.secrel32	.Lc453
-	.quad	.Lc140
-	.quad	.Lc141-.Lc140
-	.byte	4
-	.long	.Lc142-.Lc140
-	.byte	14
-	.uleb128	48
-	.balign 4,0
+	.long	.Lc558-.Lc557
 .Lc557:
-	.long	.Lc559-.Lc558
+	.secrel32	.Lc462
+	.quad	.Lc130
+	.quad	.Lc131-.Lc130
+	.balign 4,0
 .Lc558:
-	.secrel32	.Lc453
-	.quad	.Lc143
-	.quad	.Lc144-.Lc143
-	.byte	4
-	.long	.Lc145-.Lc143
-	.byte	14
-	.uleb128	48
-	.balign 4,0
+	.long	.Lc560-.Lc559
 .Lc559:
-	.long	.Lc561-.Lc560
-.Lc560:
-	.secrel32	.Lc453
-	.quad	.Lc146
-	.quad	.Lc147-.Lc146
-	.balign 4,0
-.Lc561:
-	.long	.Lc563-.Lc562
-.Lc562:
-	.secrel32	.Lc453
-	.quad	.Lc148
-	.quad	.Lc149-.Lc148
+	.secrel32	.Lc462
+	.quad	.Lc132
+	.quad	.Lc133-.Lc132
 	.byte	4
-	.long	.Lc150-.Lc148
+	.long	.Lc134-.Lc132
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc563:
-	.long	.Lc565-.Lc564
-.Lc564:
-	.secrel32	.Lc453
-	.quad	.Lc151
-	.quad	.Lc152-.Lc151
+.Lc560:
+	.long	.Lc562-.Lc561
+.Lc561:
+	.secrel32	.Lc462
+	.quad	.Lc135
+	.quad	.Lc136-.Lc135
 	.byte	4
-	.long	.Lc153-.Lc151
+	.long	.Lc137-.Lc135
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc562:
+	.long	.Lc564-.Lc563
+.Lc563:
+	.secrel32	.Lc462
+	.quad	.Lc138
+	.quad	.Lc139-.Lc138
+	.byte	4
+	.long	.Lc140-.Lc138
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc564:
+	.long	.Lc566-.Lc565
+.Lc565:
+	.secrel32	.Lc462
+	.quad	.Lc141
+	.quad	.Lc142-.Lc141
+	.byte	4
+	.long	.Lc143-.Lc141
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc566:
+	.long	.Lc568-.Lc567
+.Lc567:
+	.secrel32	.Lc462
+	.quad	.Lc144
+	.quad	.Lc145-.Lc144
+	.byte	4
+	.long	.Lc146-.Lc144
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc568:
+	.long	.Lc570-.Lc569
+.Lc569:
+	.secrel32	.Lc462
+	.quad	.Lc147
+	.quad	.Lc148-.Lc147
+	.balign 4,0
+.Lc570:
+	.long	.Lc572-.Lc571
+.Lc571:
+	.secrel32	.Lc462
+	.quad	.Lc149
+	.quad	.Lc150-.Lc149
+	.byte	4
+	.long	.Lc151-.Lc149
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc572:
+	.long	.Lc574-.Lc573
+.Lc573:
+	.secrel32	.Lc462
+	.quad	.Lc152
+	.quad	.Lc153-.Lc152
+	.byte	4
+	.long	.Lc154-.Lc152
 	.byte	14
 	.uleb128	40
 	.balign 4,0
-.Lc565:
-	.long	.Lc567-.Lc566
-.Lc566:
-	.secrel32	.Lc453
-	.quad	.Lc154
-	.quad	.Lc155-.Lc154
+.Lc574:
+	.long	.Lc576-.Lc575
+.Lc575:
+	.secrel32	.Lc462
+	.quad	.Lc155
+	.quad	.Lc156-.Lc155
 	.byte	4
-	.long	.Lc156-.Lc154
+	.long	.Lc157-.Lc155
 	.byte	14
 	.uleb128	56
 	.balign 4,0
-.Lc567:
-	.long	.Lc569-.Lc568
-.Lc568:
-	.secrel32	.Lc453
-	.quad	.Lc157
-	.quad	.Lc158-.Lc157
+.Lc576:
+	.long	.Lc578-.Lc577
+.Lc577:
+	.secrel32	.Lc462
+	.quad	.Lc158
+	.quad	.Lc159-.Lc158
 	.byte	4
-	.long	.Lc159-.Lc157
+	.long	.Lc160-.Lc158
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc569:
-	.long	.Lc571-.Lc570
-.Lc570:
-	.secrel32	.Lc453
-	.quad	.Lc160
-	.quad	.Lc161-.Lc160
+.Lc578:
+	.long	.Lc580-.Lc579
+.Lc579:
+	.secrel32	.Lc462
+	.quad	.Lc161
+	.quad	.Lc162-.Lc161
 	.byte	4
-	.long	.Lc162-.Lc160
+	.long	.Lc163-.Lc161
 	.byte	14
 	.uleb128	64
 	.balign 4,0
-.Lc571:
-	.long	.Lc573-.Lc572
-.Lc572:
-	.secrel32	.Lc453
-	.quad	.Lc163
-	.quad	.Lc164-.Lc163
+.Lc580:
+	.long	.Lc582-.Lc581
+.Lc581:
+	.secrel32	.Lc462
+	.quad	.Lc164
+	.quad	.Lc165-.Lc164
 	.byte	4
-	.long	.Lc165-.Lc163
+	.long	.Lc166-.Lc164
 	.byte	14
 	.uleb128	72
 	.balign 4,0
-.Lc573:
-	.long	.Lc575-.Lc574
-.Lc574:
-	.secrel32	.Lc453
-	.quad	.Lc166
-	.quad	.Lc167-.Lc166
+.Lc582:
+	.long	.Lc584-.Lc583
+.Lc583:
+	.secrel32	.Lc462
+	.quad	.Lc167
+	.quad	.Lc168-.Lc167
 	.byte	4
-	.long	.Lc168-.Lc166
+	.long	.Lc169-.Lc167
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc575:
-	.long	.Lc577-.Lc576
-.Lc576:
-	.secrel32	.Lc453
-	.quad	.Lc169
-	.quad	.Lc170-.Lc169
+.Lc584:
+	.long	.Lc586-.Lc585
+.Lc585:
+	.secrel32	.Lc462
+	.quad	.Lc170
+	.quad	.Lc171-.Lc170
 	.byte	4
-	.long	.Lc171-.Lc169
+	.long	.Lc172-.Lc170
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc577:
-	.long	.Lc579-.Lc578
-.Lc578:
-	.secrel32	.Lc453
-	.quad	.Lc172
-	.quad	.Lc173-.Lc172
+.Lc586:
+	.long	.Lc588-.Lc587
+.Lc587:
+	.secrel32	.Lc462
+	.quad	.Lc173
+	.quad	.Lc174-.Lc173
 	.byte	4
-	.long	.Lc174-.Lc172
+	.long	.Lc175-.Lc173
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc579:
-	.long	.Lc581-.Lc580
-.Lc580:
-	.secrel32	.Lc453
-	.quad	.Lc175
-	.quad	.Lc176-.Lc175
+.Lc588:
+	.long	.Lc590-.Lc589
+.Lc589:
+	.secrel32	.Lc462
+	.quad	.Lc176
+	.quad	.Lc177-.Lc176
 	.byte	4
-	.long	.Lc177-.Lc175
+	.long	.Lc178-.Lc176
 	.byte	14
 	.uleb128	40
 	.balign 4,0
-.Lc581:
-	.long	.Lc583-.Lc582
-.Lc582:
-	.secrel32	.Lc453
-	.quad	.Lc178
-	.quad	.Lc179-.Lc178
+.Lc590:
+	.long	.Lc592-.Lc591
+.Lc591:
+	.secrel32	.Lc462
+	.quad	.Lc179
+	.quad	.Lc180-.Lc179
 	.byte	4
-	.long	.Lc180-.Lc178
+	.long	.Lc181-.Lc179
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc583:
-	.long	.Lc585-.Lc584
-.Lc584:
-	.secrel32	.Lc453
-	.quad	.Lc181
-	.quad	.Lc182-.Lc181
+.Lc592:
+	.long	.Lc594-.Lc593
+.Lc593:
+	.secrel32	.Lc462
+	.quad	.Lc182
+	.quad	.Lc183-.Lc182
 	.byte	4
-	.long	.Lc183-.Lc181
+	.long	.Lc184-.Lc182
 	.byte	14
 	.uleb128	16
-	.byte	4
-	.long	.Lc184-.Lc183
-	.byte	5
-	.uleb128	6
-	.uleb128	4
 	.byte	4
 	.long	.Lc185-.Lc184
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc585:
-	.long	.Lc587-.Lc586
-.Lc586:
-	.secrel32	.Lc453
-	.quad	.Lc186
-	.quad	.Lc187-.Lc186
-	.byte	4
-	.long	.Lc188-.Lc186
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc587:
-	.long	.Lc589-.Lc588
-.Lc588:
-	.secrel32	.Lc453
-	.quad	.Lc189
-	.quad	.Lc190-.Lc189
-	.balign 4,0
-.Lc589:
-	.long	.Lc591-.Lc590
-.Lc590:
-	.secrel32	.Lc453
-	.quad	.Lc191
-	.quad	.Lc192-.Lc191
-	.balign 4,0
-.Lc591:
-	.long	.Lc593-.Lc592
-.Lc592:
-	.secrel32	.Lc453
-	.quad	.Lc193
-	.quad	.Lc194-.Lc193
-	.balign 4,0
-.Lc593:
-	.long	.Lc595-.Lc594
-.Lc594:
-	.secrel32	.Lc453
-	.quad	.Lc195
-	.quad	.Lc196-.Lc195
-	.byte	4
-	.long	.Lc197-.Lc195
-	.byte	14
-	.uleb128	40
-	.balign 4,0
-.Lc595:
-	.long	.Lc597-.Lc596
-.Lc596:
-	.secrel32	.Lc453
-	.quad	.Lc198
-	.quad	.Lc199-.Lc198
-	.balign 4,0
-.Lc597:
-	.long	.Lc599-.Lc598
-.Lc598:
-	.secrel32	.Lc453
-	.quad	.Lc200
-	.quad	.Lc201-.Lc200
-	.byte	4
-	.long	.Lc202-.Lc200
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc599:
-	.long	.Lc601-.Lc600
-.Lc600:
-	.secrel32	.Lc453
-	.quad	.Lc203
-	.quad	.Lc204-.Lc203
-	.byte	4
-	.long	.Lc205-.Lc203
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc601:
-	.long	.Lc603-.Lc602
-.Lc602:
-	.secrel32	.Lc453
-	.quad	.Lc206
-	.quad	.Lc207-.Lc206
-	.balign 4,0
-.Lc603:
-	.long	.Lc605-.Lc604
-.Lc604:
-	.secrel32	.Lc453
-	.quad	.Lc208
-	.quad	.Lc209-.Lc208
-	.byte	4
-	.long	.Lc210-.Lc208
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc605:
-	.long	.Lc607-.Lc606
-.Lc606:
-	.secrel32	.Lc453
-	.quad	.Lc211
-	.quad	.Lc212-.Lc211
-	.byte	4
-	.long	.Lc213-.Lc211
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc607:
-	.long	.Lc609-.Lc608
-.Lc608:
-	.secrel32	.Lc453
-	.quad	.Lc214
-	.quad	.Lc215-.Lc214
-	.byte	4
-	.long	.Lc216-.Lc214
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc609:
-	.long	.Lc611-.Lc610
-.Lc610:
-	.secrel32	.Lc453
-	.quad	.Lc217
-	.quad	.Lc218-.Lc217
-	.byte	4
-	.long	.Lc219-.Lc217
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc611:
-	.long	.Lc613-.Lc612
-.Lc612:
-	.secrel32	.Lc453
-	.quad	.Lc220
-	.quad	.Lc221-.Lc220
-	.byte	4
-	.long	.Lc222-.Lc220
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc223-.Lc222
 	.byte	5
 	.uleb128	6
 	.uleb128	4
 	.byte	4
-	.long	.Lc224-.Lc223
+	.long	.Lc186-.Lc185
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc613:
-	.long	.Lc615-.Lc614
-.Lc614:
-	.secrel32	.Lc453
-	.quad	.Lc225
-	.quad	.Lc226-.Lc225
+.Lc594:
+	.long	.Lc596-.Lc595
+.Lc595:
+	.secrel32	.Lc462
+	.quad	.Lc187
+	.quad	.Lc188-.Lc187
 	.byte	4
-	.long	.Lc227-.Lc225
+	.long	.Lc189-.Lc187
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc615:
-	.long	.Lc617-.Lc616
-.Lc616:
-	.secrel32	.Lc453
-	.quad	.Lc228
-	.quad	.Lc229-.Lc228
+.Lc596:
+	.long	.Lc598-.Lc597
+.Lc597:
+	.secrel32	.Lc462
+	.quad	.Lc190
+	.quad	.Lc191-.Lc190
+	.balign 4,0
+.Lc598:
+	.long	.Lc600-.Lc599
+.Lc599:
+	.secrel32	.Lc462
+	.quad	.Lc192
+	.quad	.Lc193-.Lc192
+	.balign 4,0
+.Lc600:
+	.long	.Lc602-.Lc601
+.Lc601:
+	.secrel32	.Lc462
+	.quad	.Lc194
+	.quad	.Lc195-.Lc194
+	.balign 4,0
+.Lc602:
+	.long	.Lc604-.Lc603
+.Lc603:
+	.secrel32	.Lc462
+	.quad	.Lc196
+	.quad	.Lc197-.Lc196
 	.byte	4
-	.long	.Lc230-.Lc228
+	.long	.Lc198-.Lc196
+	.byte	14
+	.uleb128	40
+	.balign 4,0
+.Lc604:
+	.long	.Lc606-.Lc605
+.Lc605:
+	.secrel32	.Lc462
+	.quad	.Lc199
+	.quad	.Lc200-.Lc199
+	.balign 4,0
+.Lc606:
+	.long	.Lc608-.Lc607
+.Lc607:
+	.secrel32	.Lc462
+	.quad	.Lc201
+	.quad	.Lc202-.Lc201
+	.byte	4
+	.long	.Lc203-.Lc201
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc608:
+	.long	.Lc610-.Lc609
+.Lc609:
+	.secrel32	.Lc462
+	.quad	.Lc204
+	.quad	.Lc205-.Lc204
+	.byte	4
+	.long	.Lc206-.Lc204
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc610:
+	.long	.Lc612-.Lc611
+.Lc611:
+	.secrel32	.Lc462
+	.quad	.Lc207
+	.quad	.Lc208-.Lc207
+	.balign 4,0
+.Lc612:
+	.long	.Lc614-.Lc613
+.Lc613:
+	.secrel32	.Lc462
+	.quad	.Lc209
+	.quad	.Lc210-.Lc209
+	.byte	4
+	.long	.Lc211-.Lc209
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc614:
+	.long	.Lc616-.Lc615
+.Lc615:
+	.secrel32	.Lc462
+	.quad	.Lc212
+	.quad	.Lc213-.Lc212
+	.byte	4
+	.long	.Lc214-.Lc212
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc616:
+	.long	.Lc618-.Lc617
+.Lc617:
+	.secrel32	.Lc462
+	.quad	.Lc215
+	.quad	.Lc216-.Lc215
+	.byte	4
+	.long	.Lc217-.Lc215
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc618:
+	.long	.Lc620-.Lc619
+.Lc619:
+	.secrel32	.Lc462
+	.quad	.Lc218
+	.quad	.Lc219-.Lc218
+	.byte	4
+	.long	.Lc220-.Lc218
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc620:
+	.long	.Lc622-.Lc621
+.Lc621:
+	.secrel32	.Lc462
+	.quad	.Lc221
+	.quad	.Lc222-.Lc221
+	.byte	4
+	.long	.Lc223-.Lc221
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc224-.Lc223
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc225-.Lc224
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc622:
+	.long	.Lc624-.Lc623
+.Lc623:
+	.secrel32	.Lc462
+	.quad	.Lc226
+	.quad	.Lc227-.Lc226
+	.byte	4
+	.long	.Lc228-.Lc226
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc624:
+	.long	.Lc626-.Lc625
+.Lc625:
+	.secrel32	.Lc462
+	.quad	.Lc229
+	.quad	.Lc230-.Lc229
+	.byte	4
+	.long	.Lc231-.Lc229
 	.byte	14
 	.uleb128	56
 	.balign 4,0
-.Lc617:
-	.long	.Lc619-.Lc618
-.Lc618:
-	.secrel32	.Lc453
-	.quad	.Lc231
-	.quad	.Lc232-.Lc231
+.Lc626:
+	.long	.Lc628-.Lc627
+.Lc627:
+	.secrel32	.Lc462
+	.quad	.Lc232
+	.quad	.Lc233-.Lc232
 	.balign 4,0
-.Lc619:
-	.long	.Lc621-.Lc620
-.Lc620:
-	.secrel32	.Lc453
-	.quad	.Lc233
-	.quad	.Lc234-.Lc233
+.Lc628:
+	.long	.Lc630-.Lc629
+.Lc629:
+	.secrel32	.Lc462
+	.quad	.Lc234
+	.quad	.Lc235-.Lc234
 	.byte	4
-	.long	.Lc235-.Lc233
+	.long	.Lc236-.Lc234
 	.byte	14
 	.uleb128	16
-	.byte	4
-	.long	.Lc236-.Lc235
-	.byte	5
-	.uleb128	6
-	.uleb128	4
 	.byte	4
 	.long	.Lc237-.Lc236
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc621:
-	.long	.Lc623-.Lc622
-.Lc622:
-	.secrel32	.Lc453
-	.quad	.Lc238
-	.quad	.Lc239-.Lc238
-	.balign 4,0
-.Lc623:
-	.long	.Lc625-.Lc624
-.Lc624:
-	.secrel32	.Lc453
-	.quad	.Lc240
-	.quad	.Lc241-.Lc240
-	.byte	4
-	.long	.Lc242-.Lc240
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc625:
-	.long	.Lc627-.Lc626
-.Lc626:
-	.secrel32	.Lc453
-	.quad	.Lc243
-	.quad	.Lc244-.Lc243
-	.byte	4
-	.long	.Lc245-.Lc243
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc627:
-	.long	.Lc629-.Lc628
-.Lc628:
-	.secrel32	.Lc453
-	.quad	.Lc246
-	.quad	.Lc247-.Lc246
-	.byte	4
-	.long	.Lc248-.Lc246
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc249-.Lc248
 	.byte	5
 	.uleb128	6
 	.uleb128	4
 	.byte	4
-	.long	.Lc250-.Lc249
+	.long	.Lc238-.Lc237
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc629:
-	.long	.Lc631-.Lc630
 .Lc630:
-	.secrel32	.Lc453
-	.quad	.Lc251
-	.quad	.Lc252-.Lc251
-	.byte	4
-	.long	.Lc253-.Lc251
-	.byte	14
-	.uleb128	48
-	.balign 4,0
+	.long	.Lc632-.Lc631
 .Lc631:
-	.long	.Lc633-.Lc632
+	.secrel32	.Lc462
+	.quad	.Lc239
+	.quad	.Lc240-.Lc239
+	.byte	4
+	.long	.Lc241-.Lc239
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc242-.Lc241
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc243-.Lc242
+	.byte	13
+	.uleb128	6
+	.balign 4,0
 .Lc632:
-	.secrel32	.Lc453
-	.quad	.Lc254
-	.quad	.Lc255-.Lc254
-	.byte	4
-	.long	.Lc256-.Lc254
-	.byte	14
-	.uleb128	48
-	.balign 4,0
+	.long	.Lc634-.Lc633
 .Lc633:
-	.long	.Lc635-.Lc634
-.Lc634:
-	.secrel32	.Lc453
-	.quad	.Lc257
-	.quad	.Lc258-.Lc257
-	.balign 4,0
-.Lc635:
-	.long	.Lc637-.Lc636
-.Lc636:
-	.secrel32	.Lc453
-	.quad	.Lc259
-	.quad	.Lc260-.Lc259
+	.secrel32	.Lc462
+	.quad	.Lc244
+	.quad	.Lc245-.Lc244
 	.byte	4
-	.long	.Lc261-.Lc259
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc637:
-	.long	.Lc639-.Lc638
-.Lc638:
-	.secrel32	.Lc453
-	.quad	.Lc262
-	.quad	.Lc263-.Lc262
-	.byte	4
-	.long	.Lc264-.Lc262
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc639:
-	.long	.Lc641-.Lc640
-.Lc640:
-	.secrel32	.Lc453
-	.quad	.Lc265
-	.quad	.Lc266-.Lc265
-	.byte	4
-	.long	.Lc267-.Lc265
+	.long	.Lc246-.Lc244
 	.byte	14
 	.uleb128	40
 	.balign 4,0
+.Lc634:
+	.long	.Lc636-.Lc635
+.Lc635:
+	.secrel32	.Lc462
+	.quad	.Lc247
+	.quad	.Lc248-.Lc247
+	.balign 4,0
+.Lc636:
+	.long	.Lc638-.Lc637
+.Lc637:
+	.secrel32	.Lc462
+	.quad	.Lc249
+	.quad	.Lc250-.Lc249
+	.byte	4
+	.long	.Lc251-.Lc249
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc638:
+	.long	.Lc640-.Lc639
+.Lc639:
+	.secrel32	.Lc462
+	.quad	.Lc252
+	.quad	.Lc253-.Lc252
+	.byte	4
+	.long	.Lc254-.Lc252
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc640:
+	.long	.Lc642-.Lc641
 .Lc641:
-	.long	.Lc643-.Lc642
+	.secrel32	.Lc462
+	.quad	.Lc255
+	.quad	.Lc256-.Lc255
+	.byte	4
+	.long	.Lc257-.Lc255
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc258-.Lc257
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc259-.Lc258
+	.byte	13
+	.uleb128	6
+	.balign 4,0
 .Lc642:
-	.secrel32	.Lc453
+	.long	.Lc644-.Lc643
+.Lc643:
+	.secrel32	.Lc462
+	.quad	.Lc260
+	.quad	.Lc261-.Lc260
+	.byte	4
+	.long	.Lc262-.Lc260
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc644:
+	.long	.Lc646-.Lc645
+.Lc645:
+	.secrel32	.Lc462
+	.quad	.Lc263
+	.quad	.Lc264-.Lc263
+	.byte	4
+	.long	.Lc265-.Lc263
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc646:
+	.long	.Lc648-.Lc647
+.Lc647:
+	.secrel32	.Lc462
+	.quad	.Lc266
+	.quad	.Lc267-.Lc266
+	.balign 4,0
+.Lc648:
+	.long	.Lc650-.Lc649
+.Lc649:
+	.secrel32	.Lc462
 	.quad	.Lc268
 	.quad	.Lc269-.Lc268
 	.byte	4
@@ -9177,10 +9597,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc643:
-	.long	.Lc645-.Lc644
-.Lc644:
-	.secrel32	.Lc453
+.Lc650:
+	.long	.Lc652-.Lc651
+.Lc651:
+	.secrel32	.Lc462
 	.quad	.Lc271
 	.quad	.Lc272-.Lc271
 	.byte	4
@@ -9188,10 +9608,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc645:
-	.long	.Lc647-.Lc646
-.Lc646:
-	.secrel32	.Lc453
+.Lc652:
+	.long	.Lc654-.Lc653
+.Lc653:
+	.secrel32	.Lc462
 	.quad	.Lc274
 	.quad	.Lc275-.Lc274
 	.byte	4
@@ -9199,90 +9619,90 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	40
 	.balign 4,0
-.Lc647:
-	.long	.Lc649-.Lc648
-.Lc648:
-	.secrel32	.Lc453
+.Lc654:
+	.long	.Lc656-.Lc655
+.Lc655:
+	.secrel32	.Lc462
 	.quad	.Lc277
 	.quad	.Lc278-.Lc277
-	.balign 4,0
-.Lc649:
-	.long	.Lc651-.Lc650
-.Lc650:
-	.secrel32	.Lc453
-	.quad	.Lc279
-	.quad	.Lc280-.Lc279
 	.byte	4
-	.long	.Lc281-.Lc279
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc282-.Lc281
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc283-.Lc282
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc651:
-	.long	.Lc653-.Lc652
-.Lc652:
-	.secrel32	.Lc453
-	.quad	.Lc284
-	.quad	.Lc285-.Lc284
-	.byte	4
-	.long	.Lc286-.Lc284
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc287-.Lc286
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc288-.Lc287
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc653:
-	.long	.Lc655-.Lc654
-.Lc654:
-	.secrel32	.Lc453
-	.quad	.Lc289
-	.quad	.Lc290-.Lc289
-	.byte	4
-	.long	.Lc291-.Lc289
+	.long	.Lc279-.Lc277
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc655:
-	.long	.Lc657-.Lc656
 .Lc656:
-	.secrel32	.Lc453
-	.quad	.Lc292
-	.quad	.Lc293-.Lc292
-	.byte	4
-	.long	.Lc294-.Lc292
-	.byte	14
-	.uleb128	48
-	.balign 4,0
+	.long	.Lc658-.Lc657
 .Lc657:
-	.long	.Lc659-.Lc658
-.Lc658:
-	.secrel32	.Lc453
-	.quad	.Lc295
-	.quad	.Lc296-.Lc295
+	.secrel32	.Lc462
+	.quad	.Lc280
+	.quad	.Lc281-.Lc280
 	.byte	4
-	.long	.Lc297-.Lc295
+	.long	.Lc282-.Lc280
 	.byte	14
 	.uleb128	48
 	.balign 4,0
+.Lc658:
+	.long	.Lc660-.Lc659
 .Lc659:
-	.long	.Lc661-.Lc660
+	.secrel32	.Lc462
+	.quad	.Lc283
+	.quad	.Lc284-.Lc283
+	.byte	4
+	.long	.Lc285-.Lc283
+	.byte	14
+	.uleb128	40
+	.balign 4,0
 .Lc660:
-	.secrel32	.Lc453
+	.long	.Lc662-.Lc661
+.Lc661:
+	.secrel32	.Lc462
+	.quad	.Lc286
+	.quad	.Lc287-.Lc286
+	.balign 4,0
+.Lc662:
+	.long	.Lc664-.Lc663
+.Lc663:
+	.secrel32	.Lc462
+	.quad	.Lc288
+	.quad	.Lc289-.Lc288
+	.byte	4
+	.long	.Lc290-.Lc288
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc291-.Lc290
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc292-.Lc291
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc664:
+	.long	.Lc666-.Lc665
+.Lc665:
+	.secrel32	.Lc462
+	.quad	.Lc293
+	.quad	.Lc294-.Lc293
+	.byte	4
+	.long	.Lc295-.Lc293
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc296-.Lc295
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc297-.Lc296
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc666:
+	.long	.Lc668-.Lc667
+.Lc667:
+	.secrel32	.Lc462
 	.quad	.Lc298
 	.quad	.Lc299-.Lc298
 	.byte	4
@@ -9290,473 +9710,473 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc661:
-	.long	.Lc663-.Lc662
-.Lc662:
-	.secrel32	.Lc453
+.Lc668:
+	.long	.Lc670-.Lc669
+.Lc669:
+	.secrel32	.Lc462
 	.quad	.Lc301
 	.quad	.Lc302-.Lc301
 	.byte	4
 	.long	.Lc303-.Lc301
 	.byte	14
-	.uleb128	40
+	.uleb128	48
 	.balign 4,0
-.Lc663:
-	.long	.Lc665-.Lc664
-.Lc664:
-	.secrel32	.Lc453
+.Lc670:
+	.long	.Lc672-.Lc671
+.Lc671:
+	.secrel32	.Lc462
 	.quad	.Lc304
 	.quad	.Lc305-.Lc304
 	.byte	4
 	.long	.Lc306-.Lc304
 	.byte	14
-	.uleb128	40
+	.uleb128	48
 	.balign 4,0
-.Lc665:
-	.long	.Lc667-.Lc666
-.Lc666:
-	.secrel32	.Lc453
+.Lc672:
+	.long	.Lc674-.Lc673
+.Lc673:
+	.secrel32	.Lc462
 	.quad	.Lc307
 	.quad	.Lc308-.Lc307
 	.byte	4
 	.long	.Lc309-.Lc307
 	.byte	14
-	.uleb128	40
+	.uleb128	48
 	.balign 4,0
-.Lc667:
-	.long	.Lc669-.Lc668
-.Lc668:
-	.secrel32	.Lc453
+.Lc674:
+	.long	.Lc676-.Lc675
+.Lc675:
+	.secrel32	.Lc462
 	.quad	.Lc310
 	.quad	.Lc311-.Lc310
 	.byte	4
 	.long	.Lc312-.Lc310
 	.byte	14
-	.uleb128	48
+	.uleb128	40
 	.balign 4,0
-.Lc669:
-	.long	.Lc671-.Lc670
-.Lc670:
-	.secrel32	.Lc453
+.Lc676:
+	.long	.Lc678-.Lc677
+.Lc677:
+	.secrel32	.Lc462
 	.quad	.Lc313
 	.quad	.Lc314-.Lc313
 	.byte	4
 	.long	.Lc315-.Lc313
 	.byte	14
-	.uleb128	48
+	.uleb128	40
 	.balign 4,0
-.Lc671:
-	.long	.Lc673-.Lc672
-.Lc672:
-	.secrel32	.Lc453
+.Lc678:
+	.long	.Lc680-.Lc679
+.Lc679:
+	.secrel32	.Lc462
 	.quad	.Lc316
 	.quad	.Lc317-.Lc316
 	.byte	4
 	.long	.Lc318-.Lc316
 	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc319-.Lc318
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc320-.Lc319
-	.byte	13
-	.uleb128	6
+	.uleb128	40
 	.balign 4,0
-.Lc673:
-	.long	.Lc675-.Lc674
-.Lc674:
-	.secrel32	.Lc453
-	.quad	.Lc321
-	.quad	.Lc322-.Lc321
-	.byte	4
-	.long	.Lc323-.Lc321
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc675:
-	.long	.Lc677-.Lc676
-.Lc676:
-	.secrel32	.Lc453
-	.quad	.Lc324
-	.quad	.Lc325-.Lc324
-	.byte	4
-	.long	.Lc326-.Lc324
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc677:
-	.long	.Lc679-.Lc678
-.Lc678:
-	.secrel32	.Lc453
-	.quad	.Lc327
-	.quad	.Lc328-.Lc327
-	.byte	4
-	.long	.Lc329-.Lc327
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc330-.Lc329
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc331-.Lc330
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc679:
-	.long	.Lc681-.Lc680
 .Lc680:
-	.secrel32	.Lc453
-	.quad	.Lc332
-	.quad	.Lc333-.Lc332
+	.long	.Lc682-.Lc681
+.Lc681:
+	.secrel32	.Lc462
+	.quad	.Lc319
+	.quad	.Lc320-.Lc319
 	.byte	4
-	.long	.Lc334-.Lc332
+	.long	.Lc321-.Lc319
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc682:
+	.long	.Lc684-.Lc683
+.Lc683:
+	.secrel32	.Lc462
+	.quad	.Lc322
+	.quad	.Lc323-.Lc322
+	.byte	4
+	.long	.Lc324-.Lc322
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc684:
+	.long	.Lc686-.Lc685
+.Lc685:
+	.secrel32	.Lc462
+	.quad	.Lc325
+	.quad	.Lc326-.Lc325
+	.byte	4
+	.long	.Lc327-.Lc325
 	.byte	14
 	.uleb128	16
 	.byte	4
-	.long	.Lc335-.Lc334
+	.long	.Lc328-.Lc327
 	.byte	5
 	.uleb128	6
 	.uleb128	4
 	.byte	4
-	.long	.Lc336-.Lc335
+	.long	.Lc329-.Lc328
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc681:
-	.long	.Lc683-.Lc682
-.Lc682:
-	.secrel32	.Lc453
-	.quad	.Lc337
-	.quad	.Lc338-.Lc337
+.Lc686:
+	.long	.Lc688-.Lc687
+.Lc687:
+	.secrel32	.Lc462
+	.quad	.Lc330
+	.quad	.Lc331-.Lc330
 	.byte	4
-	.long	.Lc339-.Lc337
+	.long	.Lc332-.Lc330
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc688:
+	.long	.Lc690-.Lc689
+.Lc689:
+	.secrel32	.Lc462
+	.quad	.Lc333
+	.quad	.Lc334-.Lc333
+	.byte	4
+	.long	.Lc335-.Lc333
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc690:
+	.long	.Lc692-.Lc691
+.Lc691:
+	.secrel32	.Lc462
+	.quad	.Lc336
+	.quad	.Lc337-.Lc336
+	.byte	4
+	.long	.Lc338-.Lc336
 	.byte	14
 	.uleb128	16
+	.byte	4
+	.long	.Lc339-.Lc338
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
 	.long	.Lc340-.Lc339
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc341-.Lc340
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc683:
-	.long	.Lc685-.Lc684
-.Lc684:
-	.secrel32	.Lc453
-	.quad	.Lc342
-	.quad	.Lc343-.Lc342
+.Lc692:
+	.long	.Lc694-.Lc693
+.Lc693:
+	.secrel32	.Lc462
+	.quad	.Lc341
+	.quad	.Lc342-.Lc341
 	.byte	4
-	.long	.Lc344-.Lc342
+	.long	.Lc343-.Lc341
 	.byte	14
 	.uleb128	16
+	.byte	4
+	.long	.Lc344-.Lc343
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
 	.long	.Lc345-.Lc344
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc346-.Lc345
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc685:
-	.long	.Lc687-.Lc686
-.Lc686:
-	.secrel32	.Lc453
-	.quad	.Lc347
-	.quad	.Lc348-.Lc347
+.Lc694:
+	.long	.Lc696-.Lc695
+.Lc695:
+	.secrel32	.Lc462
+	.quad	.Lc346
+	.quad	.Lc347-.Lc346
 	.byte	4
-	.long	.Lc349-.Lc347
+	.long	.Lc348-.Lc346
 	.byte	14
 	.uleb128	16
+	.byte	4
+	.long	.Lc349-.Lc348
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
 	.long	.Lc350-.Lc349
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc351-.Lc350
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc687:
-	.long	.Lc689-.Lc688
-.Lc688:
-	.secrel32	.Lc453
-	.quad	.Lc352
-	.quad	.Lc353-.Lc352
+.Lc696:
+	.long	.Lc698-.Lc697
+.Lc697:
+	.secrel32	.Lc462
+	.quad	.Lc351
+	.quad	.Lc352-.Lc351
 	.byte	4
-	.long	.Lc354-.Lc352
+	.long	.Lc353-.Lc351
 	.byte	14
 	.uleb128	16
+	.byte	4
+	.long	.Lc354-.Lc353
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
 	.long	.Lc355-.Lc354
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc356-.Lc355
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc689:
-	.long	.Lc691-.Lc690
-.Lc690:
-	.secrel32	.Lc453
-	.quad	.Lc357
-	.quad	.Lc358-.Lc357
+.Lc698:
+	.long	.Lc700-.Lc699
+.Lc699:
+	.secrel32	.Lc462
+	.quad	.Lc356
+	.quad	.Lc357-.Lc356
 	.byte	4
-	.long	.Lc359-.Lc357
+	.long	.Lc358-.Lc356
 	.byte	14
 	.uleb128	16
+	.byte	4
+	.long	.Lc359-.Lc358
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
 	.long	.Lc360-.Lc359
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc361-.Lc360
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc691:
-	.long	.Lc693-.Lc692
-.Lc692:
-	.secrel32	.Lc453
-	.quad	.Lc362
-	.quad	.Lc363-.Lc362
+.Lc700:
+	.long	.Lc702-.Lc701
+.Lc701:
+	.secrel32	.Lc462
+	.quad	.Lc361
+	.quad	.Lc362-.Lc361
 	.byte	4
-	.long	.Lc364-.Lc362
+	.long	.Lc363-.Lc361
 	.byte	14
 	.uleb128	16
+	.byte	4
+	.long	.Lc364-.Lc363
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
 	.long	.Lc365-.Lc364
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc366-.Lc365
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc693:
-	.long	.Lc695-.Lc694
-.Lc694:
-	.secrel32	.Lc453
-	.quad	.Lc367
-	.quad	.Lc368-.Lc367
+.Lc702:
+	.long	.Lc704-.Lc703
+.Lc703:
+	.secrel32	.Lc462
+	.quad	.Lc366
+	.quad	.Lc367-.Lc366
 	.byte	4
-	.long	.Lc369-.Lc367
-	.byte	14
-	.uleb128	16
-	.balign 4,0
-.Lc695:
-	.long	.Lc697-.Lc696
-.Lc696:
-	.secrel32	.Lc453
-	.quad	.Lc370
-	.quad	.Lc371-.Lc370
-	.byte	4
-	.long	.Lc372-.Lc370
+	.long	.Lc368-.Lc366
 	.byte	14
 	.uleb128	16
 	.byte	4
-	.long	.Lc373-.Lc372
+	.long	.Lc369-.Lc368
 	.byte	5
 	.uleb128	6
 	.uleb128	4
+	.byte	4
+	.long	.Lc370-.Lc369
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc704:
+	.long	.Lc706-.Lc705
+.Lc705:
+	.secrel32	.Lc462
+	.quad	.Lc371
+	.quad	.Lc372-.Lc371
+	.byte	4
+	.long	.Lc373-.Lc371
+	.byte	14
+	.uleb128	16
 	.byte	4
 	.long	.Lc374-.Lc373
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc375-.Lc374
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc697:
-	.long	.Lc699-.Lc698
-.Lc698:
-	.secrel32	.Lc453
-	.quad	.Lc375
-	.quad	.Lc376-.Lc375
+.Lc706:
+	.long	.Lc708-.Lc707
+.Lc707:
+	.secrel32	.Lc462
+	.quad	.Lc376
+	.quad	.Lc377-.Lc376
 	.byte	4
-	.long	.Lc377-.Lc375
+	.long	.Lc378-.Lc376
 	.byte	14
-	.uleb128	48
+	.uleb128	16
 	.balign 4,0
-.Lc699:
-	.long	.Lc701-.Lc700
-.Lc700:
-	.secrel32	.Lc453
-	.quad	.Lc378
-	.quad	.Lc379-.Lc378
+.Lc708:
+	.long	.Lc710-.Lc709
+.Lc709:
+	.secrel32	.Lc462
+	.quad	.Lc379
+	.quad	.Lc380-.Lc379
 	.byte	4
-	.long	.Lc380-.Lc378
+	.long	.Lc381-.Lc379
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc701:
-	.long	.Lc703-.Lc702
-.Lc702:
-	.secrel32	.Lc453
-	.quad	.Lc381
-	.quad	.Lc382-.Lc381
+	.uleb128	16
 	.byte	4
-	.long	.Lc383-.Lc381
-	.byte	14
-	.uleb128	48
+	.long	.Lc382-.Lc381
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc383-.Lc382
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc703:
-	.long	.Lc705-.Lc704
-.Lc704:
-	.secrel32	.Lc453
+.Lc710:
+	.long	.Lc712-.Lc711
+.Lc711:
+	.secrel32	.Lc462
 	.quad	.Lc384
 	.quad	.Lc385-.Lc384
-	.balign 4,0
-.Lc705:
-	.long	.Lc707-.Lc706
-.Lc706:
-	.secrel32	.Lc453
-	.quad	.Lc386
-	.quad	.Lc387-.Lc386
 	.byte	4
-	.long	.Lc388-.Lc386
+	.long	.Lc386-.Lc384
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc707:
-	.long	.Lc709-.Lc708
-.Lc708:
-	.secrel32	.Lc453
-	.quad	.Lc389
-	.quad	.Lc390-.Lc389
-	.byte	4
-	.long	.Lc391-.Lc389
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc709:
-	.long	.Lc711-.Lc710
-.Lc710:
-	.secrel32	.Lc453
-	.quad	.Lc392
-	.quad	.Lc393-.Lc392
-	.byte	4
-	.long	.Lc394-.Lc392
-	.byte	14
-	.uleb128	16
-	.byte	4
-	.long	.Lc395-.Lc394
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc396-.Lc395
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc711:
-	.long	.Lc713-.Lc712
 .Lc712:
-	.secrel32	.Lc453
-	.quad	.Lc397
-	.quad	.Lc398-.Lc397
+	.long	.Lc714-.Lc713
+.Lc713:
+	.secrel32	.Lc462
+	.quad	.Lc387
+	.quad	.Lc388-.Lc387
 	.byte	4
-	.long	.Lc399-.Lc397
+	.long	.Lc389-.Lc387
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc714:
+	.long	.Lc716-.Lc715
+.Lc715:
+	.secrel32	.Lc462
+	.quad	.Lc390
+	.quad	.Lc391-.Lc390
+	.byte	4
+	.long	.Lc392-.Lc390
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc716:
+	.long	.Lc718-.Lc717
+.Lc717:
+	.secrel32	.Lc462
+	.quad	.Lc393
+	.quad	.Lc394-.Lc393
+	.balign 4,0
+.Lc718:
+	.long	.Lc720-.Lc719
+.Lc719:
+	.secrel32	.Lc462
+	.quad	.Lc395
+	.quad	.Lc396-.Lc395
+	.byte	4
+	.long	.Lc397-.Lc395
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc720:
+	.long	.Lc722-.Lc721
+.Lc721:
+	.secrel32	.Lc462
+	.quad	.Lc398
+	.quad	.Lc399-.Lc398
+	.byte	4
+	.long	.Lc400-.Lc398
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc722:
+	.long	.Lc724-.Lc723
+.Lc723:
+	.secrel32	.Lc462
+	.quad	.Lc401
+	.quad	.Lc402-.Lc401
+	.byte	4
+	.long	.Lc403-.Lc401
 	.byte	14
 	.uleb128	16
 	.byte	4
-	.long	.Lc400-.Lc399
+	.long	.Lc404-.Lc403
 	.byte	5
 	.uleb128	6
 	.uleb128	4
-	.byte	4
-	.long	.Lc401-.Lc400
-	.byte	13
-	.uleb128	6
-	.balign 4,0
-.Lc713:
-	.long	.Lc715-.Lc714
-.Lc714:
-	.secrel32	.Lc453
-	.quad	.Lc402
-	.quad	.Lc403-.Lc402
-	.byte	4
-	.long	.Lc404-.Lc402
-	.byte	14
-	.uleb128	16
 	.byte	4
 	.long	.Lc405-.Lc404
-	.byte	5
-	.uleb128	6
-	.uleb128	4
-	.byte	4
-	.long	.Lc406-.Lc405
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc715:
-	.long	.Lc717-.Lc716
-.Lc716:
-	.secrel32	.Lc453
-	.quad	.Lc407
-	.quad	.Lc408-.Lc407
+.Lc724:
+	.long	.Lc726-.Lc725
+.Lc725:
+	.secrel32	.Lc462
+	.quad	.Lc406
+	.quad	.Lc407-.Lc406
 	.byte	4
-	.long	.Lc409-.Lc407
+	.long	.Lc408-.Lc406
 	.byte	14
 	.uleb128	16
 	.byte	4
-	.long	.Lc410-.Lc409
+	.long	.Lc409-.Lc408
 	.byte	5
 	.uleb128	6
 	.uleb128	4
 	.byte	4
-	.long	.Lc411-.Lc410
+	.long	.Lc410-.Lc409
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc717:
-	.long	.Lc719-.Lc718
-.Lc718:
-	.secrel32	.Lc453
-	.quad	.Lc412
-	.quad	.Lc413-.Lc412
+.Lc726:
+	.long	.Lc728-.Lc727
+.Lc727:
+	.secrel32	.Lc462
+	.quad	.Lc411
+	.quad	.Lc412-.Lc411
 	.byte	4
-	.long	.Lc414-.Lc412
+	.long	.Lc413-.Lc411
 	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc719:
-	.long	.Lc721-.Lc720
-.Lc720:
-	.secrel32	.Lc453
-	.quad	.Lc415
-	.quad	.Lc416-.Lc415
+	.uleb128	16
 	.byte	4
-	.long	.Lc417-.Lc415
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc721:
-	.long	.Lc723-.Lc722
-.Lc722:
-	.secrel32	.Lc453
-	.quad	.Lc418
-	.quad	.Lc419-.Lc418
+	.long	.Lc414-.Lc413
+	.byte	5
+	.uleb128	6
+	.uleb128	4
 	.byte	4
-	.long	.Lc420-.Lc418
-	.byte	14
-	.uleb128	48
+	.long	.Lc415-.Lc414
+	.byte	13
+	.uleb128	6
 	.balign 4,0
-.Lc723:
-	.long	.Lc725-.Lc724
-.Lc724:
-	.secrel32	.Lc453
+.Lc728:
+	.long	.Lc730-.Lc729
+.Lc729:
+	.secrel32	.Lc462
+	.quad	.Lc416
+	.quad	.Lc417-.Lc416
+	.byte	4
+	.long	.Lc418-.Lc416
+	.byte	14
+	.uleb128	16
+	.byte	4
+	.long	.Lc419-.Lc418
+	.byte	5
+	.uleb128	6
+	.uleb128	4
+	.byte	4
+	.long	.Lc420-.Lc419
+	.byte	13
+	.uleb128	6
+	.balign 4,0
+.Lc730:
+	.long	.Lc732-.Lc731
+.Lc731:
+	.secrel32	.Lc462
 	.quad	.Lc421
 	.quad	.Lc422-.Lc421
 	.byte	4
@@ -9764,10 +10184,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc725:
-	.long	.Lc727-.Lc726
-.Lc726:
-	.secrel32	.Lc453
+.Lc732:
+	.long	.Lc734-.Lc733
+.Lc733:
+	.secrel32	.Lc462
 	.quad	.Lc424
 	.quad	.Lc425-.Lc424
 	.byte	4
@@ -9775,10 +10195,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc727:
-	.long	.Lc729-.Lc728
-.Lc728:
-	.secrel32	.Lc453
+.Lc734:
+	.long	.Lc736-.Lc735
+.Lc735:
+	.secrel32	.Lc462
 	.quad	.Lc427
 	.quad	.Lc428-.Lc427
 	.byte	4
@@ -9786,10 +10206,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc729:
-	.long	.Lc731-.Lc730
-.Lc730:
-	.secrel32	.Lc453
+.Lc736:
+	.long	.Lc738-.Lc737
+.Lc737:
+	.secrel32	.Lc462
 	.quad	.Lc430
 	.quad	.Lc431-.Lc430
 	.byte	4
@@ -9797,63 +10217,63 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc731:
-	.long	.Lc733-.Lc732
-.Lc732:
-	.secrel32	.Lc453
+.Lc738:
+	.long	.Lc740-.Lc739
+.Lc739:
+	.secrel32	.Lc462
 	.quad	.Lc433
 	.quad	.Lc434-.Lc433
 	.byte	4
 	.long	.Lc435-.Lc433
 	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc740:
+	.long	.Lc742-.Lc741
+.Lc741:
+	.secrel32	.Lc462
+	.quad	.Lc436
+	.quad	.Lc437-.Lc436
+	.byte	4
+	.long	.Lc438-.Lc436
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc742:
+	.long	.Lc744-.Lc743
+.Lc743:
+	.secrel32	.Lc462
+	.quad	.Lc439
+	.quad	.Lc440-.Lc439
+	.byte	4
+	.long	.Lc441-.Lc439
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc744:
+	.long	.Lc746-.Lc745
+.Lc745:
+	.secrel32	.Lc462
+	.quad	.Lc442
+	.quad	.Lc443-.Lc442
+	.byte	4
+	.long	.Lc444-.Lc442
+	.byte	14
 	.uleb128	16
 	.byte	4
-	.long	.Lc436-.Lc435
+	.long	.Lc445-.Lc444
 	.byte	5
 	.uleb128	6
 	.uleb128	4
 	.byte	4
-	.long	.Lc437-.Lc436
+	.long	.Lc446-.Lc445
 	.byte	13
 	.uleb128	6
 	.balign 4,0
-.Lc733:
-	.long	.Lc735-.Lc734
-.Lc734:
-	.secrel32	.Lc453
-	.quad	.Lc438
-	.quad	.Lc439-.Lc438
-	.byte	4
-	.long	.Lc440-.Lc438
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc735:
-	.long	.Lc737-.Lc736
-.Lc736:
-	.secrel32	.Lc453
-	.quad	.Lc441
-	.quad	.Lc442-.Lc441
-	.byte	4
-	.long	.Lc443-.Lc441
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc737:
-	.long	.Lc739-.Lc738
-.Lc738:
-	.secrel32	.Lc453
-	.quad	.Lc444
-	.quad	.Lc445-.Lc444
-	.byte	4
-	.long	.Lc446-.Lc444
-	.byte	14
-	.uleb128	48
-	.balign 4,0
-.Lc739:
-	.long	.Lc741-.Lc740
-.Lc740:
-	.secrel32	.Lc453
+.Lc746:
+	.long	.Lc748-.Lc747
+.Lc747:
+	.secrel32	.Lc462
 	.quad	.Lc447
 	.quad	.Lc448-.Lc447
 	.byte	4
@@ -9861,10 +10281,10 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc741:
-	.long	.Lc743-.Lc742
-.Lc742:
-	.secrel32	.Lc453
+.Lc748:
+	.long	.Lc750-.Lc749
+.Lc749:
+	.secrel32	.Lc462
 	.quad	.Lc450
 	.quad	.Lc451-.Lc450
 	.byte	4
@@ -9872,6 +10292,39 @@ RTTI_$SYSTEM_$$_TSYSTEM$indirect:
 	.byte	14
 	.uleb128	48
 	.balign 4,0
-.Lc743:
+.Lc750:
+	.long	.Lc752-.Lc751
+.Lc751:
+	.secrel32	.Lc462
+	.quad	.Lc453
+	.quad	.Lc454-.Lc453
+	.byte	4
+	.long	.Lc455-.Lc453
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc752:
+	.long	.Lc754-.Lc753
+.Lc753:
+	.secrel32	.Lc462
+	.quad	.Lc456
+	.quad	.Lc457-.Lc456
+	.byte	4
+	.long	.Lc458-.Lc456
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc754:
+	.long	.Lc756-.Lc755
+.Lc755:
+	.secrel32	.Lc462
+	.quad	.Lc459
+	.quad	.Lc460-.Lc459
+	.byte	4
+	.long	.Lc461-.Lc459
+	.byte	14
+	.uleb128	48
+	.balign 4,0
+.Lc756:
 # End asmlist al_dwarf_frame
 

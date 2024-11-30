@@ -23,18 +23,52 @@ type
     end;
 
 type
-    Exception = class
+    Exception = class(TObject)
     private
         FMessage: TString;
         FErrorC : DWORD;
     public
         constructor Create(const AString: TString; AnAddr: codepointer = Pointer($a1); AFrame: Pointer = Pointer($b1));
+        constructor Create(const AString: TString; const errcode: integer);
         
         function ClassName: TString; virtual;
+        
+        procedure handleException(AnAddr: CodePointer);
         
         property Message: TString read FMessage write FMessage;
         property ErrorCode: DWORD read FErrorC  write FErrorC ;
     end;
+
+    EDivByZero       = class(Exception) end;  
+    EOutOfMemory     = class(Exception) end;
+    EAccessViolation = class(Exception) end;
+
+const
+    exception_classes: array[200..236] of TClass = (
+        { 0   DivByZero           RangeError         StackOverflow     OutOfMemory/HeapOverflow InvalidPointerOperation  }
+        EDivByZero, nil, nil, EOutOfMemory, nil,
+        
+        { 5   Overflow            Underflow          InvalidOp         ZeroDivide               209                      }
+        nil, nil, nil, nil, nil,
+        
+        { 10  ObjectCheckError    AbstractError      ExternalException 213                      BusError                 }
+        nil, nil, nil, nil, nil,               
+        
+        { 15  IntOverflow         AccessViolation    ControlC          Privilege                InvalidCast              }
+        nil, EAccessViolation, nil, nil, nil,  
+        
+        { 20  InvalidVarCast      InvalidVarOp       DispatchError     VarArrayCreate           VarNotArray              }
+        nil, nil, nil, nil, nil, 
+        
+        { 25  VarArrayBounds      226                AssertionFailed   IntfCastError            SafecallException        }
+        nil, nil, nil, nil, nil,    
+        
+        { 30  230                 iconvError         NoThreadSupport   SigQuit                  MissingWStringManager    }
+        nil, nil, nil, nil, nil,    
+        
+        { 35  NoDynLibsSupport    ThreadError                                                                            }
+        nil, nil
+    );
 
 procedure fpc_raiseexception(obj: Exception; anaddr: codepointer; aframe: pointer); compilerproc;
 {$endif}
@@ -55,8 +89,10 @@ begin
     
     if not Assigned(obj) then
     begin
-        MessageBoxA(0,TString('fpc_raiseexception'),TString('inngo'),0);
+        MessageBoxA(0,TString('1 fpc_raiseexception'),TString('inngo'),0);
         obj := Exception.Create(TString('execp'), anaddr, aframe);
+        obj.handleException(AnAddr);
+        MessageBoxA(0,TString('2 fpc_raiseexception'),TString('inngo'),0);
     end;
 end;
 
@@ -66,13 +102,42 @@ begin
 end;
 
 constructor Exception.Create(const AString: TString; AnAddr: CodePointer; AFrame: Pointer);
-//var
-//    seh : TSEHHandlerData;
+var
+    t: procedure;
 begin
+    MessageBoxA(0,'exerc','exerc',0);
+    if not Assigned(AnAddr) then
+    printf('anAddr is not assigned.');
+    
     printf('woooopsss'#13#10);
-    //MessageBoxA(0,TString('Enil'),TString('inngo'),0);
+    Pointer(t) := AnAddr;
+    
+    MessageBoxA(0,TString('wooooopppsss'),TString('inngo'),0);
+    
+    t;
+    
+    MessageBoxA(0,TString('okokik'),TString('inngo'),0);
     //inherited Create;
     FMessage := AString;
+end;
+constructor Exception.Create(
+    const AString: TString;
+    const errcode: integer);
+begin
+    Message := AString;
+    self.ErrorCode := errcode;
+end;
+
+procedure Exception.handleException(AnAddr: CodePointer);
+var
+    t: procedure;
+begin
+    printf('woooopsss'#13#10);
+    Pointer(t) := AnAddr;
+    
+    MessageBoxA(0,TString('22 wooooopppsss'),TString('inngo'),0);
+    
+    t;
 end;
 
 {$endif}
