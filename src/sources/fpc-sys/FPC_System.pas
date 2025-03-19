@@ -65,6 +65,11 @@ function  fpc_AnsiStr_Compare_Equal (const S1, S2: Pointer): BOOL compilerproc;
 function  fpc_char_to_ansistr (const c :  Char; cp : TSystemCodePage): String; compilerproc;
 function  fpc_pchar_to_ansistr(const p : PChar; cp : TSystemCodePage): String; compilerproc;
 
+procedure fpc_write_text_shortstr(len: LongInt; var f: Text; const s: ShortString); compilerproc;
+
+procedure fpc_write_end(var f: Text); compilerproc;
+procedure fpc_writeln_end(var f: Text); compilerproc;
+
 procedure fpc_EmptyChar( var DestS: Pointer); compilerproc;
 
 function  fpc_get_input: PText;         compilerproc;
@@ -86,6 +91,8 @@ procedure fpc_libinitializeunits; compilerproc;
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 procedure fpc_copy_proc(Src, Dest, TypeInfo : Pointer); compilerproc; inline;
 
+function fpc_get_output: PText; compilerproc;
+
 procedure EmptyMethod; external name 'FPC_EMPTYMETHOD';
 
 procedure move(const source; var dest; count: DWORD); stdcall;
@@ -105,10 +112,10 @@ const
     EXCEPTION_EXECUTE_HANDLER    =  1;  // continue normal execution
     EXCEPTION_CONTINUE_EXECUTION = -1;  // resume at the same point
     EXCEPTION_CONTINUE_SEARCH    =  0;  // search for another handler
-    
-function __FPC_specific_handler(rec, frame, context, dispatch: pointer): integer; cdecl;
+
+(*function __FPC_specific_handler(rec, frame, context, dispatch: pointer): integer; cdecl;
 function __FPC_except_handler  (rec, frame, context, dispatch: pointer): integer; cdecl;
-function __FPC_default_handler (rec, frame, context, dispatch: pointer): integer; cdecl;
+function __FPC_default_handler (rec, frame, context, dispatch: pointer): integer; cdecl;*)
 
 var
     in_initialization_code_exe : Boolean = false;
@@ -209,7 +216,7 @@ begin
     ExitProcess(0);
 end;
 
-function __FPC_specific_handler(var rec: EXCEPTION_RECORD; var frame: TSEHFrame; var context: TContext; var dispatch: TDispatcherContext): EXCEPTION_DISPOSITION; cdecl;
+(*function __FPC_specific_handler(var rec: EXCEPTION_RECORD; var frame: TSEHFrame; var context: TContext; var dispatch: TDispatcherContext): EXCEPTION_DISPOSITION; cdecl;
 begin
     MessageBoxA(0,'spec','info',0);
     result := EXCEPTION_CONTINUE_SEARCH;
@@ -223,7 +230,7 @@ function __FPC_default_handler(rec, frame, context, dispatch: pointer): integer;
 begin   
   MessageBoxA(0,'DEFAULTERS 2333','info',0);
   result := EXCEPTION_CONTINUE_SEARCH;
-end;
+end;*)
 
 procedure fpc_initializeunits; [public, alias:'FPC_INITIALIZEUNITS']; compilerproc;
     procedure CallProcedure(proc: TProcedure);
@@ -488,6 +495,31 @@ end;
 
 procedure fpc_finalize(Data,TypeInfo: Pointer); compilerproc;
 begin end;
+
+procedure fpc_write_end(var f: Text); compilerproc;
+begin
+end;
+
+procedure fpc_writeln_end(var f: Text); compilerproc;
+var
+  s: PChar;
+  w: DWORD;
+begin
+  s := LineEnding;
+  WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), PChar(s), strlen(s)+1, w, nil);
+end;
+
+function fpc_get_output: PText; compilerproc;
+begin
+    result := nil;
+end;
+
+procedure fpc_write_text_shortstr(len: LongInt; var f: Text; const s: ShortString); [public, alias: 'FPC_WRITE_TEXT_SHORTSTR']; compilerproc;
+var
+  w: DWORD;
+begin
+  WriteConsoleA(GetStdHandle(STD_OUTPUT_HANDLE), @s[1], ord(s[0]), w, nil);
+end;
 
 procedure move(const source; var dest; count: DWORD); [public, alias:'FPC_move']; stdcall;
 begin

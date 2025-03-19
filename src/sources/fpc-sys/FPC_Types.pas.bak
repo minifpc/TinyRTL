@@ -259,8 +259,7 @@ Type
 
 const
   AnsiFirstOff = sizeof(TAnsiRec);
-  LineEnding = #13#10;
-  
+
 {$ifndef __WINDOWS_TYPES_HDR__}
 {$I fpc_wintypes.pas}
 {$endif}
